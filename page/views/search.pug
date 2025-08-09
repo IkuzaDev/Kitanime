@@ -47,8 +47,7 @@ block content
                     div(class="p-3")
                       h3(class="font-medium text-sm text-gray-900 line-clamp-2 mb-1")= anime.title
                       if anime.genres && anime.genres.length > 0
-                        p(class="text-xs text-gray-500")= anime.genres.slice(0, 2).join(', ')
-
+                        p(class="text-xs text-gray-500")= anime.genres.map((genre) => genre.name).join(', ')
 
         else if !keyword
           div(class="text-center py-12")
