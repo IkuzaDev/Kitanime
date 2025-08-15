@@ -13,27 +13,11 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/api/index.js"
-    },
-    {
-      "src": "/css/(.*)",
-      "dest": "/page/public/css/$1"
-    },
-    {
-      "src": "/fonts/(.*)",
-      "dest": "/page/public/fonts/$1"
-    },
-    {
-      "src": "/images/(.*)",
-      "dest": "/page/public/images/$1"
-    },
-    {
-      "src": "/js/(.*)",
-      "dest": "/page/public/js/$1"
+      "dest": "api/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/page/app.js"
+      "dest": "page/app.js"
     }
   ]
 }
