@@ -9,33 +9,13 @@ class AnimeApiService {
     this.apiResponsesPath = path.join(__dirname, '..', 'apiResponse');
   }
   async getApiBaseUrl() {
-    try {
-      const dbUrl = await getActiveApiEndpoint();
-      console.log(dbUrl);
-      if (dbUrl) {
-        return dbUrl;
-      }
-      try {
-        const endpointData = await fs.readFile(this.fallbackEndpointsPath, 'utf8');
-        const endpoints = JSON.parse(endpointData);
-        return endpoints.base_url || 'http://https://5fhp32db-3000.asse.devtunnels.ms/v1';
-      } catch (error) {
-        console.warn('Could not read endpoint.json, using default URL');
-        return 'http://https://5fhp32db-3000.asse.devtunnels.ms/v1';
-      }
-    } catch (error) {
-      console.error('Error getting API base URL:', error);
-      return 'http://https://5fhp32db-3000.asse.devtunnels.ms/v1';
-    }
+    return '/api/v1';
   }
 
   async makeRequest(endpoint, params = {}) {
     try {
       const baseUrl = await this.getApiBaseUrl();
-      let url = `${baseUrl}${endpoint}`;
-      if(endpoint == '/ongoing-anime'){
-        url = `${baseUrl}/ongoing-anime/${params.page}`;
-      }
+      const url = `${baseUrl}${endpoint}`;
       
       console.log(`Making API request to: ${url}`);
       
@@ -111,7 +91,7 @@ class AnimeApiService {
   }
 
   async getOngoingAnime(page = 1) {
-    return await this.makeRequest('/ongoing-anime', { page });
+    return await this.makeRequest(`/ongoing-anime/${page}`);
   }
 
   async getCompleteAnime(page = 1) {
@@ -147,7 +127,7 @@ class AnimeApiService {
   }
 
   async getAnimeByGenre(genreSlug, page = 1) {
-    return await this.makeRequest(`/genres/${genreSlug}/${page}`, { page });
+    return await this.makeRequest(`/genres/${genreSlug}/${page}`);
   }
 
   validateAnimeData(data, slug = null) {
