@@ -18,20 +18,14 @@ block content
               id="player"
               class="w-full h-full"
               preload="metadata"
-              poster='/stream?url='+anime.poster
+              poster=anime.poster
               crossorigin="anonymous"
               autoplay
               playsinline
               allow="autoplay"
               muted
             )
-              if episode.video_sources
-                if Array.isArray(episode.video_sources)
-                  each source in episode.video_sources
-                    source(src=source.url || source type=source.type || "video/mp4")
-                else
-                  source(src=episode.video_sources type="video/mp4")
-              
+              //- Source tags will be added dynamically by the client-side script.
               p(class="text-white text-center p-4") Browser Anda tidak mendukung video player.
 
         div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
@@ -220,6 +214,46 @@ block scripts
     const episodeNumber = #{episode.number};
     const animeSlug = '#{anime.slug}';
     const nextEpisodeNumber = #{navigation.next || 'null'};
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch(`/api/episode/${animeSlug}/${episodeNumber}/sources`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.success && data.sources && data.sources.length > 0) {
+            const newSources = data.sources.map(s => ({
+              src: s.url,
+              type: s.type || 'video/mp4',
+              size: s.quality ? parseInt(s.quality.replace('p', '')) : undefined
+            }));
+
+            player.source = {
+              type: 'video',
+              title: `#{anime.title} - Episode #{episode.number}`,
+              sources: newSources,
+              poster: '#{anime.poster}',
+              tracks: data.subtitles ? data.subtitles.map(sub => ({
+                  kind: 'captions',
+                  label: sub.label,
+                  src: sub.url,
+                  srclang: sub.lang,
+                  default: sub.default
+              })) : []
+            };
+            console.log('Player sources updated dynamically.');
+          } else {
+            throw new Error('No video sources found or API error.');
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching video sources:', error);
+          showVideoError();
+        });
+    });
     
     player.on('timeupdate', event => {
       const currentTime = player.currentTime;
