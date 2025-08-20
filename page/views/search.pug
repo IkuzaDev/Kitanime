@@ -1,150 +1,226 @@
 extends layout
 
 block content
-  div(class="container mx-auto px-4 py-6")
-    div(class="grid grid-cols-1 lg:grid-cols-4 gap-8")
-      div(class="lg:col-span-3")
-        div(class="mb-6")
-          h1(class="text-2xl md:text-3xl font-bold text-gray-900 mb-4")
-            if keyword
-              | Hasil Pencarian: "#{keyword}"
-            else
-              | Pencarian Anime
-          
-          form(action="/search" method="GET" class="mb-6")
-            div(class="flex")
-              input(
-                type="text"
-                name="q"
-                placeholder="Masukkan judul anime..."
-                value=keyword || ""
-                class="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                required
-              )
-              button(
-                type="submit"
-                class="px-6 py-3 bg-primary-600 text-white rounded-r-lg hover:bg-primary-700 transition-colors font-medium"
-              ) Cari
+  // Modern Search Hero Section
+  section(class="bg-gradient-to-r from-dark-900 via-dark-800 to-dark-900 py-16 relative overflow-hidden")
+    div(class="container mx-auto px-6 relative z-10")
+      div(class="text-center max-w-4xl mx-auto")
+        h1(class="text-4xl md:text-6xl font-black text-white mb-6")
+          if keyword
+            span Hasil untuk "
+            span(class="gradient-text")= keyword
+            span "
+          else
+            span(class="gradient-text") Cari Anime
+        p(class="text-xl text-gray-300 mb-8") Temukan anime favorit Anda dari ribuan koleksi dengan subtitle Indonesia berkualitas tinggi
+        
+        // Enhanced Search Form
+        form(action="/search" method="GET" class="max-w-2xl mx-auto")
+          div(class="relative")
+            input(
+              type="text"
+              name="q"
+              placeholder="Masukkan judul anime yang ingin dicari..."
+              value=keyword || ""
+              class="w-full px-6 py-4 pl-14 pr-20 bg-dark-800/80 backdrop-blur-lg text-white placeholder-gray-400 rounded-2xl border border-dark-700/50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-lg"
+              required
+            )
+            svg(class="absolute left-5 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
+            button(
+              type="submit"
+              class="absolute right-2 top-1/2 transform -translate-y-1/2 px-6 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all font-medium"
+            ) Cari
 
+  // Main Content
+  div(class="container mx-auto px-6 py-12")
+    div(class="grid grid-cols-1 xl:grid-cols-4 gap-12")
+      div(class="xl:col-span-3")
         if keyword && searchResults
           if searchResults.length > 0
-            div(class="mb-6")
-              p(class="text-gray-600") Ditemukan #{searchResults.length} hasil untuk "#{keyword}"
+            // Results Header
+            div(class="flex items-center justify-between mb-8")
+              div(class="flex items-center space-x-4")
+                div(class="w-1 h-8 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full")
+                h2(class="text-3xl font-bold text-white") Hasil Pencarian
+                div(class="px-4 py-2 bg-primary-600/20 text-primary-400 rounded-full text-sm font-medium border border-primary-600/30")= `${searchResults.length} anime ditemukan`
             
-            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8")
+            // Search Results Grid
+            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6")
               each anime in searchResults
-                div(class="anime-card bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md")
-                  a(href=`/anime/${anime.slug}`)
-                    div(class="relative")
-                      img(src=anime.poster alt=anime.title class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x300?text=No+Image';")
-                      if anime.status
-                        div(class="absolute top-2 left-2 bg-primary-600 text-white text-xs px-2 py-1 rounded")= anime.status
+                div(class="anime-card group cursor-pointer rounded-2xl overflow-hidden animate-slide-up")
+                  a(href=`/anime/${anime.slug}` class="block")
+                    div(class="relative overflow-hidden")
+                      img(src=anime.poster alt=anime.title class="anime-poster w-full h-64 sm:h-72 object-cover transition-transform duration-500" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
+                      
+                      // Overlay Gradient
+                      div(class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300")
+                      
+                      // Status Badges
+                      div(class="absolute top-3 left-3")
+                        if anime.status
+                          div(class="px-3 py-1 bg-primary-600 text-white text-xs font-medium rounded-full shadow-lg backdrop-blur-sm")= anime.status
+                      
                       if anime.rating
-                        div(class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded flex items-center")
+                        div(class="absolute top-3 right-3 px-3 py-1 bg-dark-800/80 backdrop-blur-sm text-white text-xs rounded-full border border-dark-700/50 flex items-center")
                           svg(class="w-3 h-3 mr-1 text-yellow-400" fill="currentColor" viewBox="0 0 20 20")
                             path(d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z")
                           span= anime.rating
-                    div(class="p-3")
-                      h3(class="font-medium text-sm text-gray-900 line-clamp-2 mb-1")= anime.title
+                      
+                      // Play Button Overlay
+                      div(class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300")
+                        div(class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform")
+                          svg(class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24")
+                            path(d="M8 5v14l11-7z")
+                    
+                    div(class="p-4 bg-dark-800/50 backdrop-blur-sm")
+                      h3(class="font-semibold text-white text-sm leading-tight mb-2 line-clamp-2 group-hover:text-primary-400 transition-colors")= anime.title
                       if anime.genres && anime.genres.length > 0
-                        p(class="text-xs text-gray-500")= anime.genres.map((genre) => genre.name).join(', ')
-
-        else if !keyword
-          div(class="text-center py-12")
-            svg(class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
-            h3(class="text-lg font-medium text-gray-900 mb-2") Cari Anime Favorit Anda
-            p(class="text-gray-600 mb-6") Masukkan judul anime yang ingin Anda tonton
+                        div(class="flex flex-wrap gap-1 mt-2")
+                          each genre in anime.genres.slice(0, 2)
+                            span(class="px-2 py-1 bg-dark-700/50 text-gray-400 text-xs rounded-full border border-dark-600/30")= genre.name || genre
+          else
+            // No Results State
+            div(class="text-center py-20")
+              div(class="w-24 h-24 bg-dark-800/50 rounded-full flex items-center justify-center mx-auto mb-6")
+                svg(class="w-12 h-12 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
+              h3(class="text-2xl font-bold text-white mb-4") Anime Tidak Ditemukan
+              p(class="text-gray-400 text-lg max-w-md mx-auto mb-8") Maaf, tidak ada anime yang sesuai dengan pencarian "#{keyword}". Coba gunakan kata kunci yang berbeda.
+              
+              // Search Suggestions
+              div(class="bg-dark-800/50 rounded-2xl p-6 max-w-md mx-auto")
+                h4(class="text-white font-semibold mb-4") Saran Pencarian:
+                div(class="space-y-2 text-left")
+                  p(class="text-gray-400 text-sm") • Coba gunakan kata kunci yang lebih umum
+                  p(class="text-gray-400 text-sm") • Periksa ejaan kata kunci
+                  p(class="text-gray-400 text-sm") • Coba cari berdasarkan genre
+                
+                div(class="mt-6")
+                  a(href="/genres" class="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-all")
+                    span Lihat Semua Genre
+                    svg(class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6")
+        else
+          // Search Tips
+          div(class="bg-dark-800/50 backdrop-blur-lg rounded-2xl p-8 border border-dark-700/30 shadow-2xl")
+            div(class="text-center mb-8")
+              div(class="w-16 h-16 bg-primary-600/20 rounded-full flex items-center justify-center mx-auto mb-4")
+                svg(class="w-8 h-8 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z")
+              h3(class="text-2xl font-bold text-white mb-4") Tips Pencarian
+              p(class="text-gray-400") Temukan anime yang Anda cari dengan mudah menggunakan tips berikut
             
-            div(class="max-w-md mx-auto")
-              h4(class="font-medium text-gray-900 mb-3") Pencarian Populer:
-              div(class="flex flex-wrap gap-2 justify-center")
-                each term in ['Naruto', 'One Piece', 'Attack on Titan', 'Demon Slayer', 'Jujutsu Kaisen', 'My Hero Academia']
-                  a(href=`/search?q=${encodeURIComponent(term)}` class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-primary-100 hover:text-primary-700 transition-colors")= term
+            div(class="grid grid-cols-1 md:grid-cols-2 gap-6")
+              div(class="space-y-4")
+                div(class="flex items-start space-x-3")
+                  div(class="w-8 h-8 bg-blue-600/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1")
+                    svg(class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253")
+                  div
+                    h4(class="text-white font-semibold") Cari berdasarkan judul
+                    p(class="text-gray-400 text-sm") Gunakan nama anime dalam bahasa Jepang atau Indonesia
+                
+                div(class="flex items-start space-x-3")
+                  div(class="w-8 h-8 bg-green-600/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1")
+                    svg(class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
+                  div
+                    h4(class="text-white font-semibold") Filter berdasarkan genre
+                    p(class="text-gray-400 text-sm") Temukan anime sesuai genre favorit Anda
+              
+              div(class="space-y-4")
+                div(class="flex items-start space-x-3")
+                  div(class="w-8 h-8 bg-purple-600/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1")
+                    svg(class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z")
+                  div
+                    h4(class="text-white font-semibold") Lihat anime populer
+                    p(class="text-gray-400 text-sm") Temukan anime dengan rating tertinggi
+                
+                div(class="flex items-start space-x-3")
+                  div(class="w-8 h-8 bg-orange-600/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-1")
+                    svg(class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z")
+                  div
+                    h4(class="text-white font-semibold") Cek anime ongoing
+                    p(class="text-gray-400 text-sm") Ikuti anime yang sedang tayang
 
-        if adSlots && adSlots.contentBottom && adSlots.contentBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.contentBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
-
-      div(class="lg:col-span-1")
-        if adSlots && adSlots.sidebarTop && adSlots.sidebarTop.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarTop
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
-
-        div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
-          h3(class="font-bold text-gray-900 mb-4") Tips Pencarian
-          div(class="space-y-3 text-sm text-gray-600")
-            div(class="flex items-start")
-              svg(class="w-4 h-4 text-primary-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
-              span Gunakan kata kunci yang spesifik untuk hasil yang lebih akurat
-            div(class="flex items-start")
-              svg(class="w-4 h-4 text-primary-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
-              span Coba gunakan judul bahasa Inggris atau Jepang
-            div(class="flex items-start")
-              svg(class="w-4 h-4 text-primary-600 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
-              span Gunakan kata kunci yang lebih umum jika tidak menemukan hasil
-
-        div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
-          h3(class="font-bold text-gray-900 mb-4") Genre Populer
-          div(class="flex flex-wrap gap-2")
-            each genre in genres
-              a(href=`/genres/${genre.slug}` class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-primary-100 hover:text-primary-700 transition-colors")= genre.name
-
-        div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
-          h3(class="font-bold text-gray-900 mb-4") Menu Cepat
-          div(class="space-y-3")
-            a(href="/ongoing" class="flex items-center text-gray-600 hover:text-primary-600 transition-colors")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z")
-              span Anime Ongoing
-            a(href="/complete" class="flex items-center text-gray-600 hover:text-primary-600 transition-colors")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z")
-              span Anime Complete
-            a(href="/genres" class="flex items-center text-gray-600 hover:text-primary-600 transition-colors")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+      // Enhanced Sidebar
+      div(class="xl:col-span-1 space-y-8")
+        // Quick Search Categories
+        div(class="bg-dark-800/50 backdrop-blur-lg rounded-2xl p-6 border border-dark-700/30 shadow-2xl")
+          div(class="flex items-center space-x-3 mb-6")
+            div(class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center")
+              svg(class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
-              span Genre Anime
+            h3(class="text-xl font-bold text-white") Genre Populer
+          div(class="space-y-2")
+            - var genres = ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Slice of Life']
+            each genre in genres
+              a(href=`/genres/${genre.toLowerCase()}` class="block p-3 bg-dark-700/30 rounded-lg border border-dark-600/30 hover:bg-primary-600/20 hover:border-primary-600/30 transition-all group")
+                div(class="flex items-center justify-between")
+                  span(class="text-gray-300 group-hover:text-primary-400 transition-colors")= genre
+                  svg(class="w-4 h-4 text-gray-500 group-hover:text-primary-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                    path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
 
-        if adSlots && adSlots.sidebarBottom && adSlots.sidebarBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+        // Popular Searches
+        div(class="bg-dark-800/50 backdrop-blur-lg rounded-2xl p-6 border border-dark-700/30 shadow-2xl")
+          div(class="flex items-center space-x-3 mb-6")
+            div(class="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center")
+              svg(class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6")
+            h3(class="text-xl font-bold text-white") Pencarian Populer
+          div(class="space-y-2")
+            - var searches = ['Naruto', 'One Piece', 'Attack on Titan', 'Demon Slayer', 'Jujutsu Kaisen', 'My Hero Academia']
+            each search in searches
+              a(href=`/search?q=${encodeURIComponent(search)}` class="block p-2 text-gray-400 hover:text-primary-400 transition-colors")= search
 
 block scripts
   script.
-    document.addEventListener('DOMContentLoaded', function() {
-      const searchInput = document.querySelector('input[name="q"]');
-      if (searchInput && !searchInput.value) {
-        searchInput.focus();
-      }
+    // Enhanced search functionality
+    const searchForm = document.querySelector('form');
+    const searchInput = document.querySelector('input[name="q"]');
+    
+    // Add search suggestions (future enhancement)
+    searchInput?.addEventListener('input', function() {
+      const query = this.value.trim();
+      // Here you could implement real-time search suggestions
     });
 
-    const searchInput = document.querySelector('input[name="q"]');
-    let searchTimeout;
+    // Add stagger animation to search results
+    const searchResults = document.querySelectorAll('.anime-card');
+    searchResults.forEach((card, index) => {
+      card.style.animationDelay = `${index * 0.1}s`;
+    });
 
-    if (searchInput) {
-      searchInput.addEventListener('input', function() {
-        const query = this.value.trim();
-        
-        clearTimeout(searchTimeout);
-        
-        if (query.length >= 2) {
-          searchTimeout = setTimeout(() => {
-            console.log('Search suggestion for:', query);
-          }, 300);
-        }
+    // Enhanced focus states
+    searchInput?.addEventListener('focus', function() {
+      this.parentElement.classList.add('ring-2', 'ring-primary-500');
+    });
+
+    searchInput?.addEventListener('blur', function() {
+      this.parentElement.classList.remove('ring-2', 'ring-primary-500');
+    });
+
+    // Lazy loading for search results
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.classList.remove('opacity-0');
+              img.classList.add('opacity-100');
+              imageObserver.unobserve(img);
+            }
+          }
+        });
       });
-    }
 
-    if (typeof gtag !== 'undefined' && '#{keyword}') {
-      gtag('event', 'search', {
-        search_term: '#{keyword}',
-        results_count: #{searchResults ? searchResults.length : 0}
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        img.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+        imageObserver.observe(img);
       });
     }

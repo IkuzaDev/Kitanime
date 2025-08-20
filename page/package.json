@@ -5,8 +5,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon app.js",
-    "production": "node server.js"
+    "dev": "concurrently \"npm run watch-css\" \"nodemon app.js\"",
+    "production": "npm run build-css:prod && node server.js",
+    "build-css": "tailwindcss -i ./public/css/tailwind.css -o ./public/css/tailwind-built.css",
+    "build-css:prod": "tailwindcss -i ./public/css/tailwind.css -o ./public/css/tailwind-built.min.css --minify",
+    "watch-css": "tailwindcss -i ./public/css/tailwind.css -o ./public/css/tailwind-built.css --watch"
   },
   "dependencies": {
     "axios": "^1.11.0",
@@ -25,7 +28,14 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.0",
+    "cross-env": "^10.0.0",
+    "cssnano": "^7.1.0",
+    "nodemon": "^3.0.1",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "tailwindcss": "^3.4.0"
   },
   "keywords": [
     "anime",

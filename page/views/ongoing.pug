@@ -1,79 +1,213 @@
 extends layout
 
 block content
-  div(class="container mx-auto px-4 py-6")
-    div(class="grid grid-cols-1 lg:grid-cols-4 gap-8")
-      div(class="lg:col-span-3")
-        div(class="mb-6")
-          h1(class="text-2xl md:text-3xl font-bold text-gray-900 mb-2") Anime Ongoing
-          p(class="text-gray-600") Daftar anime yang sedang tayang dengan subtitle Indonesia
+  // Modern Hero Header Section
+  section(class="bg-gradient-to-r from-dark-900 via-dark-800 to-dark-900 py-16 relative overflow-hidden")
+    // Background Decorations
+    div(class="absolute inset-0 overflow-hidden")
+      div(class="absolute top-10 right-10 w-32 h-32 bg-primary-500/20 rounded-full filter blur-3xl")
+      div(class="absolute bottom-10 left-10 w-24 h-24 bg-accent-500/20 rounded-full filter blur-2xl")
+    
+    div(class="container mx-auto px-6 relative z-10")
+      div(class="text-center")
+        div(class="inline-flex items-center px-4 py-2 bg-primary-600/20 text-primary-400 rounded-full text-sm font-medium mb-6 border border-primary-600/30")
+          div(class="w-2 h-2 bg-green-500 rounded-full mr-3 animate-pulse")
+          span Live Updates
+        h1(class="text-4xl md:text-6xl font-black text-white mb-4")
+          span(class="gradient-text") Anime Ongoing
+        p(class="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed") Daftar anime terbaru yang sedang tayang dengan subtitle Indonesia berkualitas tinggi dan update tercepat
 
+  // Main Content
+  div(class="container mx-auto px-6 py-12")
+    div(class="grid grid-cols-1 xl:grid-cols-4 gap-12")
+      div(class="xl:col-span-3")
+        // Filter & Sort Section
+        div(class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4")
+          div(class="flex items-center space-x-4")
+            div(class="flex items-center space-x-2")
+              div(class="w-1 h-6 bg-gradient-to-b from-primary-500 to-primary-600 rounded-full")
+              h2(class="text-2xl font-bold text-white") Daftar Anime
+            if animeList && animeList.length > 0
+              div(class="px-3 py-1 bg-dark-800/50 text-gray-400 text-sm rounded-full border border-dark-700/50")= `${animeList.length} anime ditemukan`
+          
+          // Sort Options (Future Enhancement)
+          div(class="flex items-center space-x-3")
+            select(class="bg-dark-800/50 border border-dark-700/50 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent")
+              option(value="latest") Terbaru
+              option(value="popular") Populer
+              option(value="title") Judul A-Z
+
+        // Anime Grid
         if animeList && animeList.length > 0
-          div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8")
+          div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-12")
             each anime in animeList
-              div(class="anime-card bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md")
-                a(href=`/anime/${anime.slug}`)
-                  div(class="relative")
-                    img(src=anime.poster alt=anime.title class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x300?text=No+Image';")
-                    if anime.current_episode
-                      div(class="absolute top-2 left-2 bg-primary-600 text-white text-xs px-2 py-1 rounded")= anime.current_episode
+              div(class="anime-card group cursor-pointer rounded-2xl overflow-hidden animate-slide-up")
+                a(href=`/anime/${anime.slug}` class="block")
+                  div(class="relative overflow-hidden")
+                    img(src=anime.poster alt=anime.title class="anime-poster w-full h-64 sm:h-72 object-cover transition-transform duration-500" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
+                    
+                    // Overlay Gradient
+                    div(class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300")
+                    
+                    // Status Badges
+                    div(class="absolute top-3 left-3 flex flex-col space-y-2")
+                      if anime.current_episode
+                        div(class="px-3 py-1 bg-primary-600 text-white text-xs font-medium rounded-full shadow-lg backdrop-blur-sm")= anime.current_episode
+                      div(class="px-3 py-1 bg-green-500 text-white text-xs font-medium rounded-full shadow-lg backdrop-blur-sm flex items-center")
+                        div(class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse")
+                        span ONGOING
+                    
                     if anime.newest_release_date
-                      div(class="absolute top-2 right-2 bg-black bg-opacity-70 text-white text-xs px-2 py-1 rounded")= anime.newest_release_date
-                  div(class="p-3")
-                    h3(class="font-medium text-sm text-gray-900 line-clamp-2 mb-1")= anime.title
+                      div(class="absolute top-3 right-3 px-3 py-1 bg-dark-800/80 backdrop-blur-sm text-white text-xs rounded-full border border-dark-700/50")= anime.newest_release_date
+                    
+                    // Play Button Overlay
+                    div(class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300")
+                      div(class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform")
+                        svg(class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24")
+                          path(d="M8 5v14l11-7z")
+                  
+                  div(class="p-4 bg-dark-800/50 backdrop-blur-sm")
+                    h3(class="font-semibold text-white text-sm leading-tight mb-2 line-clamp-2 group-hover:text-primary-400 transition-colors")= anime.title
                     if anime.release_day
-                      p(class="text-xs text-gray-500")= anime.release_day
+                      p(class="text-xs text-gray-400 flex items-center")
+                        svg(class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                          path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z")
+                        span= anime.release_day
 
+          // Enhanced Pagination
           if pagination && pagination.last_visible_page > 0
             nav(class="flex justify-center")
               div(class="flex items-center space-x-2")
                 if pagination.current_page > 1
-                  a(href=`/ongoing?page=${pagination.current_page - 1}` class="px-3 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors") Sebelumnya
+                  a(href=`/ongoing?page=${pagination.current_page - 1}` class="px-4 py-3 bg-dark-800/50 text-gray-300 rounded-xl hover:bg-dark-700/50 hover:text-white transition-all border border-dark-700/30 flex items-center")
+                    svg(class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7")
+                    span Sebelumnya
                 
                 each page in Array.from({length: Math.min(5, pagination.last_visible_page)}, (_, i) => {const start = Math.max(1, pagination.current_page - 2);return start + i;}).filter(p => p <= pagination.last_visible_page)
                   if page === pagination.current_page
-                    span(class="px-3 py-2 bg-primary-600 text-white rounded")= page
+                    span(class="px-4 py-3 bg-primary-600 text-white rounded-xl font-semibold shadow-lg")= page
                   else
-                    a(href=`/ongoing?page=${page}` class="px-3 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors")= page
+                    a(href=`/ongoing?page=${page}` class="px-4 py-3 bg-dark-800/50 text-gray-300 rounded-xl hover:bg-dark-700/50 hover:text-white transition-all border border-dark-700/30")= page
                 
                 if pagination.current_page < pagination.last_visible_page
-                  a(href=`/ongoing?page=${pagination.next_page}` class="px-3 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors") Selanjutnya
+                  a(href=`/ongoing?page=${pagination.next_page}` class="px-4 py-3 bg-dark-800/50 text-gray-300 rounded-xl hover:bg-dark-700/50 hover:text-white transition-all border border-dark-700/30 flex items-center")
+                    span Selanjutnya
+                    svg(class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
 
         else
-          div(class="text-center py-12")
-            svg(class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
-            h3(class="text-lg font-medium text-gray-900 mb-2") Tidak ada anime ongoing
-            p(class="text-gray-600") Belum ada data anime ongoing yang tersedia
+          // Empty State
+          div(class="text-center py-20")
+            div(class="w-24 h-24 bg-dark-800/50 rounded-full flex items-center justify-center mx-auto mb-6")
+              svg(class="w-12 h-12 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z")
+            h3(class="text-2xl font-bold text-white mb-4") Belum Ada Anime Ongoing
+            p(class="text-gray-400 text-lg max-w-md mx-auto") Saat ini belum ada data anime ongoing yang tersedia. Silakan kembali lagi nanti untuk update terbaru.
+            div(class="mt-8")
+              a(href="/" class="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-all font-medium")
+                svg(class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
+                span Kembali ke Beranda
 
+        // Ad Slots (Dark Theme)
         if adSlots && adSlots.contentBottom && adSlots.contentBottom.length > 0
-          div(class="mb-6")
+          div(class="mt-12")
             each ad in adSlots.contentBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+              div(class="ad-slot bg-dark-800/30 backdrop-blur-sm rounded-2xl border border-dark-700/30 overflow-hidden")!= ad.content
 
-      div(class="lg:col-span-1")
+      // Enhanced Sidebar
+      div(class="xl:col-span-1 space-y-8")
+        // Ad Slots Top
         if adSlots && adSlots.sidebarTop && adSlots.sidebarTop.length > 0
-          div(class="mb-6")
+          div(class="space-y-6")
             each ad in adSlots.sidebarTop
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+              div(class="ad-slot bg-dark-800/30 backdrop-blur-sm rounded-2xl border border-dark-700/30 overflow-hidden")!= ad.content
 
-        div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
-          h3(class="font-bold text-gray-900 mb-4") Menu Cepat
+        // Quick Navigation
+        div(class="bg-dark-800/50 backdrop-blur-lg rounded-2xl p-6 border border-dark-700/30 shadow-2xl")
+          div(class="flex items-center space-x-3 mb-6")
+            div(class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center")
+              svg(class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z")
+            h3(class="text-xl font-bold text-white") Navigasi Cepat
           div(class="space-y-3")
-            a(href="/" class="flex items-center text-gray-600 hover:text-primary-600 transition-colors")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
-              span Beranda
-            a(href="/complete" class="flex items-center text-gray-600 hover:text-primary-600 transition-colors")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z")
-              span Anime Complete
-            a(href="/genres" class="flex items-center text-gray-600 hover:text-primary-600 transition-colors")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
-              span Genre Anime
+            a(href="/" class="flex items-center p-4 text-gray-300 hover:text-white hover:bg-dark-700/50 rounded-xl transition-all group")
+              div(class="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center mr-4 group-hover:bg-blue-600/30 transition-colors")
+                svg(class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
+              span(class="font-medium") Beranda
+            a(href="/complete" class="flex items-center p-4 text-gray-300 hover:text-white hover:bg-dark-700/50 rounded-xl transition-all group")
+              div(class="w-10 h-10 bg-green-600/20 rounded-lg flex items-center justify-center mr-4 group-hover:bg-green-600/30 transition-colors")
+                svg(class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z")
+              span(class="font-medium") Anime Complete
+            a(href="/genres" class="flex items-center p-4 text-gray-300 hover:text-white hover:bg-dark-700/50 rounded-xl transition-all group")
+              div(class="w-10 h-10 bg-accent-600/20 rounded-lg flex items-center justify-center mr-4 group-hover:bg-accent-600/30 transition-colors")
+                svg(class="w-5 h-5 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
+              span(class="font-medium") Genre Anime
+            a(href="/movies" class="flex items-center p-4 text-gray-300 hover:text-white hover:bg-dark-700/50 rounded-xl transition-all group")
+              div(class="w-10 h-10 bg-yellow-600/20 rounded-lg flex items-center justify-center mr-4 group-hover:bg-yellow-600/30 transition-colors")
+                svg(class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h4a1 1 0 110 2h-1v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6H2a1 1 0 110-2h4z")
+              span(class="font-medium") Anime Movies
 
+        // Release Schedule Widget
+        div(class="bg-dark-800/50 backdrop-blur-lg rounded-2xl p-6 border border-dark-700/30 shadow-2xl")
+          div(class="flex items-center space-x-3 mb-6")
+            div(class="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center")
+              svg(class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z")
+            h3(class="text-xl font-bold text-white") Jadwal Rilis
+          div(class="space-y-4")
+            - var days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
+            each day in days
+              div(class="flex items-center justify-between p-3 bg-dark-700/30 rounded-lg border border-dark-600/30")
+                span(class="text-gray-300 font-medium")= day
+                div(class="w-6 h-6 bg-primary-600/20 rounded-full flex items-center justify-center")
+                  - var dayIndex = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'].indexOf(day)
+                  span(class="text-xs text-primary-400 font-bold")= (dayIndex + 2) % 8 + 1
+
+        // Ad Slots Bottom
         if adSlots && adSlots.sidebarBottom && adSlots.sidebarBottom.length > 0
-          div(class="mb-6")
+          div(class="space-y-6")
             each ad in adSlots.sidebarBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+              div(class="ad-slot bg-dark-800/30 backdrop-blur-sm rounded-2xl border border-dark-700/30 overflow-hidden")!= ad.content
+
+block scripts
+  script.
+    // Add stagger animation to anime cards
+    const animeCards = document.querySelectorAll('.anime-card');
+    animeCards.forEach((card, index) => {
+      card.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    // Enhanced pagination scroll
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // Lazy loading for images
+    if ('IntersectionObserver' in window) {
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.classList.remove('opacity-0');
+              img.classList.add('opacity-100');
+              imageObserver.unobserve(img);
+            }
+          }
+        });
+      });
+
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        img.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+        imageObserver.observe(img);
+      });
+    }
