@@ -18,6 +18,9 @@ html(lang="id" class="scroll-smooth")
     meta(name="twitter:description" content=description)
     
     link(rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css")
+    link(rel="stylesheet" href="/css/modern-style.css")
+    link(rel="stylesheet" href="/css/ultra-modern.css")
+    link(rel="stylesheet" href="/css/dark-mode-enhanced.css")
     script(src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js")
     
     script(src="https://cdn.tailwindcss.com/3.4.17")
@@ -67,15 +70,18 @@ html(lang="id" class="scroll-smooth")
         overflow-y: auto;
       }
       
-      .ad-slot {
-        min-height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      /* Modern animations */
+      .fade-in {
+        animation: fadeIn 0.6s ease-out;
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
-  body(class="bg-gray-50 text-gray-900 font-sans")
-    header(class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 rounded-b-lg justify-between")
+  body(class="bg-gray-50 text-gray-900 font-sans transition-colors duration-300")
+    header(class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 rounded-b-lg justify-between backdrop-blur-md bg-opacity-90")
       nav(class="container mx-auto px-8 py-0")
         div(class="flex items-center justify-between")
           a(href="/" class="flex items-center")
@@ -118,12 +124,9 @@ html(lang="id" class="scroll-smooth")
             a(href="/genres" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'genres' ? 'text-primary-600 font-medium' : ''}`) Genre
             a(href="/movies" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'movies' ? 'text-primary-600 font-medium' : ''}`) Movies
 
-    if adSlots && adSlots.header && adSlots.header.length > 0
-      div(class="container mx-auto px-4 py-2")
-        each ad in adSlots.header
-          div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
 
-    main(class="min-h-screen")
+
+    main(class="min-h-screen fade-in")
       block content
 
     footer(class="bg-gray-900 text-white mt-12")
@@ -214,10 +217,7 @@ html(lang="id" class="scroll-smooth")
       });
 
     script(src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js")
-    
-    if adsenseEnabled
-      script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxx" crossorigin="anonymous")
-      script.
-        (adsbygoogle = window.adsbygoogle || []).push({});
+    script(src="/js/dark-mode.js")
+    script(src="/js/ultra-modern.js")
 
   block scripts

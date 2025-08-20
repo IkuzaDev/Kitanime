@@ -14,7 +14,6 @@ const adminRoutes = require('./routes/admin');
 const apiRoutes = require('./routes/api');
 
 const cookieConsent = require('./middleware/cookieConsent');
-const adSlots = require('./middleware/adSlots');
 
 const { initializeDatabase } = require('./models/database');
 
@@ -137,7 +136,6 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cookieConsent);
-app.use(adSlots);
 
 app.use('/', indexRoutes);
 app.use('/anime', animeRoutes);
@@ -171,16 +169,21 @@ async function startServer() {
     await initializeDatabase();
     console.log('Database initialized successfully');
     
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`KitaNime server running on port ${PORT}`);
       console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
     });
+    
+    return server;
   } catch (error) {
     console.error('Failed to start server:', error);
     process.exit(1);
   }
 }
 
-startServer();//start
+// Only start server if this file is run directly (not required as module)
+if (require.main === module) {
+  startServer();
+}
 
 module.exports = app;

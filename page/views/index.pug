@@ -1,15 +1,28 @@
 extends layout
 
 block content
-  div(class="container mx-auto px-4 py-6")
-    section(class="mb-8")
-      div(class="bg-gradient-to-r from-primary-600 to-primary-800 rounded-xl p-8 text-white")
-        div(class="max-w-2xl")
-          h1(class="text-3xl md:text-4xl font-bold mb-4") Selamat Datang di KitaNime
-          p(class="text-lg opacity-90 mb-6") Platform streaming anime subtitle Indonesia terlengkap. Nikmati ribuan anime berkualitas tinggi dengan subtitle Indonesia yang akurat.
-          div(class="flex flex-wrap gap-4")
-            a(href="/ongoing" class="bg-white text-primary-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors") Anime Ongoing
-            a(href="/complete" class="border border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-white hover:text-primary-600 transition-colors") Anime Complete
+  // Ultra Modern Hero Section
+  section(class="hero-ultra relative overflow-hidden")
+    div(class="hero-content relative z-10")
+      h1(class="hero-title text-6xl md:text-8xl font-black mb-6") KitaNime
+      p(class="hero-subtitle text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto") Platform streaming anime terlengkap dengan subtitle Indonesia berkualitas tinggi
+      div(class="flex flex-col sm:flex-row gap-4 justify-center")
+        a(href="/ongoing" class="btn-ultra bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700") 
+          span Anime Ongoing
+          svg(class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6")
+        a(href="/complete" class="btn-ultra bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700")
+          span Anime Complete
+          svg(class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7")
+    
+    // Animated Background Elements
+    div(class="absolute inset-0 overflow-hidden")
+      div(class="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob")
+      div(class="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000")
+      div(class="absolute top-40 left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000")
+
+  div(class="container mx-auto px-4 py-12")
 
     div(class="grid grid-cols-1 lg:grid-cols-4 gap-8")
       div(class="lg:col-span-3")

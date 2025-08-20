@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const animeApi = require('../services/animeApi');
 const { getSetting } = require('../models/database');
-const { routes } = require('../app');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const qs = require('qs');

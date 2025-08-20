@@ -2,10 +2,11 @@
   "name": "kitanime-streaming",
   "version": "1.0.0",
   "description": "Anime streaming web application with real-time API integration",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node server.js",
+    "dev": "nodemon app.js",
+    "production": "node server.js"
   },
   "dependencies": {
     "axios": "^1.11.0",

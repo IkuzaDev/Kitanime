@@ -1,127 +1,366 @@
-/* Enhanced dark mode styles for better text readability */
+/* Modern Dark Mode Styles for KitaNime */
+:root {
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+  --secondary-color: #8b5cf6;
+  --accent-color: #06b6d4;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  
+  /* Light mode colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Dark mode variables */
 .dark {
-  --text-muted-light: #6b7280;
-  --text-muted-dark: #9ca3af;
-  --text-primary-light: #4f46e5;
-  --text-primary-dark: #818cf8;
-  --text-success-light: #059669;
-  --text-success-dark: #34d399;
-  --text-danger-light: #dc2626;
-  --text-danger-dark: #f87171;
-  --text-warning-light: #d97706;
-  --text-warning-dark: #fbbf24;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #475569;
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
 }
 
-/* Enhance text readability in dark mode */
-.dark .text-gray-500,
-.dark .text-gray-600,
-.dark .text-gray-700 {
-  color: #9ca3af !important; /* lighter gray in dark mode */
+/* Smooth transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-.dark .text-gray-800,
-.dark .text-gray-900 {
-  color: #e5e7eb !important; /* even lighter gray for dark text in dark mode */
+/* Base styles */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-/* Enhance form elements in dark mode */
-.dark input[type="text"],
-.dark input[type="password"],
-.dark input[type="email"],
-.dark input[type="number"],
-.dark select,
-.dark textarea {
-  background-color: #374151 !important;
-  border-color: #4b5563 !important;
-  color: #f9fafb !important;
+/* Modern card styles */
+.card, .bg-white {
+  background-color: var(--bg-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow) !important;
+  border-radius: 12px !important;
 }
 
-.dark input::placeholder {
-  color: #9ca3af !important;
+.card:hover {
+  box-shadow: var(--shadow-lg) !important;
+  transform: translateY(-2px);
 }
 
-/* Table styles for dark mode */
-.dark table {
-  color: #e5e7eb;
+/* Modern button styles */
+.btn {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
 }
 
-.dark table th {
-  background-color: #1f2937;
-  color: #f9fafb;
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
 }
 
-.dark table tr:nth-child(even) {
-  background-color: rgba(55, 65, 81, 0.5);
+.btn-primary:hover {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+  transform: translateY(-1px);
 }
 
-.dark table tr:hover {
-  background-color: rgba(55, 65, 81, 0.8);
+.btn-secondary {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
 }
 
-/* Card styling in dark mode */
-.dark .card {
-  background-color: #1f2937;
-  border-color: rgba(75, 85, 99, 0.3);
+.btn-success {
+  background-color: var(--success-color) !important;
+  border-color: var(--success-color) !important;
 }
 
-/* Fix text colors in modal dialogs for dark mode */
-.dark .modal-content {
-  background-color: #1f2937;
-  color: #f9fafb;
+.btn-warning {
+  background-color: var(--warning-color) !important;
+  border-color: var(--warning-color) !important;
 }
 
-.dark .modal-header,
-.dark .modal-footer {
-  border-color: #374151;
+.btn-danger {
+  background-color: var(--error-color) !important;
+  border-color: var(--error-color) !important;
 }
 
-/* Enhance button styles in dark mode */
-.dark .btn-light,
-.dark .btn-default {
-  background-color: #374151;
-  border-color: #4b5563;
-  color: #f9fafb;
+/* Modern form styles */
+.form-control, input, textarea, select {
+  background-color: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
 }
 
-.dark .btn-light:hover,
-.dark .btn-default:hover {
-  background-color: #4b5563;
+.form-control:focus, input:focus, textarea:focus, select:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+  outline: none !important;
 }
 
-/* SweetAlert2 Dark Theme */
-.dark .swal2-popup {
-  background-color: #1f2937 !important;
-  color: #f9fafb !important;
+.form-control::placeholder, input::placeholder, textarea::placeholder {
+  color: var(--text-muted) !important;
 }
 
-.dark .swal2-title,
-.dark .swal2-html-container,
-.dark .swal2-confirm,
-.dark .swal2-cancel {
-  color: #f9fafb !important;
+/* Text colors */
+.text-gray-500, .text-gray-600, .text-gray-700 {
+  color: var(--text-muted) !important;
 }
 
-.dark .swal2-input,
-.dark .swal2-textarea,
-.dark .swal2-select {
-  background-color: #374151 !important;
-  color: #f9fafb !important;
-  border-color: #4b5563 !important;
+.text-gray-800, .text-gray-900 {
+  color: var(--text-primary) !important;
 }
 
-/* Fix message alerts in dark mode */
-.dark .bg-red-100 {
-  background-color: rgba(220, 38, 38, 0.2) !important;
+.text-white {
+  color: var(--text-primary) !important;
 }
 
-.dark .bg-green-100 {
-  background-color: rgba(5, 150, 105, 0.2) !important;
+/* Background colors */
+.bg-gray-50, .bg-gray-100 {
+  background-color: var(--bg-secondary) !important;
 }
 
-.dark .text-red-800 {
-  color: #f87171 !important;
+.bg-gray-200, .bg-gray-300 {
+  background-color: var(--bg-tertiary) !important;
 }
 
-.dark .text-green-800 {
-  color: #34d399 !important;
-} 
+/* Modern navigation */
+.navbar, nav {
+  background-color: var(--bg-primary) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  backdrop-filter: blur(10px);
+}
+
+.navbar-brand, .nav-link {
+  color: var(--text-primary) !important;
+}
+
+.nav-link:hover {
+  color: var(--primary-color) !important;
+}
+
+/* Modern table styles */
+table {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+table th {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+table td {
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+table tr:hover {
+  background-color: var(--bg-secondary) !important;
+}
+
+/* Modern modal styles */
+.modal-content {
+  background-color: var(--bg-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.modal-header, .modal-footer {
+  border-color: var(--border-color) !important;
+}
+
+.modal-title {
+  color: var(--text-primary) !important;
+}
+
+/* Modern alert styles */
+.alert {
+  border-radius: 12px !important;
+  border: none !important;
+}
+
+.alert-success {
+  background-color: rgba(16, 185, 129, 0.1) !important;
+  color: var(--success-color) !important;
+}
+
+.alert-danger {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  color: var(--error-color) !important;
+}
+
+.alert-warning {
+  background-color: rgba(245, 158, 11, 0.1) !important;
+  color: var(--warning-color) !important;
+}
+
+.alert-info {
+  background-color: rgba(6, 182, 212, 0.1) !important;
+  color: var(--accent-color) !important;
+}
+
+/* Modern badge styles */
+.badge {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+}
+
+/* SweetAlert2 modern styles */
+.swal2-popup {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+.swal2-title, .swal2-html-container {
+  color: var(--text-primary) !important;
+}
+
+.swal2-confirm {
+  background-color: var(--primary-color) !important;
+  border-radius: 8px !important;
+}
+
+.swal2-cancel {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+  border-radius: 8px !important;
+}
+
+.swal2-input, .swal2-textarea, .swal2-select {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 8px !important;
+}
+
+/* Dark mode toggle button */
+.dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+.dark-mode-toggle:hover {
+  background-color: var(--primary-color);
+  color: white;
+  transform: scale(1.1);
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Animation utilities */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Modern spacing utilities */
+.glass-effect {
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .glass-effect {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  .dark-mode-toggle {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .card {
+    margin: 10px;
+    border-radius: 8px !important;
+  }
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+button:focus, .btn:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Loading spinner */
+.spinner {
+  border: 2px solid var(--border-color);
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

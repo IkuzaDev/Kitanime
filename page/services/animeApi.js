@@ -18,14 +18,14 @@ class AnimeApiService {
       try {
         const endpointData = await fs.readFile(this.fallbackEndpointsPath, 'utf8');
         const endpoints = JSON.parse(endpointData);
-        return endpoints.base_url || 'http://https://5fhp32db-3000.asse.devtunnels.ms/v1';
+        return endpoints.base_url || 'https://animebe.rylvitation.my.id/v1';
       } catch (error) {
         console.warn('Could not read endpoint.json, using default URL');
-        return 'http://https://5fhp32db-3000.asse.devtunnels.ms/v1';
+        return 'https://animebe.rylvitation.my.id/v1';
       }
     } catch (error) {
       console.error('Error getting API base URL:', error);
-      return 'http://https://5fhp32db-3000.asse.devtunnels.ms/v1';
+      return 'https://animebe.rylvitation.my.id/v1';
     }
   }
 
