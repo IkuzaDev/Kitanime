@@ -7,6 +7,7 @@ const compression = require('compression');
 const cors = require('cors');
 const axios = require('axios');
 const request = require('request');
+const createSessionConfig = require('./config/session');
 
 const indexRoutes = require('./routes/index');
 const animeRoutes = require('./routes/anime');
@@ -14,11 +15,14 @@ const adminRoutes = require('./routes/admin');
 const apiRoutes = require('./routes/api');
 
 const cookieConsent = require('./middleware/cookieConsent');
+const adSlots = require('./middleware/adSlots');
 
 const { initializeDatabase } = require('./models/database');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+app.disable('x-powered-by');
+app.set('trust proxy', 1);
 
 app.use(compression());
 app.use(cors(
@@ -38,257 +42,123 @@ app.use((req, res, next) => {
 
 app.get('/stream', async (req, res) => {
   try {
-    const url = req.query.url;
+    const googleVideoUrl = req.query.url;
     const range = req.headers.range;
     const token = req.query.token;
-
-    if (!url) {
-      return res.status(400).json({ error: 'Missing url parameter' });
+    
+    if (!googleVideoUrl) {
+      return res.status(400).json({ error: 'URL parameter is required' });
     }
-
-    // Check if it's an image URL
-    const isImage = /\.(jpg|jpeg|png|gif|webp|bmp|svg)$/i.test(url);
-
-    if (isImage) {
-      // Handle image streaming
-      try {
-        const response = await axios.get(url, {
-          responseType: 'stream',
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
-            'Accept': 'image/webp,image/apng,image/*,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.9',
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache'
-          },
-          timeout: 10000
-        });
-
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Content-Type', response.headers['content-type'] || 'image/jpeg');
-        res.setHeader('Cache-Control', 'public, max-age=86400'); // Cache for 24 hours
-
-        response.data.pipe(res);
-      } catch (imageError) {
-        console.error('Image streaming error:', imageError.message);
-        res.status(404).json({ error: 'Image not found or cannot be loaded' });
+    
+    // Set CORS headers early
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Range, Content-Type');
+    
+    //non gofile
+    if(!token){
+      const iframeRes = await axios.get(googleVideoUrl, {
+      headers: {
+          'Host': 'desustream.info',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Upgrade-Insecure-Requests': '1',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
+          'Sec-Fetch-Dest': 'document',
+          'Sec-Fetch-Mode': 'navigate',
+          'Sec-Fetch-Site': 'none',
+          'Sec-Fetch-User': '?1',
+          'Sec-GPC': '1',
+          'Sec-CH-UA': '"Not)A;Brand";v="8", "Chromium";v="138", "Brave";v="138"',
+          'Sec-CH-UA-Mobile': '?0',
+          'Sec-CH-UA-Platform': '"Windows"',
+          'Connection': 'keep-alive',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Methods': '*',
+          'Access-Control-Allow-Credentials': 'true',
+      },
+    });
+    const match = iframeRes.data.match(/file:"([^"]+)"/)[1];
+    const host = new URL(match).hostname;
+    const response = await axios.get(match, {
+      responseType: 'stream',
+      headers: {
+        'Host': host, // Bisa auto dari URL, opsional
+        'Range': range,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Encoding': 'gzip, deflate, br, zstd',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Pragma': 'no-cache',
+        'Upgrade-Insecure-Requests': '1',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
+        'Sec-CH-UA': '"Not)A;Brand";v="8", "Chromium";v="138", "Brave";v="138"',
+        'Sec-CH-UA-Mobile': '?0',
+        'Sec-CH-UA-Platform': '"Windows"',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-User': '?1',
+        'Sec-GPC': '1',
+        // Kadang Referer bantu
+        'Referer': 'https://www.youtube.com/'
       }
-      return;
-    }
-
-    // Handle video streaming (existing logic)
-    if (!token) {
-      try {
-        const iframeRes = await axios.get(url, {
-          headers: {
-            'Host': 'desustream.info',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache',
-            'Upgrade-Insecure-Requests': '1',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
-            'Sec-Fetch-Dest': 'document',
-            'Sec-Fetch-Mode': 'navigate',
-            'Sec-Fetch-Site': 'none',
-            'Sec-Fetch-User': '?1',
-            'Sec-GPC': '1',
-            'Sec-CH-UA': '"Not)A;Brand";v="8", "Chromium";v="138", "Brave";v="138"',
-            'Sec-CH-UA-Mobile': '?0',
-            'Sec-CH-UA-Platform': '"Windows"',
-            'Connection': 'keep-alive',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers': '*',
-            'Access-Control-Allow-Methods': '*',
-            'Access-Control-Allow-Credentials': 'true',
-          },
-          timeout: 10000
-        });
-
-        const match = iframeRes.data.match(/file:"([^"]+)"/);
-        if (!match) {
-          return res.status(404).json({ error: 'Video file not found' });
-        }
-
-        const videoUrl = match[1];
-        const host = new URL(videoUrl).hostname;
-
-        const response = await axios.get(videoUrl, {
-          responseType: 'stream',
-          headers: {
-            'Host': host,
-            'Range': range,
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-            'Accept-Encoding': 'gzip, deflate, br, zstd',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Cache-Control': 'no-cache',
-            'Connection': 'keep-alive',
-            'Pragma': 'no-cache',
-            'Upgrade-Insecure-Requests': '1',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
-            'Sec-CH-UA': '"Not)A;Brand";v="8", "Chromium";v="138", "Brave";v="138"',
-            'Sec-CH-UA-Mobile': '?0',
-            'Sec-CH-UA-Platform': '"Windows"',
-            'Sec-Fetch-Dest': 'document',
-            'Sec-Fetch-Mode': 'navigate',
-            'Sec-Fetch-Site': 'none',
-            'Sec-Fetch-User': '?1',
-            'Sec-GPC': '1',
-            'Referer': 'https://www.youtube.com/'
-          },
-          timeout: 30000
-        });
-
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Content-Type', response.headers['content-type'] || 'video/mp4');
-
-        if (range) {
-          res.setHeader('Content-Range', response.headers['content-range']);
-          res.setHeader('Accept-Ranges', 'bytes');
-          res.status(206);
-        }
-
-        response.data.pipe(res);
-      } catch (videoError) {
-        console.error('Video streaming error:', videoError.message);
-        res.status(500).json({ error: 'Video streaming failed' });
+      });
+    
+      res.setHeader('Content-Type', response.headers['content-type'] || 'video/mp4');
+      if (range) {
+        res.setHeader('Content-Range', response.headers['content-range']);
+        res.setHeader('Accept-Ranges', 'bytes');
+        res.status(206);
       }
+    
+      response.data.pipe(res);
     }
   } catch (error) {
-    console.error('Stream endpoint error:', error.message);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error('Stream error:', error.message);
+    res.status(500).json({
+      error: 'Failed to stream video',
+      message: process.env.NODE_ENV === 'production' ? 'Internal server error' : error.message
+    });
   }
 });
 app.get('/proxy', (req, res) => {
-  const url = req.query.url;
-  if (!url) return res.status(400).send('Missing url');
-  request
-    .get(url)
-    .on('error', (err) => res.status(500).send('Proxy error'))
-    .pipe(res);
-});
-
-// Alternative image endpoint using request library
-app.get('/img', (req, res) => {
-  const url = req.query.url;
-  if (!url) return res.status(400).send('Missing url');
-
-  console.log('IMG request for URL:', url);
-
-  // Add referer to bypass some restrictions
-  const options = {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
-      'Accept': 'image/webp,image/apng,image/*,*/*;q=0.8',
-      'Accept-Language': 'en-US,en;q=0.9',
-      'Referer': 'https://otakudesu.best/',
-      'Origin': 'https://otakudesu.best'
-    },
-    followRedirect: true,
-    followAllRedirects: true,
-    maxRedirects: 5,
-    timeout: 15000
-  };
-
-  request
-    .get(url, options)
-    .on('error', (err) => {
-      console.error('IMG proxy error:', err.message);
-      res.status(500).send('Proxy error');
-    })
-    .on('response', (response) => {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Content-Type', response.headers['content-type'] || 'image/jpeg');
-      res.setHeader('Cache-Control', 'public, max-age=86400');
-      console.log('IMG loaded successfully, content-type:', response.headers['content-type']);
-    })
-    .pipe(res);
-});
-
-// Simple direct image proxy
-app.get('/p', (req, res) => {
-  const url = req.query.url;
-  if (!url) return res.status(400).send('Missing url');
-
-  console.log('P request for URL:', url);
-
-  // Add proper headers for image requests
-  const options = {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
-      'Accept': 'image/webp,image/apng,image/*,*/*;q=0.8',
-      'Accept-Language': 'en-US,en;q=0.9',
-      'Referer': 'https://otakudesu.best/',
-      'Origin': 'https://otakudesu.best'
-    },
-    followRedirect: true,
-    followAllRedirects: true,
-    maxRedirects: 5,
-    timeout: 15000
-  };
-
-  request(url, options)
-    .on('error', (err) => {
-      console.error('P proxy error:', err.message);
-      res.status(500).send('Proxy error');
-    })
-    .on('response', (response) => {
-      // Set proper headers for image
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader('Content-Type', response.headers['content-type'] || 'image/jpeg');
-      res.setHeader('Cache-Control', 'public, max-age=86400');
-      console.log('P loaded successfully, content-type:', response.headers['content-type']);
-    })
-    .pipe(res);
-});
-
-// Simple image proxy endpoint
-app.get('/image', async (req, res) => {
   try {
     const url = req.query.url;
-    console.log('Image request for URL:', url);
-
-    if (!url) {
-      return res.status(400).json({ error: 'Missing url parameter' });
-    }
-
-    const response = await axios.get(url, {
-      responseType: 'stream',
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
-        'Accept': 'image/webp,image/apng,image/*,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Cache-Control': 'no-cache',
-        'Pragma': 'no-cache'
-      },
-      timeout: 15000,
-      maxRedirects: 5
-    });
-
+    if (!url) return res.status(400).json({ error: 'Missing url parameter' });
+    
+    // Set CORS headers
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Content-Type', response.headers['content-type'] || 'image/jpeg');
-    res.setHeader('Cache-Control', 'public, max-age=86400'); // Cache for 24 hours
-
-    console.log('Image loaded successfully, content-type:', response.headers['content-type']);
-    response.data.pipe(res);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    
+    request
+      .get(url)
+      .on('error', (err) => {
+        console.error('Proxy error:', err.message);
+        res.status(500).json({ error: 'Proxy request failed' });
+      })
+      .pipe(res);
   } catch (error) {
-    console.error('Image proxy error:', error.message);
-    console.error('Error details:', error.response?.status, error.response?.statusText);
-
-    // Return a fallback image or error message
-    if (error.response?.status === 403 || error.response?.status === 404) {
-      res.status(404).json({
-        error: 'Image not found or access denied',
-        originalUrl: req.query.url,
-        status: error.response.status
-      });
-    } else {
-      res.status(500).json({
-        error: 'Failed to load image',
-        message: error.message,
-        originalUrl: req.query.url
-      });
-    }
+    console.error('Proxy error:', error.message);
+    res.status(500).json({ error: 'Proxy request failed' });
   }
+});
+
+// Handle OPTIONS requests for CORS
+app.options('/stream', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Range, Content-Type');
+  res.status(200).end();
+});
+
+app.options('/proxy', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.status(200).end();
 });
 
 app.set('views', path.join(__dirname, 'views'));
@@ -298,20 +168,13 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'kitanime-secret-key-change-in-production',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: false,
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  }
-}));
+// Use proper session store for production
+app.use(session(createSessionConfig()));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cookieConsent);
+app.use(adSlots);
 
 app.use('/', indexRoutes);
 app.use('/anime', animeRoutes);
@@ -345,20 +208,28 @@ async function startServer() {
     await initializeDatabase();
     console.log('Database initialized successfully');
     
-    const server = app.listen(PORT, () => {
+    // In cPanel environment, don't call listen() - it's handled by the hosting
+    if (process.env.CPANEL || process.env.LSWS || process.env.VERCEL) {
+      console.log('Running in hosting environment - server will be handled by hosting');
+      return;
+    }
+    
+    // Start server only for local development
+    app.listen(PORT, () => {
       console.log(`KitaNime server running on port ${PORT}`);
       console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
     });
-    
-    return server;
   } catch (error) {
     console.error('Failed to start server:', error);
-    process.exit(1);
+    if (!process.env.VERCEL && !process.env.CPANEL && !process.env.LSWS) {
+      process.exit(1);
+    }
   }
 }
 
-// Only start server if this file is run directly (not required as module)
-if (require.main === module) {
+// Only start server if this file is run directly (not imported)
+// and not in cPanel environment
+if (require.main === module && !process.env.CPANEL) {
   startServer();
 }
 

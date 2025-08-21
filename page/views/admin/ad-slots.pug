@@ -1,0 +1,194 @@
+extends layout
+
+block content
+  div(class="space-y-6")
+    div(class="flex items-center justify-between")
+      div
+        h2(class="text-xl font-semibold text-gray-900") Kelola Slot Iklan
+        p(class="text-gray-600 mt-1") Tambah, edit, atau hapus slot iklan di website
+      
+      button(onclick="showAddModal()" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors font-medium") Tambah Slot Iklan
+
+    div(class="bg-white rounded-lg shadow overflow-hidden")
+      div(class="px-6 py-4 border-b border-gray-200")
+        h3(class="font-medium text-gray-900") Daftar Slot Iklan
+      
+      if adSlots && adSlots.length > 0
+        div(class="divide-y divide-gray-200")
+          each slot in adSlots
+            div(class="px-6 py-4")
+              div(class="flex items-start justify-between")
+                div(class="flex-1")
+                  div(class="flex items-center space-x-3 mb-2")
+                    h4(class="font-medium text-gray-900")= slot.name
+                    if slot.is_active
+                      span(class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800") Aktif
+                    else
+                      span(class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800") Tidak Aktif
+                    
+                    case slot.type
+                      when 'adsense'
+                        span(class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800") AdSense
+                      when 'banner'
+                        span(class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800") Banner
+                  
+                  p(class="text-sm text-gray-500 mb-2") Posisi: #{slot.position}
+                  p(class="text-xs text-gray-400") Dibuat: #{new Date(slot.created_at).toLocaleDateString('id-ID')}
+                  
+                  if slot.content
+                    div(class="mt-2 p-2 bg-gray-50 rounded text-xs text-gray-600 max-h-20 overflow-hidden")
+                      if slot.type === 'adsense'
+                        | AdSense Code: #{slot.content.substring(0, 100)}...
+                      else
+                        | #{slot.content.substring(0, 100)}...
+                
+                div(class="flex items-center space-x-2")
+                  button(onclick=`editSlot(${slot.id}, '${slot.name}', '${slot.position}', '${slot.type}', \`${slot.content.replace(/`/g, '\\`')}\`, ${slot.is_active})` class="text-primary-600 hover:text-primary-700 font-medium text-sm") Edit
+                  button(onclick=`deleteSlot(${slot.id})` class="text-red-600 hover:text-red-700 font-medium text-sm") Hapus
+
+      else
+        div(class="px-6 py-8 text-center")
+          svg(class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10")
+          h3(class="text-lg font-medium text-gray-900 mb-2") Belum ada slot iklan
+          p(class="text-gray-600") Tambah slot iklan untuk mulai menampilkan iklan di website
+
+    div(class="bg-blue-50 border border-blue-200 rounded-lg p-6")
+      h3(class="font-medium text-blue-900 mb-3") Posisi Slot Iklan
+      div(class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-800")
+        div
+          h4(class="font-medium mb-2") Posisi Tersedia:
+          ul(class="space-y-1")
+            li • header - Di bagian header website
+            li • sidebar-top - Di bagian atas sidebar
+            li • sidebar-bottom - Di bagian bawah sidebar
+            li • content-bottom - Di bawah konten utama
+            li • player-bottom - Di bawah video player
+
+  div(id="slotModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50")
+    div(class="flex items-center justify-center min-h-screen p-4")
+      div(class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto")
+        form(id="slotForm" method="POST")
+          div(class="px-6 py-4 border-b border-gray-200")
+            h3(id="modalTitle" class="text-lg font-medium text-gray-900") Tambah Slot Iklan
+          
+          div(class="px-6 py-4 space-y-4")
+            div
+              label(class="block text-sm font-medium text-gray-700 mb-1") Nama Slot
+              input(type="text" name="name" id="slotName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Contoh: Header Banner")
+            
+            div
+              label(class="block text-sm font-medium text-gray-700 mb-1") Posisi
+              select(name="position" id="slotPosition" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent")
+                option(value="") Pilih posisi
+                option(value="header") Header
+                option(value="sidebar-top") Sidebar Top
+                option(value="sidebar-bottom") Sidebar Bottom
+                option(value="content-bottom") Content Bottom
+                option(value="player-bottom") Player Bottom
+            
+            div
+              label(class="block text-sm font-medium text-gray-700 mb-1") Tipe Iklan
+              select(name="type" id="slotType" required onchange="toggleContentType()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent")
+                option(value="") Pilih tipe
+                option(value="adsense") Google AdSense
+                option(value="banner") Banner Manual
+            
+            div
+              label(class="block text-sm font-medium text-gray-700 mb-1") Konten Iklan
+              textarea(name="content" id="slotContent" required rows="6" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent" placeholder="Masukkan kode AdSense atau HTML banner")
+              div(id="contentHelp" class="mt-1 text-xs text-gray-500")
+                span(id="adsenseHelp" style="display: none") Paste kode AdSense yang diberikan oleh Google
+                span(id="bannerHelp" style="display: none") Masukkan HTML untuk banner (img tag, link, dll)
+            
+            div
+              label(class="flex items-center")
+                input(type="checkbox" name="is_active" id="slotActive" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500")
+                span(class="ml-2 text-sm text-gray-700") Aktifkan slot iklan ini
+          
+          div(class="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3")
+            button(type="button" onclick="closeModal()" class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors") Batal
+            button(type="submit" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors") Simpan
+
+block scripts
+  script.
+    let editingId = null;
+
+    function showAddModal() {
+      document.getElementById('modalTitle').textContent = 'Tambah Slot Iklan';
+      document.getElementById('slotForm').action = '/admin/ad-slots';
+      document.getElementById('slotName').value = '';
+      document.getElementById('slotPosition').value = '';
+      document.getElementById('slotType').value = '';
+      document.getElementById('slotContent').value = '';
+      document.getElementById('slotActive').checked = true;
+      editingId = null;
+      document.getElementById('slotModal').classList.remove('hidden');
+    }
+
+    function editSlot(id, name, position, type, content, isActive) {
+      document.getElementById('modalTitle').textContent = 'Edit Slot Iklan';
+      document.getElementById('slotForm').action = `/admin/ad-slots/${id}`;
+      document.getElementById('slotName').value = name;
+      document.getElementById('slotPosition').value = position;
+      document.getElementById('slotType').value = type;
+      document.getElementById('slotContent').value = content;
+      document.getElementById('slotActive').checked = isActive;
+      editingId = id;
+      toggleContentType();
+      document.getElementById('slotModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('slotModal').classList.add('hidden');
+    }
+
+    function deleteSlot(id) {
+      if (confirm('Apakah Anda yakin ingin menghapus slot iklan ini?')) {
+        fetch(`/admin/ad-slots/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            location.reload();
+          } else {
+            alert('Gagal menghapus slot iklan');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Terjadi kesalahan');
+        });
+      }
+    }
+
+    function toggleContentType() {
+      const type = document.getElementById('slotType').value;
+      const adsenseHelp = document.getElementById('adsenseHelp');
+      const bannerHelp = document.getElementById('bannerHelp');
+      const contentTextarea = document.getElementById('slotContent');
+
+      if (type === 'adsense') {
+        adsenseHelp.style.display = 'inline';
+        bannerHelp.style.display = 'none';
+        contentTextarea.placeholder = 'Paste kode AdSense di sini...';
+      } else if (type === 'banner') {
+        adsenseHelp.style.display = 'none';
+        bannerHelp.style.display = 'inline';
+        contentTextarea.placeholder = '<img src="banner.jpg" alt="Advertisement" class="w-full h-auto">';
+      } else {
+        adsenseHelp.style.display = 'none';
+        bannerHelp.style.display = 'none';
+        contentTextarea.placeholder = 'Masukkan kode AdSense atau HTML banner';
+      }
+    }
+
+    document.getElementById('slotModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });

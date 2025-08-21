@@ -1,60 +1,38 @@
 extends layout
 
 block content
-  // Modern Hero Header Section
-  section(class="bg-gradient-to-r from-dark-900 via-dark-800 to-dark-900 py-16 relative overflow-hidden")
-    // Background Decorations
-    div(class="absolute inset-0 overflow-hidden")
-      div(class="absolute top-10 right-10 w-32 h-32 bg-primary-500/20 rounded-full filter blur-3xl")
-      div(class="absolute bottom-10 left-10 w-24 h-24 bg-accent-500/20 rounded-full filter blur-2xl")
-    
-    div(class="container mx-auto px-6 relative z-10")
-      div(class="text-center")
-        div(class="inline-flex items-center px-4 py-2 bg-red-600/20 text-red-400 rounded-full text-sm font-medium mb-6 border border-red-600/30")
-          svg(class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-            path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z")
-          span Error #{error.status || 500}
-        h1(class="text-4xl md:text-6xl font-black text-white mb-4")
-          span(class="gradient-text")= error.status || 500
-        h2(class="text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed")
-          if error.status === 404
-            | Halaman Tidak Ditemukan
-          else
-            | Terjadi Kesalahan
-
-  // Main Content
-  div(class="container mx-auto px-6 py-12")
-    div(class="max-w-2xl mx-auto text-center")
-      // Error Icon
+  div(class="container mx-auto px-4 py-12")
+    div(class="max-w-md mx-auto text-center")
       div(class="mb-8")
         if error.status === 404
-          svg(class="w-32 h-32 text-gray-500 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+          svg(class="w-24 h-24 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
             path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.5-.935-6.072-2.456M3 12a9 9 0 1118 0 9 9 0 01-18 0z")
         else
-          svg(class="w-32 h-32 text-gray-500 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+          svg(class="w-24 h-24 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
             path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z")
       
-      // Error Message
-      p(class="text-xl text-gray-300 mb-8 leading-relaxed")= error.message || "Terjadi kesalahan yang tidak terduga"
+      h1(class="text-4xl font-bold text-gray-900 mb-4")= error.status || 500
       
-      // Action Buttons
-      div(class="space-y-4 mb-12")
-        a(href="/" class="btn-modern inline-block bg-primary-600 text-white px-8 py-4 rounded-xl hover:bg-primary-700 transition-all font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1") Kembali ke Beranda
+      h2(class="text-xl font-medium text-gray-700 mb-6")
+        if error.status === 404
+          | Halaman Tidak Ditemukan
+        else
+          | Terjadi Kesalahan
+      
+      p(class="text-gray-600 mb-8")= error.message || "Terjadi kesalahan yang tidak terduga"
+      
+      div(class="space-y-4")
+        a(href="/" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors font-medium") Kembali ke Beranda
         
         if error.status === 404
-          div(class="mt-6")
-            a(href="/search" class="btn-modern px-6 py-3 bg-dark-700 text-white rounded-xl hover:bg-dark-600 transition-all border border-dark-600/50") Coba Cari Anime
+          div
+            a(href="/search" class="text-primary-600 hover:text-primary-700 font-medium") Coba Cari Anime
         else
-          div(class="mt-6")
-            button(onclick="history.back()" class="btn-modern px-6 py-3 bg-dark-700 text-white rounded-xl hover:bg-dark-600 transition-all border border-dark-600/50") Kembali ke Halaman Sebelumnya
+          div
+            button(onclick="history.back()" class="text-primary-600 hover:text-primary-700 font-medium") Kembali ke Halaman Sebelumnya
 
-      // Debug Information (Development Only)
       if process.env.NODE_ENV !== 'production' && error.stack
         div(class="mt-12 text-left")
-          details(class="bg-dark-800/50 rounded-xl p-6 border border-dark-700/50")
-            summary(class="cursor-pointer font-semibold text-white mb-4 text-lg flex items-center")
-              svg(class="w-5 h-5 mr-2 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z")
-                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z")
-              span Debug Information
-            pre(class="text-xs text-gray-400 overflow-auto bg-dark-900/50 p-4 rounded-lg border border-dark-700/30")= error.stack
+          details(class="bg-gray-100 rounded-lg p-4")
+            summary(class="cursor-pointer font-medium text-gray-700 mb-2") Debug Information
+            pre(class="text-xs text-gray-600 overflow-auto")= error.stack

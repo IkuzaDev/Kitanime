@@ -123,11 +123,16 @@ router.get('/:slug/episode/:episode', async (req, res) => {
       ep.episode_number == episodeNumber
     );
     const getEpisodeDetails = await animeApi.getEpisodeDetails(slug, episodeNumber);
-
-    const prevEpisode = currentEpisodeIndex > 0 ?
-      allEpisodes[currentEpisodeIndex - 1] : parseInt(episodeNumber) - 1;
-    const nextEpisode = currentEpisodeIndex < allEpisodes.length - 1 ?
-      allEpisodes[currentEpisodeIndex + 1] : parseInt(episodeNumber) + 1;
+    console.log(episodeData.next_episode);
+    const modifiedStreamList = {};
+    var qlist = [];
+    qlist.push(360);
+    modifiedStreamList[parseInt('360')] = `/stream?url=${getEpisodeDetails.stream_url}`;
+    for (const quality in getEpisodeDetails.steramList) {
+      qlist.push(parseInt(quality.replace('p', '')));
+      modifiedStreamList[parseInt(quality.replace('p', ''))] = `/stream?url=${getEpisodeDetails.steramList[quality]}`;
+    }
+    
     var episodeDatas = {
         title: `${sanitizedAnime.title} Episode ${episodeNumber} - KitaNime`,
         description: `Nonton ${sanitizedAnime.title} Episode ${episodeNumber} subtitle Indonesia`,
@@ -136,17 +141,20 @@ router.get('/:slug/episode/:episode', async (req, res) => {
           number: episodeNumber,
           title: episodeData.episode_title || `Episode ${episodeNumber}`,
           video_sources: `/stream?url=${getEpisodeDetails.stream_url}` || [],
+          qlist,
+          quality: modifiedStreamList || [],
           subtitles: episodeData.stream_url || [],
           download_links: getEpisodeDetails.download_urls || []
         },
         navigation: {
-          prev: prevEpisode,
-          next: nextEpisode,
+          isNext: episodeData.has_next_episode,
+          isPrev: episodeData.has_previous_episode,
+          prev: episodeData.previous_episode,
+          next: episodeData.next_episode,
           all_episodes: sanitizedAnime.episodes
         },
         currentPage: 'anime'
     }
-    console.log(episodeDatas);
     res.render('episode-player', episodeDatas);
   } catch (error) {
     console.error('Episode player page error:', error);

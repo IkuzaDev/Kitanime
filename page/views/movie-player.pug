@@ -1,64 +1,45 @@
 extends layout
 
 block content
-  // Modern Hero Header Section
-  section(class="bg-gradient-to-r from-dark-900 via-dark-800 to-dark-900 py-8 relative overflow-hidden")
-    // Background Decorations
-    div(class="absolute inset-0 overflow-hidden")
-      div(class="absolute top-10 right-10 w-24 h-24 bg-primary-500/20 rounded-full filter blur-2xl")
-      div(class="absolute bottom-10 left-10 w-20 h-20 bg-accent-500/20 rounded-full filter blur-xl")
-    
-    div(class="container mx-auto px-6 relative z-10")
-      // Breadcrumb Navigation
-      nav(class="mb-4")
-        ol(class="flex items-center space-x-2 text-sm text-gray-400")
-          li: a(href="/" class="hover:text-primary-400 transition-colors") Beranda
-          li: span(class="text-gray-600") /
-          li: a(href=`/` class="hover:text-primary-400 transition-colors")= anime.title
+  div(class="container mx-auto px-4 py-6")
+    div(class="grid grid-cols-1 lg:grid-cols-4 gap-8")
+      div(class="lg:col-span-3")
+        nav(class="mb-4")
+          ol(class="flex items-center space-x-2 text-sm text-gray-500")
+            li: a(href="/" class="hover:text-primary-600") Beranda
+            li: span /
+            li: a(href=`/` class="hover:text-primary-600")= anime.title
 
-  // Main Content
-  div(class="container mx-auto px-6 py-8")
-    div(class="grid grid-cols-1 xl:grid-cols-4 gap-8")
-      div(class="xl:col-span-3")
-        // Video Player
-        div(class="anime-card rounded-2xl overflow-hidden mb-6 relative bg-black")
+        div(class="bg-black rounded-lg overflow-hidden mb-6 relative")
           div(class="aspect-video")
             iframe(class="w-full h-full" src=`${anime.stream_url}` frameborder="0" allow="autoplay; fullscreen" allowfullscreen)
+            
 
-        // Player Bottom Ads
         if adSlots && adSlots.playerBottom && adSlots.playerBottom.length > 0
           div(class="mb-6")
             each ad in adSlots.playerBottom
-              div(class="ad-slot bg-dark-800/50 rounded-xl border border-dark-700/50")!= ad.content
+              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
 
-      // Sidebar
-      div(class="xl:col-span-1")
-        // Top Ads
+      div(class="lg:col-span-1")
         if adSlots && adSlots.sidebarTop && adSlots.sidebarTop.length > 0
-          div(class="mb-8")
+          div(class="mb-6")
             each ad in adSlots.sidebarTop
-              div(class="ad-slot bg-dark-800/50 rounded-xl border border-dark-700/50")!= ad.content
+              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
 
-        // Anime Info Card
-        div(class="anime-card rounded-2xl p-6 mb-8")
+        div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
           a(href=`/anime/${anime.slug}`)
-            img(src=anime.poster alt=anime.title class="w-full rounded-xl mb-4 shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
-          h3(class="font-bold text-white mb-3")
-            a(href=`/anime/${anime.slug}` class="hover:text-primary-400 transition-colors")= anime.title
+            img(src=anime.poster alt=anime.title class="w-full rounded-lg mb-3" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
+          h3(class="font-bold text-gray-900 mb-2")
+            a(href=`/anime/${anime.slug}` class="hover:text-primary-600")= anime.title
 
-        // Share Episode
-        div(class="anime-card rounded-2xl p-6 mb-8")
-          h3(class="font-bold text-white mb-4 flex items-center")
-            svg(class="w-5 h-5 mr-3 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z")
-            span Bagikan Episode
-          div(class="space-y-3")
-            button(onclick=`shareEpisode('facebook')` class="w-full bg-blue-600 text-white py-3 px-4 rounded-xl text-sm hover:bg-blue-700 transition-all") Facebook
-            button(onclick=`shareEpisode('twitter')` class="w-full bg-sky-500 text-white py-3 px-4 rounded-xl text-sm hover:bg-sky-600 transition-all") Twitter
-            button(onclick="copyEpisodeLink()" class="w-full bg-dark-700 text-white py-3 px-4 rounded-xl text-sm hover:bg-dark-600 transition-all") Copy Link
+        div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
+          h3(class="font-bold text-gray-900 mb-4") Bagikan Episode
+          div(class="space-y-2")
+            button(onclick=`shareEpisode('facebook')` class="w-full bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700 transition-colors") Facebook
+            button(onclick=`shareEpisode('twitter')` class="w-full bg-sky-500 text-white py-2 px-3 rounded text-sm hover:bg-sky-600 transition-colors") Twitter
+            button(onclick="copyEpisodeLink()" class="w-full bg-gray-600 text-white py-2 px-3 rounded text-sm hover:bg-gray-700 transition-colors") Copy Link
 
-        // Bottom Ads
         if adSlots && adSlots.sidebarBottom && adSlots.sidebarBottom.length > 0
-          div(class="mb-8")
+          div(class="mb-6")
             each ad in adSlots.sidebarBottom
-              div(class="ad-slot bg-dark-800/50 rounded-xl border border-dark-700/50")!= ad.content
+              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content

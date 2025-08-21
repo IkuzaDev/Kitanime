@@ -2,20 +2,19 @@
   "name": "kitanime-streaming",
   "version": "1.0.0",
   "description": "Anime streaming web application with real-time API integration",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "concurrently \"npm run watch-css\" \"nodemon app.js\"",
-    "production": "npm run build-css:prod && node server.js",
-    "build-css": "tailwindcss -i ./public/css/tailwind.css -o ./public/css/tailwind-built.css",
-    "build-css:prod": "tailwindcss -i ./public/css/tailwind.css -o ./public/css/tailwind-built.min.css --minify",
-    "watch-css": "tailwindcss -i ./public/css/tailwind.css -o ./public/css/tailwind-built.css --watch"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "cpanel": "node server.js",
+    "cpanel-start": "NODE_ENV=production node server.js"
   },
   "dependencies": {
     "axios": "^1.11.0",
     "bcrypt": "^6.0.0",
     "cheerio": "^1.1.0",
     "compression": "^1.8.1",
+    "connect-sqlite3": "^0.9.16",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^5.1.0",
@@ -25,17 +24,11 @@
     "https": "^1.0.0",
     "pug": "^3.0.3",
     "request": "^2.88.2",
+    "serverless-http": "^3.2.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.21",
-    "concurrently": "^9.2.0",
-    "cross-env": "^10.0.0",
-    "cssnano": "^7.1.0",
-    "nodemon": "^3.0.1",
-    "postcss": "^8.5.6",
-    "postcss-cli": "^11.0.1",
-    "tailwindcss": "^3.4.0"
+    "nodemon": "^3.0.1"
   },
   "keywords": [
     "anime",
