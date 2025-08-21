@@ -15,7 +15,6 @@ const adminRoutes = require('./routes/admin');
 const apiRoutes = require('./routes/api');
 
 const cookieConsent = require('./middleware/cookieConsent');
-const adSlots = require('./middleware/adSlots');
 
 const { initializeDatabase } = require('./models/database');
 
@@ -183,7 +182,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Custom middleware
 app.use(cookieConsent);
-app.use(adSlots);
 
 // Routes
 app.use('/', indexRoutes);

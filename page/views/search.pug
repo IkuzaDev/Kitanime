@@ -74,16 +74,10 @@ block content
                 each term in ['Naruto', 'One Piece', 'Attack on Titan', 'Demon Slayer', 'Jujutsu Kaisen', 'My Hero Academia']
                   a(href=`/search?q=${encodeURIComponent(term)}` class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 text-sm rounded-full hover:bg-primary-100 hover:text-primary-700 transition-colors")= term
 
-        if adSlots && adSlots.contentBottom && adSlots.contentBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.contentBottom
-              div(class="ad-slot bg-gray-100 dark:bg-gray-800 rounded-lg")!= ad.content
+
 
       div(class="lg:col-span-1")
-        if adSlots && adSlots.sidebarTop && adSlots.sidebarTop.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarTop
-              div(class="ad-slot bg-gray-100 dark:bg-gray-800 rounded-lg")!= ad.content
+
 
         div(class="bg-white dark:bg-gray-900 rounded-lg shadow-sm p-6 mb-6")
           h3(class="font-bold text-gray-900 dark:text-gray-100 mb-4") Tips Pencarian
@@ -123,10 +117,7 @@ block content
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
               span Genre Anime
 
-        if adSlots && adSlots.sidebarBottom && adSlots.sidebarBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarBottom
-              div(class="ad-slot bg-gray-100 dark:bg-gray-800 rounded-lg")!= ad.content
+
 
 block scripts
   script.

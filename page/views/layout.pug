@@ -70,12 +70,7 @@ html(lang="id" class="scroll-smooth")
         overflow-y: auto;
       }
       
-      .ad-slot {
-        min-height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+
 
   body(class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300")
     header(class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 rounded-b-lg justify-between transition-colors duration-300")
@@ -131,10 +126,7 @@ html(lang="id" class="scroll-smooth")
             a(href="/genres" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'genres' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Genre
             a(href="/movies" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'movies' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Movies
 
-    if adSlots && adSlots.header && adSlots.header.length > 0
-      div(class="container mx-auto px-4 py-2")
-        each ad in adSlots.header
-          div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+
 
     main(class="min-h-screen")
       block content
@@ -269,9 +261,6 @@ html(lang="id" class="scroll-smooth")
 
     script(src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js")
     
-    if adsenseEnabled
-      script(async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxx" crossorigin="anonymous")
-      script.
-        (adsbygoogle = window.adsbygoogle || []).push({});
+
 
   block scripts

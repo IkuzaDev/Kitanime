@@ -25,16 +25,7 @@ async function initializeDatabase() {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
 
-      db.run(`CREATE TABLE IF NOT EXISTS ad_slots (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        position TEXT NOT NULL,
-        type TEXT NOT NULL CHECK(type IN ('adsense', 'banner')),
-        content TEXT NOT NULL,
-        is_active INTEGER DEFAULT 1,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      )`);
+
 
       db.run(`CREATE TABLE IF NOT EXISTS admin_users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -94,19 +85,7 @@ async function insertDefaultData() {
       }
     });
 
-    db.get("SELECT COUNT(*) as count FROM ad_slots", (err, row) => {
-      if (err) {
-        reject(err);
-        return;
-      }
 
-      if (row.count === 0) {
-        db.run(`INSERT INTO ad_slots (name, position, type, content, is_active) VALUES
-          ('Header Banner', 'header', 'banner', '<img src="/images/ads/header-banner.jpg" alt="Advertisement" class="w-full h-20 object-cover rounded-lg">', 1),
-          ('Sidebar Top', 'sidebar-top', 'adsense', '<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxx" data-ad-slot="xxxxxxxxxx" data-ad-format="auto"></ins>', 1),
-          ('Content Bottom', 'content-bottom', 'banner', '<img src="/images/ads/content-banner.jpg" alt="Advertisement" class="w-full h-32 object-cover rounded-lg">', 1)`);
-      }
-    });
 
     db.get("SELECT COUNT(*) as count FROM settings", (err, row) => {
       if (err) {
@@ -118,8 +97,7 @@ async function insertDefaultData() {
         db.run(`INSERT INTO settings (key, value, description) VALUES
           ('site_title', 'KitaNime - Streaming Anime Subtitle Indonesia', 'Judul website'),
           ('site_description', 'Nonton anime subtitle Indonesia terlengkap dan terbaru', 'Deskripsi website'),
-          ('cookie_consent_enabled', '1', 'Enable cookie consent popup'),
-          ('adsense_enabled', '0', 'Enable Google AdSense')`);
+          ('cookie_consent_enabled', '1', 'Enable cookie consent popup')`);
       }
 
       resolve();
@@ -164,52 +142,7 @@ const dbHelpers = {
     });
   },
 
-  getAdSlotsByPosition: (position) => {
-    return new Promise((resolve, reject) => {
-      db.all("SELECT * FROM ad_slots WHERE position = ? AND is_active = 1", [position], (err, rows) => {
-        if (err) reject(err);
-        else resolve(rows);
-      });
-    });
-  },
 
-  getAllAdSlots: () => {
-    return new Promise((resolve, reject) => {
-      db.all("SELECT * FROM ad_slots ORDER BY position, created_at DESC", (err, rows) => {
-        if (err) reject(err);
-        else resolve(rows);
-      });
-    });
-  },
-
-  addAdSlot: (name, position, type, content, isActive) => {
-    return new Promise((resolve, reject) => {
-      db.run("INSERT INTO ad_slots (name, position, type, content, is_active) VALUES (?, ?, ?, ?, ?)",
-        [name, position, type, content, isActive ? 1 : 0], function(err) {
-        if (err) reject(err);
-        else resolve(this.lastID);
-      });
-    });
-  },
-
-  updateAdSlot: (id, name, position, type, content, isActive) => {
-    return new Promise((resolve, reject) => {
-      db.run("UPDATE ad_slots SET name = ?, position = ?, type = ?, content = ?, is_active = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?",
-        [name, position, type, content, isActive ? 1 : 0, id], function(err) {
-        if (err) reject(err);
-        else resolve(this.changes);
-      });
-    });
-  },
-
-  deleteAdSlot: (id) => {
-    return new Promise((resolve, reject) => {
-      db.run("DELETE FROM ad_slots WHERE id = ?", [id], function(err) {
-        if (err) reject(err);
-        else resolve(this.changes);
-      });
-    });
-  },
 
   getAdminByUsername: (username) => {
     return new Promise((resolve, reject) => {

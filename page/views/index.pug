@@ -154,19 +154,11 @@ block content
                             path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z")
                           span= anime.status
 
-        // Ad Slots (Dark Theme)
-        if adSlots && adSlots.contentBottom && adSlots.contentBottom.length > 0
-          section(class="animate-slide-up" style="animation-delay: 0.4s")
-            each ad in adSlots.contentBottom
-              div(class="ad-slot bg-dark-800/30 backdrop-blur-sm rounded-2xl border border-dark-700/30 overflow-hidden")!= ad.content
+
 
       // Sidebar
       div(class="xl:col-span-1 space-y-8")
-        // Ad Slots Top
-        if adSlots && adSlots.sidebarTop && adSlots.sidebarTop.length > 0
-          div(class="space-y-6")
-            each ad in adSlots.sidebarTop
-              div(class="ad-slot bg-dark-800/30 backdrop-blur-sm rounded-2xl border border-dark-700/30 overflow-hidden")!= ad.content
+
 
         // Quick Menu
         div(class="bg-dark-800/50 backdrop-blur-lg rounded-2xl p-6 border border-dark-700/30 shadow-2xl")
@@ -218,10 +210,7 @@ block content
             each genre in []
               a(href=`/genres/${genre.toLowerCase()}` class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-full hover:bg-primary-100 dark:hover:bg-primary-900 hover:text-primary-700 dark:hover:text-primary-300 transition-colors duration-200")= genre
 
-        if adSlots && adSlots.sidebarBottom && adSlots.sidebarBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarBottom
-              div(class="ad-slot bg-gray-100 dark:bg-gray-800 rounded-2xl shadow-lg transition-colors duration-300")!= ad.content
+
 
         // About Section
         div(class="bg-gradient-to-br from-dark-800/60 to-dark-700/40 backdrop-blur-lg rounded-2xl p-6 border border-dark-600/30 shadow-2xl")

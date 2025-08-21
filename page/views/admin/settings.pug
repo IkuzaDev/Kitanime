@@ -37,20 +37,7 @@ block content
             label(class="block text-sm font-medium text-gray-700 mb-2") Teks Persetujuan Cookie
             textarea(name="cookie_consent_text" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent")= settings.cookie_consent_text || "Website ini menggunakan cookie untuk meningkatkan pengalaman pengguna. Dengan melanjutkan, Anda menyetujui penggunaan cookie."
 
-      div(class="bg-white rounded-lg shadow p-6")
-        h3(class="text-lg font-medium text-gray-900 mb-4") Google AdSense
-        
-        div(class="space-y-4")
-          div
-            label(class="flex items-center")
-              input(type="checkbox" name="adsense_enabled" checked=settings.adsense_enabled class="rounded border-gray-300 text-primary-600 focus:ring-primary-500")
-              span(class="ml-2 text-sm text-gray-700") Aktifkan Google AdSense
-            p(class="text-xs text-gray-500 mt-1") Mengaktifkan fitur AdSense untuk slot iklan yang menggunakan tipe AdSense
-          
-          div
-            label(class="block text-sm font-medium text-gray-700 mb-2") Publisher ID AdSense
-            input(type="text" name="adsense_publisher_id" value=settings.adsense_publisher_id placeholder="ca-pub-xxxxxxxxxxxxxxxxx" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent")
-            p(class="text-xs text-gray-500 mt-1") ID publisher AdSense Anda (opsional, untuk auto ads)
+
 
       div(class="bg-white rounded-lg shadow p-6")
         h3(class="text-lg font-medium text-gray-900 mb-4") Pengaturan Video Player

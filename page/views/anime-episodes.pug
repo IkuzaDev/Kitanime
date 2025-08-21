@@ -44,16 +44,10 @@ block content
               h3(class="text-lg font-medium text-gray-900 mb-2") Belum ada episode
               p(class="text-gray-600") Episode untuk anime ini belum tersedia
 
-        if adSlots && adSlots.contentBottom && adSlots.contentBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.contentBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+
 
       div(class="lg:col-span-1")
-        if adSlots && adSlots.sidebarTop && adSlots.sidebarTop.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarTop
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+
 
         div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
           h3(class="font-bold text-gray-900 mb-4") Informasi Anime
@@ -93,10 +87,7 @@ block content
                   path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
                 span Download Batch
 
-        if adSlots && adSlots.sidebarBottom && adSlots.sidebarBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+
 
 block scripts
   script.

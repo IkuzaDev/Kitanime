@@ -79,16 +79,10 @@ block content
               span(class="font-medium mr-2") 4.
               span Ekstrak file yang sudah didownload menggunakan WinRAR atau 7-Zip
 
-        if adSlots && adSlots.contentBottom && adSlots.contentBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.contentBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+
 
       div(class="lg:col-span-1")
-        if adSlots && adSlots.sidebarTop && adSlots.sidebarTop.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarTop
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+
 
         div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
           h3(class="font-bold text-gray-900 mb-4") Informasi Download
@@ -125,8 +119,3 @@ block content
             div • Pastikan ruang penyimpanan cukup
             div • Gunakan download manager untuk file besar
             div • Scan file dengan antivirus setelah download
-
-        if adSlots && adSlots.sidebarBottom && adSlots.sidebarBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
