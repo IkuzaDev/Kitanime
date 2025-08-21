@@ -29,7 +29,7 @@ block content
               id="player"
               class="w-full h-full"
               preload="metadata"
-              poster='/stream?url='+anime.poster
+              poster=`/p?url=${encodeURIComponent(anime.poster)}`
               crossorigin="anonymous"
               autoplay
               playsinline
@@ -159,13 +159,13 @@ block content
         // Anime Info Card
         div(class="anime-card rounded-2xl p-6 mb-8")
           a(href=`/anime/${anime.slug}`)
-            img(src=anime.poster alt=anime.title class="w-full rounded-xl mb-4 shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
+            img(src=`/p?url=${encodeURIComponent(anime.poster)}` alt=anime.title class="w-full rounded-xl mb-4 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
           h3(class="font-bold text-white mb-3")
             a(href=`/anime/${anime.slug}` class="hover:text-primary-400 transition-colors")= anime.title
           if anime.synopsis
             p(class="text-sm text-gray-300 line-clamp-3 mb-4")= anime.synopsis
           div(class="mt-4")
-            a(href=`/anime/${anime.slug}` class="btn-modern px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700 transition-all") Lihat Detail Anime
+            a(href=`/anime/${anime.slug}` class="px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700 transition-all shadow-sm hover:shadow-md") Lihat Detail Anime
 
         // Share Episode
         div(class="anime-card rounded-2xl p-6 mb-8")
