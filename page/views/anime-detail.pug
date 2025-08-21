@@ -50,16 +50,7 @@ block content
                 div(class="mt-4 text-center")
                   a(href=`/anime/${anime.slug}/episodes` class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-200 font-medium") Lihat Semua Episode
 
-          if adSlots && adSlots.contentBottom && adSlots.contentBottom.length > 0
-            div(class="space-y-6")
-              each ad in adSlots.contentBottom
-                div(class="ad-slot bg-gray-100 dark:bg-gray-700 rounded-lg p-4")!= ad.content
-
         div(class="lg:col-span-1 space-y-6")
-          if adSlots && adSlots.sidebarTop && adSlots.sidebarTop.length > 0
-            div(class="space-y-6")
-              each ad in adSlots.sidebarTop
-                div(class="ad-slot bg-gray-100 dark:bg-gray-700 rounded-lg p-4")!= ad.content
 
           div(class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 space-y-3")
             h3(class="font-bold text-gray-900 dark:text-gray-100 mb-4") Informasi Anime
@@ -96,10 +87,7 @@ block content
             h3(class="font-bold text-gray-900 dark:text-gray-100 mb-4") Anime Serupa
             div(class="text-sm text-gray-500 dark:text-gray-400 text-center py-4") Segera hadir...
 
-          if adSlots && adSlots.sidebarBottom && adSlots.sidebarBottom.length > 0
-            div(class="space-y-6")
-              each ad in adSlots.sidebarBottom
-                div(class="ad-slot bg-gray-100 dark:bg-gray-700 rounded-lg p-4")!= ad.content
+
 
 block scripts
   script.

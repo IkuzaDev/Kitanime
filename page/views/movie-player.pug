@@ -15,16 +15,7 @@ block content
             iframe(class="w-full h-full" src=`${anime.stream_url}` frameborder="0" allow="autoplay; fullscreen" allowfullscreen)
             
 
-        if adSlots && adSlots.playerBottom && adSlots.playerBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.playerBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
-
       div(class="lg:col-span-1")
-        if adSlots && adSlots.sidebarTop && adSlots.sidebarTop.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarTop
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
 
         div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
           a(href=`/anime/${anime.slug}`)
@@ -39,7 +30,3 @@ block content
             button(onclick=`shareEpisode('twitter')` class="w-full bg-sky-500 text-white py-2 px-3 rounded text-sm hover:bg-sky-600 transition-colors") Twitter
             button(onclick="copyEpisodeLink()" class="w-full bg-gray-600 text-white py-2 px-3 rounded text-sm hover:bg-gray-700 transition-colors") Copy Link
 
-        if adSlots && adSlots.sidebarBottom && adSlots.sidebarBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content

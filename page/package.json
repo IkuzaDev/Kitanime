@@ -7,7 +7,10 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "cpanel": "node server.js",
-    "cpanel-start": "NODE_ENV=production node server.js"
+    "cpanel-start": "NODE_ENV=production node server.js",
+    "build-css": "tailwindcss -i ./public/css/input.css -o ./public/css/tailwind.min.css --minify",
+    "watch-css": "tailwindcss -i ./public/css/input.css -o ./public/css/tailwind.min.css --watch",
+    "dev-with-css": "npm run watch-css & npm run dev"
   },
   "dependencies": {
     "axios": "^1.11.0",
@@ -28,7 +31,9 @@
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.0"
   },
   "keywords": [
     "anime",

@@ -62,16 +62,7 @@ block content
             p(class="text-gray-600 mb-4") Belum ada anime dengan genre #{genreName} yang tersedia
             a(href="/genres" class="text-primary-600 hover:text-primary-700 font-medium") Lihat Genre Lain
 
-        if adSlots && adSlots.contentBottom && adSlots.contentBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.contentBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
-
       div(class="lg:col-span-1")
-        if adSlots && adSlots.sidebarTop && adSlots.sidebarTop.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarTop
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
 
         div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
           h3(class="font-bold text-gray-900 mb-4") Genre Serupa
@@ -100,7 +91,4 @@ block content
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
               span Semua Genre
 
-        if adSlots && adSlots.sidebarBottom && adSlots.sidebarBottom.length > 0
-          div(class="mb-6")
-            each ad in adSlots.sidebarBottom
-              div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+

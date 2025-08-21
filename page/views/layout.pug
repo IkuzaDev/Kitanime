@@ -20,32 +20,7 @@ html(lang="id" class="scroll-smooth")
     link(rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css")
     script(src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js")
     
-    script(src="https://cdn.tailwindcss.com/3.4.17")
-    script.
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: '#f5f3ff',
-                100: '#ede9fe',
-                200: '#ddd6fe',
-                300: '#c4b5fd',
-                400: '#a78bfa',
-                500: '#8b5cf6',
-                600: '#7c3aed',
-                700: '#6d28d9',
-                800: '#5b21b6',
-                900: '#4c1d95'
-              }
-            },
-            fontFamily: {
-              'sans': ['Inter', 'system-ui', 'sans-serif']
-            }
-          }
-        }
-      }
+    link(rel="stylesheet" href="/css/tailwind.min.css")
     
     style.
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -126,10 +101,7 @@ html(lang="id" class="scroll-smooth")
             a(href="/genres" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'genres' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Genre
             a(href="/movies" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'movies' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Movies
 
-    if adSlots && adSlots.header && adSlots.header.length > 0
-      div(class="container mx-auto px-4 py-2")
-        each ad in adSlots.header
-          div(class="ad-slot bg-gray-100 rounded-lg")!= ad.content
+
 
     main(class="min-h-screen")
       block content
