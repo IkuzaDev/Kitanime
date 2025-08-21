@@ -1,5 +1,5 @@
 doctype html
-html(lang="id" class="scroll-smooth")
+html(lang="id" class="scroll-smooth dark")
   head
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
@@ -18,151 +18,263 @@ html(lang="id" class="scroll-smooth")
     meta(name="twitter:description" content=description)
     
     link(rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css")
-    link(rel="stylesheet" href="/css/modern-style.css")
-    link(rel="stylesheet" href="/css/ultra-modern.css")
-    link(rel="stylesheet" href="/css/dark-mode-enhanced.css")
+    link(rel="stylesheet" href="/css/tailwind-built.min.css")
+    link(rel="stylesheet" href="/css/kitanime-dark-theme.css")
     script(src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js")
     
-    script(src="https://cdn.tailwindcss.com/3.4.17")
-    script.
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: '#f0f9ff',
-                100: '#e0f2fe',
-                200: '#bae6fd',
-                300: '#7dd3fc',
-                400: '#38bdf8',
-                500: '#0ea5e9',
-                600: '#0284c7',
-                700: '#0369a1',
-                800: '#075985',
-                900: '#0c4a6e'
-              }
-            },
-            fontFamily: {
-              'sans': ['Inter', 'system-ui', 'sans-serif']
-            }
-          }
-        }
-      }
-    
     style.
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
       
+      /* Dark Theme Base */
+      .dark {
+        color-scheme: dark;
+      }
+      
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: #0f172a;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+      
+      /* Anime Card Enhancements */
       .anime-card {
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+        border: 1px solid rgba(148, 163, 184, 0.1);
       }
       
       .anime-card:hover {
-        transform: translateY(-4px);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        border-color: rgba(6, 182, 212, 0.3);
       }
       
+      .anime-card:hover .anime-poster {
+        transform: scale(1.05);
+      }
+      
+      .anime-poster {
+        transition: transform 0.4s ease;
+      }
+      
+      /* Gradient Text */
+      .gradient-text {
+        background: linear-gradient(135deg, #06b6d4 0%, #d946ef 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      
+      /* Button Enhancements */
+      .btn-modern {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+      
+      .btn-modern::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: left 0.5s;
+      }
+      
+      .btn-modern:hover::before {
+        left: 100%;
+      }
+      
+      /* Search Bar */
+      .search-input {
+        background: rgba(30, 41, 59, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        transition: all 0.3s ease;
+      }
+      
+      .search-input:focus {
+        background: rgba(30, 41, 59, 0.95);
+        border-color: #06b6d4;
+        box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+      }
+      
+      /* Video Player Dark */
       .video-player {
         aspect-ratio: 16/9;
         background: #000;
+        border-radius: 12px;
+        overflow: hidden;
       }
       
-      .search-suggestions {
-        max-height: 300px;
-        overflow-y: auto;
+      /* Loading Animation */
+      .loading-spinner {
+        border: 3px solid rgba(6, 182, 212, 0.3);
+        border-radius: 50%;
+        border-top: 3px solid #06b6d4;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
       }
       
-      /* Modern animations */
-      .fade-in {
-        animation: fadeIn 0.6s ease-out;
+      /* Line clamp utilities */
+      .line-clamp-2 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
       }
       
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
 
-  body(class="bg-gray-50 text-gray-900 font-sans transition-colors duration-300")
-    header(class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 rounded-b-lg justify-between backdrop-blur-md bg-opacity-90")
-      nav(class="container mx-auto px-8 py-0")
+
+  body(class="bg-dark-950 text-gray-100 font-sans transition-all duration-300 antialiased")
+    // Navigation Header
+    header(class="bg-dark-900/80 backdrop-blur-xl border-b border-dark-700/50 sticky top-0 z-50 shadow-2xl")
+      nav(class="container mx-auto px-6 py-4")
         div(class="flex items-center justify-between")
-          a(href="/" class="flex items-center")
-            img(src="/images/logo.png" alt="KitaNime" class="h-8 w-auto rounded-sm", onerror="this.onerror=null;this.src='https://placehold.co/400?text=KN';")
-            span(class="text-xl font-bold text-primary-600") KitaNime
+          // Logo
+          a(href="/" class="flex items-center space-x-3 group")
+            div(class="relative")
+              img(src="/images/logo.svg" alt="KitaNime" class="h-10 w-auto rounded-lg transition-transform group-hover:scale-105", onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjMDZiNmQ0Ii8+PHRleHQgeD0iMjAiIHk9IjI4IiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+S048L3RleHQ+PC9zdmc+';")
+              div(class="absolute inset-0 bg-gradient-to-r from-primary-500 to-accent-500 rounded-lg opacity-0 group-hover:opacity-20 transition-opacity")
+            span(class="text-2xl font-bold gradient-text") KitaNime
           
-          div(class="hidden md:flex items-center p-6")
-            a(href="/" class=`p-2 text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'home' ? 'text-primary-600 font-medium' : ''}`) Home
-            a(href="/ongoing" class=`p-2 text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'ongoing' ? 'text-primary-600 font-medium' : ''}`) Ongoing
-            a(href="/complete" class=`p-2 text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'complete' ? 'text-primary-600 font-medium' : ''}`) Complete
-            a(href="/genres" class=`p-2 text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'genres' ? 'text-primary-600 font-medium' : ''}`) Genre
-            a(href="/movies" class=`p-2 text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'movies' ? 'text-primary-600 font-medium' : ''}`) Movie
+          // Desktop Navigation
+          div(class="hidden lg:flex items-center space-x-8")
+            a(href="/" class=`nav-link px-4 py-2 rounded-lg transition-all duration-300 ${currentPage === 'home' ? 'bg-primary-600/20 text-primary-400 shadow-lg' : 'text-gray-300 hover:text-white hover:bg-dark-800'}`) 
+              span Home
+            a(href="/ongoing" class=`nav-link px-4 py-2 rounded-lg transition-all duration-300 ${currentPage === 'ongoing' ? 'bg-primary-600/20 text-primary-400 shadow-lg' : 'text-gray-300 hover:text-white hover:bg-dark-800'}`) 
+              span Ongoing
+            a(href="/complete" class=`nav-link px-4 py-2 rounded-lg transition-all duration-300 ${currentPage === 'complete' ? 'bg-primary-600/20 text-primary-400 shadow-lg' : 'text-gray-300 hover:text-white hover:bg-dark-800'}`) 
+              span Complete
+            a(href="/genres" class=`nav-link px-4 py-2 rounded-lg transition-all duration-300 ${currentPage === 'genres' ? 'bg-primary-600/20 text-primary-400 shadow-lg' : 'text-gray-300 hover:text-white hover:bg-dark-800'}`) 
+              span Genre
+            a(href="/movies" class=`nav-link px-4 py-2 rounded-lg transition-all duration-300 ${currentPage === 'movies' ? 'bg-primary-600/20 text-primary-400 shadow-lg' : 'text-gray-300 hover:text-white hover:bg-dark-800'}`) 
+              span Movies
           
-          div(class="flex-1 max-w-md mx-6 relative")
+          // Search Bar
+          div(class="flex-1 max-w-md mx-8 relative")
             form(action="/search" method="GET" class="relative")
               input(
                 type="text" 
                 name="q" 
-                placeholder="Cari anime..." 
+                placeholder="Cari anime favoritmu..." 
                 value=keyword || ""
-                class="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                class="search-input w-full px-5 py-3 pl-12 pr-4 rounded-xl text-white placeholder-gray-400 focus:outline-none"
                 autocomplete="off"
                 id="searchInput"
               )
-              button(type="submit" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400")
-                svg(class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              button(type="submit" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary-400 transition-colors")
+                svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                   path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
             
-            div(id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 hidden search-suggestions z-50")
+            div(id="searchSuggestions" class="absolute top-full left-0 right-0 bg-dark-800/95 backdrop-blur-xl border border-dark-700/50 rounded-xl shadow-2xl mt-2 hidden overflow-hidden z-50")
           
-          button(id="mobileMenuBtn" class="md:hidden p-2 text-gray-600")
+          // Mobile Menu Button
+          button(id="mobileMenuBtn" class="lg:hidden p-2 text-gray-300 hover:text-white hover:bg-dark-800 rounded-lg transition-all")
             svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16")
         
-        div(id="mobileMenu" class="md:hidden hidden mt-4 pb-4 border-t border-gray-200")
-          div(class="flex flex-col space-y-3 pt-4")
-            a(href="/" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'home' ? 'text-primary-600 font-medium' : ''}`) Beranda
-            a(href="/ongoing" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'ongoing' ? 'text-primary-600 font-medium' : ''}`) Ongoing
-            a(href="/complete" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'complete' ? 'text-primary-600 font-medium' : ''}`) Complete
-            a(href="/genres" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'genres' ? 'text-primary-600 font-medium' : ''}`) Genre
-            a(href="/movies" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'movies' ? 'text-primary-600 font-medium' : ''}`) Movies
+        // Mobile Menu
+        div(id="mobileMenu" class="lg:hidden hidden mt-4 pt-4 border-t border-dark-700/50")
+          div(class="flex flex-col space-y-2")
+            a(href="/" class=`mobile-nav-link block px-4 py-3 rounded-lg transition-all ${currentPage === 'home' ? 'bg-primary-600/20 text-primary-400' : 'text-gray-300 hover:text-white hover:bg-dark-800'}`) Beranda
+            a(href="/ongoing" class=`mobile-nav-link block px-4 py-3 rounded-lg transition-all ${currentPage === 'ongoing' ? 'bg-primary-600/20 text-primary-400' : 'text-gray-300 hover:text-white hover:bg-dark-800'}`) Ongoing
+            a(href="/complete" class=`mobile-nav-link block px-4 py-3 rounded-lg transition-all ${currentPage === 'complete' ? 'bg-primary-600/20 text-primary-400' : 'text-gray-300 hover:text-white hover:bg-dark-800'}`) Complete
+            a(href="/genres" class=`mobile-nav-link block px-4 py-3 rounded-lg transition-all ${currentPage === 'genres' ? 'bg-primary-600/20 text-primary-400' : 'text-gray-300 hover:text-white hover:bg-dark-800'}`) Genre
+            a(href="/movies" class=`mobile-nav-link block px-4 py-3 rounded-lg transition-all ${currentPage === 'movies' ? 'bg-primary-600/20 text-primary-400' : 'text-gray-300 hover:text-white hover:bg-dark-800'}`) Movies
 
 
 
-    main(class="min-h-screen fade-in")
+    // Main Content
+    main(class="min-h-screen animate-fade-in")
       block content
 
-    footer(class="bg-gray-900 text-white mt-12")
-      div(class="container mx-auto px-4 py-8")
+    // Modern Footer
+    footer(class="bg-gradient-to-t from-dark-950 via-dark-900 to-dark-900 text-gray-300 mt-16 border-t border-dark-700/50")
+      div(class="container mx-auto px-6 py-12")
         div(class="grid grid-cols-1 md:grid-cols-4 gap-8")
           div(class="col-span-1 md:col-span-2")
-            div(class="flex items-center space-x-2 mb-4")
-              img(src="/images/logo-white.png" alt="KitaNime" class="h-8 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/400?text=KN';")
-              span(class="text-xl font-bold") KitaNime
-            p(class="text-gray-400 mb-4") Platform streaming anime subtitle Indonesia terlengkap dan terbaru. Nikmati ribuan anime berkualitas tinggi dengan subtitle Indonesia.
+            div(class="flex items-center space-x-3 mb-6")
+              img(src="/images/logo-white.svg" alt="KitaNime" class="h-10 w-auto rounded-lg" onerror="this.onerror=null;this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjEiLz48dGV4dCB4PSIyMCIgeT0iMjgiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5LTjwvdGV4dD48L3N2Zz4=';")
+              span(class="text-2xl font-bold gradient-text") KitaNime
+            p(class="text-gray-400 mb-6 leading-relaxed") Platform streaming anime subtitle Indonesia terlengkap dan terbaru. Nikmati ribuan anime berkualitas tinggi dengan subtitle Indonesia yang akurat dan update cepat.
             div(class="flex space-x-4")
-              a(href="#" class="text-gray-400 hover:text-white transition-colors")
+              a(href="#" class="social-link p-3 bg-dark-800 rounded-xl text-gray-400 hover:text-white hover:bg-primary-600 transition-all duration-300")
                 svg(class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24")
                   path(d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z")
-              a(href="#" class="text-gray-400 hover:text-white transition-colors")
+              a(href="#" class="social-link p-3 bg-dark-800 rounded-xl text-gray-400 hover:text-white hover:bg-accent-600 transition-all duration-300")
                 svg(class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24")
-                  path(d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z")
+                  path(d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.347-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z")
+          
+          div
+            h3(class="text-xl font-semibold text-white mb-4") Kategori
+            ul(class="space-y-2")
+              li: a(href="/ongoing" class="text-gray-400 hover:text-primary-400 transition-colors") Anime Ongoing
+              li: a(href="/complete" class="text-gray-400 hover:text-primary-400 transition-colors") Anime Complete
+              li: a(href="/movies" class="text-gray-400 hover:text-primary-400 transition-colors") Anime Movies
+              li: a(href="/genres" class="text-gray-400 hover:text-primary-400 transition-colors") Semua Genre
+          
+          div
+            h3(class="text-xl font-semibold text-white mb-4") Support
+            ul(class="space-y-2")
+              li: a(href="#" class="text-gray-400 hover:text-primary-400 transition-colors") FAQ
+              li: a(href="#" class="text-gray-400 hover:text-primary-400 transition-colors") Lapor Bug
+              li: a(href="#" class="text-gray-400 hover:text-primary-400 transition-colors") Request Anime
+              li: a(href="#" class="text-gray-400 hover:text-primary-400 transition-colors") Kontak
+          
+          div
+            h3(class="text-xl font-semibold text-white mb-4") Legal
+            ul(class="space-y-2")
+              li: a(href="#" class="text-gray-400 hover:text-primary-400 transition-colors") Privacy Policy
+              li: a(href="#" class="text-gray-400 hover:text-primary-400 transition-colors") Terms of Service
+              li: a(href="#" class="text-gray-400 hover:text-primary-400 transition-colors") DMCA
+              li: a(href="#" class="text-gray-400 hover:text-primary-400 transition-colors") Disclaimer
+        
+        div(class="border-t border-dark-700/50 mt-8 pt-8 text-center")
+          p(class="text-gray-500") © 2025 KitaNime. Made with ❤️ for anime lovers.
+          p(class="text-gray-600 text-sm mt-2") This site does not store any files on our server. All contents are provided by non-affiliated third parties.
 
+    // Cookie Consent (Dark)
     if showCookieConsent
-      div(id="cookieConsent" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50")
-        div(class="flex items-start space-x-3")
+      div(id="cookieConsent" class="fixed bottom-6 left-6 right-6 md:left-auto md:right-6 md:max-w-sm bg-dark-800/95 backdrop-blur-xl border border-dark-700/50 rounded-xl shadow-2xl p-6 z-50")
+        div(class="flex items-start space-x-4")
           div(class="flex-shrink-0")
-            svg(class="w-5 h-5 text-primary-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            svg(class="w-6 h-6 text-primary-400 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
           div(class="flex-1")
-            p(class="text-sm text-gray-600 mb-3") Website ini menggunakan cookie untuk meningkatkan pengalaman browsing Anda.
-            div(class="flex space-x-2")
-              button(id="acceptCookies" class="px-3 py-1 bg-primary-600 text-white text-sm rounded hover:bg-primary-700 transition-colors") Terima
-              button(id="declineCookies" class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-colors") Tolak
+            p(class="text-sm text-gray-300 mb-4") Website ini menggunakan cookie untuk meningkatkan pengalaman browsing Anda dan menyediakan konten yang personal.
+            div(class="flex space-x-3")
+              button(id="acceptCookies" class="btn-modern px-4 py-2 bg-primary-600 text-white text-sm rounded-lg hover:bg-primary-700 transition-all") Terima
+              button(id="declineCookies" class="btn-modern px-4 py-2 bg-dark-700 text-gray-300 text-sm rounded-lg hover:bg-dark-600 transition-all") Tolak
 
+    // Enhanced JavaScript
     script.
+      // Mobile Menu Toggle
       document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
         const menu = document.getElementById('mobileMenu');
         menu.classList.toggle('hidden');
       });
 
+      // Enhanced Search with Dark Theme
       const searchInput = document.getElementById('searchInput');
       const searchSuggestions = document.getElementById('searchSuggestions');
       let searchTimeout;
@@ -183,9 +295,12 @@ html(lang="id" class="scroll-smooth")
             .then(data => {
               if (data.suggestions && data.suggestions.length > 0) {
                 searchSuggestions.innerHTML = data.suggestions.map(anime => 
-                  `<a href="/anime/${anime.slug}" class="flex items-center space-x-3 p-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0">
-                    <img src="${anime.poster}" alt="${anime.title}" class="w-10 h-14 object-cover rounded" onerror="this.onerror=null;this.src='https://placehold.co/400x560?text=No+Image';">
-                    <span class="text-sm font-medium text-gray-900">${anime.title}</span>
+                  `<a href="/anime/${anime.slug}" class="flex items-center space-x-4 p-4 hover:bg-dark-700/70 border-b border-dark-700/30 last:border-b-0 transition-all group">
+                    <img src="${anime.poster}" alt="${anime.title}" class="w-12 h-16 object-cover rounded-lg group-hover:scale-105 transition-transform" onerror="this.onerror=null;this.src='https://placehold.co/400x560?text=No+Image';">
+                    <div class="flex-1">
+                      <span class="text-sm font-medium text-white group-hover:text-primary-400 transition-colors">${anime.title}</span>
+                      <p class="text-xs text-gray-400 mt-1">${anime.status || 'Unknown'}</p>
+                    </div>
                   </a>`
                 ).join('');
                 searchSuggestions.classList.remove('hidden');
@@ -199,25 +314,65 @@ html(lang="id" class="scroll-smooth")
         }, 300);
       });
 
+      // Click outside to close search
       document.addEventListener('click', function(e) {
         if (!searchInput?.contains(e.target) && !searchSuggestions?.contains(e.target)) {
           searchSuggestions?.classList.add('hidden');
         }
       });
 
+      // Cookie Consent
       document.getElementById('acceptCookies')?.addEventListener('click', function() {
         fetch('/cookie-consent', { method: 'POST' })
           .then(() => {
-            document.getElementById('cookieConsent').style.display = 'none';
+            document.getElementById('cookieConsent').style.transform = 'translateY(100%)';
+            setTimeout(() => {
+              document.getElementById('cookieConsent').style.display = 'none';
+            }, 300);
           });
       });
 
       document.getElementById('declineCookies')?.addEventListener('click', function() {
-        document.getElementById('cookieConsent').style.display = 'none';
+        document.getElementById('cookieConsent').style.transform = 'translateY(100%)';
+        setTimeout(() => {
+          document.getElementById('cookieConsent').style.display = 'none';
+        }, 300);
       });
 
-    script(src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js")
-    script(src="/js/dark-mode.js")
-    script(src="/js/ultra-modern.js")
+      // Smooth scroll enhancement
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Lazy loading images
+      if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const img = entry.target;
+              if (img.dataset.src) {
+                img.src = img.dataset.src;
+                img.classList.remove('opacity-0');
+                img.classList.add('opacity-100');
+                imageObserver.unobserve(img);
+              }
+            }
+          });
+        });
+
+        document.querySelectorAll('img[data-src]').forEach(img => {
+          img.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+          imageObserver.observe(img);
+        });
+      }
 
   block scripts
