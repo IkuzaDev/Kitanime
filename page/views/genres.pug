@@ -1,64 +1,215 @@
 extends layout
 
 block content
-  div(class="container mx-auto px-4 py-6")
+  div(class="container mx-auto px-6 py-8")
+    // Hero Header
+    section(class="mb-12 relative overflow-hidden")
+      div(class="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-indigo-500/10 rounded-3xl")
+      div(class="relative bg-gradient-to-r from-white/80 to-white/60 dark:from-gray-800/80 dark:to-gray-700/60 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-gray-600/30")
+        div(class="max-w-4xl mx-auto text-center")
+          div(class="mb-6")
+            div(class="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-3 rounded-full text-sm font-medium mb-4 animate-float")
+              svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
+              span Kategori Anime
+          h1(class="text-4xl md:text-5xl font-bold mb-4 leading-tight")
+            span(class="text-gray-900 dark:text-gray-100") Genre 
+            span(class="gradient-text") Anime
+          p(class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto") Jelajahi anime berdasarkan genre favorit Anda. Temukan anime baru sesuai selera dan mood Anda.
+
     div(class="grid grid-cols-1 lg:grid-cols-4 gap-8")
       div(class="lg:col-span-3")
-        div(class="mb-6")
-          h1(class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2") Genre Anime
-          p(class="text-gray-600 dark:text-gray-400") Jelajahi anime berdasarkan genre favorit Anda
-
         if genres && genres.length > 0
-          div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8")
-            each genre in genres
-              a(href=`/genres/${genre.slug}` class="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl dark:shadow-gray-900/50 p-6 transition-all duration-300 hover:scale-105 text-center border border-gray-100 dark:border-gray-700")
-                div(class="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900 dark:to-primary-800 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300")
-                  svg(class="w-8 h-8 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                    path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
-                h3(class="font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200")= genre.name
-                if genre.count
-                  p(class="text-sm text-gray-500 dark:text-gray-400")= `${genre.count} anime`
-                else
-                  p(class="text-sm text-gray-500 dark:text-gray-400") Lihat anime
+          div(class="mb-8")
+            div(class="flex items-center space-x-3 mb-6")
+              div(class="w-1 h-8 bg-gradient-to-b from-purple-500 to-pink-600 rounded-full")
+              h2(class="text-2xl font-bold text-gray-900 dark:text-gray-100") Semua Genre
+              span(class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm font-medium")= genres.length + ' Genre'
+            
+            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6")
+              each genre in genres
+                a(href=`/genres/${genre.slug}` class="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-lg hover:shadow-2xl dark:shadow-gray-900/50 p-8 transition-all duration-500 hover:scale-105 text-center border border-white/20 dark:border-gray-700/30 hover:border-purple-300 dark:hover:border-purple-500")
+                  div(class="w-20 h-20 bg-gradient-to-br from-purple-100 to-pink-200 dark:from-purple-900/50 dark:to-pink-900/50 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:from-purple-200 group-hover:to-pink-300 dark:group-hover:from-purple-800/70 dark:group-hover:to-pink-800/70")
+                    svg(class="w-10 h-10 text-purple-600 dark:text-purple-400 group-hover:text-purple-700 dark:group-hover:text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
+                  h3(class="font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-200 text-lg")= genre.name
+                  if genre.count
+                    p(class="text-sm text-gray-500 dark:text-gray-400 bg-purple-50 dark:bg-purple-900/20 px-3 py-1 rounded-full inline-block")= `${genre.count} anime`
+                  else
+                    p(class="text-sm text-gray-500 dark:text-gray-400 bg-purple-50 dark:bg-purple-900/20 px-3 py-1 rounded-full inline-block") Lihat anime
 
         else
-          div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8")
-            each genre in ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Thriller']
-              a(href=`/genres/${genre.toLowerCase()}` class="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl dark:shadow-gray-900/50 p-6 transition-all duration-300 hover:scale-105 text-center border border-gray-100 dark:border-gray-700")
-                div(class="w-16 h-16 bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900 dark:to-primary-800 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300")
-                  svg(class="w-8 h-8 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                    path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
-                h3(class="font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200")= genre
-                p(class="text-sm text-gray-500 dark:text-gray-400") Lihat anime
+          div(class="mb-8")
+            div(class="flex items-center space-x-3 mb-6")
+              div(class="w-1 h-8 bg-gradient-to-b from-purple-500 to-pink-600 rounded-full")
+              h2(class="text-2xl font-bold text-gray-900 dark:text-gray-100") Genre Populer
+              span(class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm font-medium") 8 Genre
+            
+            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6")
+              each genre in ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Thriller']
+                a(href=`/genres/${genre.toLowerCase()}` class="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-lg hover:shadow-2xl dark:shadow-gray-900/50 p-8 transition-all duration-500 hover:scale-105 text-center border border-white/20 dark:border-gray-700/30 hover:border-purple-300 dark:hover:border-purple-500")
+                  div(class="w-20 h-20 bg-gradient-to-br from-purple-100 to-pink-200 dark:from-purple-900/50 dark:to-pink-900/50 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:from-purple-200 group-hover:to-pink-300 dark:group-hover:from-purple-800/70 dark:group-hover:to-pink-800/70")
+                    svg(class="w-10 h-10 text-purple-600 dark:text-purple-400 group-hover:text-purple-700 dark:group-hover:text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
+                  h3(class="font-bold text-gray-900 dark:text-gray-100 mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-200 text-lg")= genre
+                  p(class="text-sm text-gray-500 dark:text-gray-400 bg-purple-50 dark:bg-purple-900/20 px-3 py-1 rounded-full inline-block") Lihat anime
 
       div(class="lg:col-span-1")
-
-        div(class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 border border-gray-100 dark:border-gray-700 transition-colors duration-300")
-          h3(class="font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center")
-            svg(class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+        // Popular Genres Section
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
+          h3(class="font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center text-lg")
+            svg(class="w-6 h-6 mr-3 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
             span Genre Populer
-          div(class="space-y-2")
+          div(class="space-y-3")
             each genre in ['Action', 'Romance', 'Comedy', 'Drama', 'Fantasy']
-              a(href=`/genres/${genre.toLowerCase()}` class="block text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 text-sm p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700")= genre
+              a(href=`/genres/${genre.toLowerCase()}` class="group flex items-center text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 p-3 rounded-2xl hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:scale-105")
+                svg(class="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
+                span= genre
 
-        div(class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 border border-gray-100 dark:border-gray-700 transition-colors duration-300")
-          h3(class="font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center")
-            svg(class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+        // Quick Menu Section
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
+          h3(class="font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center text-lg")
+            svg(class="w-6 h-6 mr-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z")
             span Menu Cepat
-          div(class="space-y-3")
-            a(href="/" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+          div(class="space-y-4")
+            a(href="/" class="group flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 p-3 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:scale-105")
+              svg(class="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
               span Beranda
-            a(href="/ongoing" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            a(href="/ongoing" class="group flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 p-3 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:scale-105")
+              svg(class="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z")
               span Anime Ongoing
-            a(href="/complete" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            a(href="/complete" class="group flex items-center text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-all duration-300 p-3 rounded-2xl hover:bg-green-50 dark:hover:bg-green-900/20 hover:scale-105")
+              svg(class="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z")
               span Anime Complete
+
+        // Genre Stats Section
+        div(class="bg-gradient-to-br from-purple-50 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 rounded-3xl p-8 border border-purple-200/50 dark:border-purple-700/30 transition-all duration-500 hover:shadow-xl")
+          h3(class="font-bold text-purple-900 dark:text-purple-100 mb-6 flex items-center text-lg")
+            svg(class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z")
+            span Statistik Genre
+          div(class="space-y-4")
+            div(class="flex items-center justify-between p-3 bg-white/50 dark:bg-white/10 rounded-2xl")
+              span(class="text-purple-800 dark:text-purple-200 font-medium") Total Genre
+              span(class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold")= genres ? genres.length : 8
+            div(class="flex items-center justify-between p-3 bg-white/50 dark:bg-white/10 rounded-2xl")
+              <span class="text-pink-800 dark:text-pink-200 font-medium">Genre Terpopuler</span>
+              <span class="bg-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold">Action</span>
+
+        // About Section
+        div(class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/30 dark:border-gray-600/40 transition-all duration-500 hover:shadow-2xl")
+          h3(class="font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center text-lg")
+            svg(class="w-6 h-6 mr-3 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
+            span Tentang Genre
+          p(class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed") Jelajahi berbagai genre anime yang tersedia. Dari action hingga romance, temukan genre favorit Anda dan nikmati anime berkualitas dengan subtitle Indonesia.
+
+  // Scroll to Top Button
+  button(id="scrollToTop" class="fixed bottom-8 right-8 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white p-4 rounded-full shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 hover:scale-110 opacity-0 invisible z-50")
+    svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18")
+
+block scripts
+  script.
+    // Enhanced genre card animations
+    document.addEventListener('DOMContentLoaded', function() {
+      const genreCards = document.querySelectorAll('.genre-card');
+      
+      // Stagger animation for cards
+      genreCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
+    });
+
+    // Smooth scrolling functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Smooth scroll for all internal links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Scroll to top button functionality
+      const scrollToTopBtn = document.getElementById('scrollToTop');
+      
+      // Show/hide scroll to top button
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+          scrollToTopBtn.classList.add('opacity-100', 'visible');
+        } else {
+          scrollToTopBtn.classList.add('opacity-0', 'invisible');
+          scrollToTopBtn.classList.remove('opacity-100', 'visible');
+        }
+      });
+
+      // Smooth scroll to top when button is clicked
+      scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+
+      // Enhanced smooth scroll for all links
+      document.querySelectorAll('a').forEach(link => {
+        if (link.href && link.href.includes(window.location.origin)) {
+          link.addEventListener('click', function(e) {
+            // Only apply smooth scroll for same-page navigation
+            if (this.href.includes('#')) {
+              e.preventDefault();
+              const targetId = this.href.split('#')[1];
+              const targetElement = document.getElementById(targetId);
+              if (targetElement) {
+                targetElement.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
+            }
+          });
+        }
+      });
+    });
+
+    // Smooth scroll behavior for the entire page
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Enhanced scroll animations
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const parallaxElements = document.querySelectorAll('.hero-header');
+      
+      parallaxElements.forEach(element => {
+        const speed = 0.5;
+        element.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+
+    // Smooth scroll for mobile devices
+    if ('ontouchstart' in window) {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
 
 

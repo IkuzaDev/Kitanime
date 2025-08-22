@@ -23,14 +23,14 @@ html(lang="id" class="scroll-smooth")
     link(rel="stylesheet" href="/css/tailwind.min.css")
     
     style.
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
       
       .anime-card {
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
       
       .anime-card:hover {
-        transform: translateY(-4px);
+        transform: translateY(-8px) scale(1.02);
       }
       
       .video-player {
@@ -50,91 +50,289 @@ html(lang="id" class="scroll-smooth")
         justify-content: center;
       }
 
-  body(class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300")
-    header(class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 rounded-b-lg justify-between transition-colors duration-300")
-      nav(class="container mx-auto px-8 py-4")
+      .glass-effect {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+      }
+
+      .glass-effect-dark {
+        background: rgba(17, 24, 39, 0.9);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(75, 85, 99, 0.4);
+      }
+
+      .gradient-text {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
+
+      .animate-glow {
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow {
+        from { box-shadow: 0 0 20px rgba(102, 126, 234, 0.5); }
+        to { box-shadow: 0 0 30px rgba(102, 126, 234, 0.8); }
+      }
+
+      /* Enhanced contrast for better readability */
+      .text-contrast-light {
+        color: #1f2937;
+      }
+      
+      .text-contrast-dark {
+        color: #f9fafb;
+      }
+      
+      .bg-contrast-light {
+        background-color: rgba(255, 255, 255, 0.95);
+      }
+      
+      .bg-contrast-dark {
+        background-color: rgba(17, 24, 39, 0.95);
+      }
+      
+      .border-contrast-light {
+        border-color: rgba(209, 213, 219, 0.5);
+      }
+      
+      .border-contrast-dark {
+        border-color: rgba(75, 85, 99, 0.5);
+      }
+
+  body(class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-all duration-500")
+    header(class="sticky top-0 z-50 transition-all duration-500")
+      div(class="absolute inset-0 bg-gradient-to-r from-white/90 to-white/70 dark:from-gray-900/90 dark:to-gray-800/70 backdrop-blur-xl border-b border-white/30 dark:border-gray-600/40")
+      nav(class="relative container mx-auto px-6 py-4")
         div(class="flex items-center justify-between")
-          a(href="/" class="flex items-center")
-            img(src="/images/logo.png" alt="KitaNime" class="h-8 w-auto rounded-sm", onerror="this.onerror=null;this.src='https://placehold.co/400?text=KN';")
-            span(class="text-xl font-bold text-primary-600 dark:text-primary-400") KitaNime
+          a(href="/" class="flex items-center group")
+            div(class="relative")
+              img(src="/images/logo.png" alt="KitaNime" class="h-10 w-auto rounded-xl transition-transform duration-300 group-hover:scale-110", onerror="this.onerror=null;this.src='https://placehold.co/400?text=KN';")
+              div(class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300")
+            span(class="ml-3 text-2xl font-bold gradient-text") KitaNime
           
-          div(class="hidden md:flex items-center space-x-6")
-            a(href="/" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'home' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Home
-            a(href="/ongoing" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'ongoing' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Ongoing
-            a(href="/complete" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'complete' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Complete
-            a(href="/genres" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'genres' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Genre
-            a(href="/movies" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'movies' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Movie
+          div(class="hidden lg:flex items-center space-x-8")
+            a(href="/" class=`relative text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 font-medium ${currentPage === 'home' ? 'text-blue-600 dark:text-blue-400' : ''}`)
+              span= 'Home'
+              if currentPage === 'home'
+                div(class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full")
+            a(href="/ongoing" class=`relative text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 font-medium ${currentPage === 'ongoing' ? 'text-blue-600 dark:text-blue-400' : ''}`)
+              span= 'Ongoing'
+              if currentPage === 'ongoing'
+                div(class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full")
+            a(href="/complete" class=`relative text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 font-medium ${currentPage === 'complete' ? 'text-blue-600 dark:text-blue-400' : ''}`)
+              span= 'Complete'
+              if currentPage === 'complete'
+                div(class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full")
+            a(href="/genres" class=`relative text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 font-medium ${currentPage === 'genres' ? 'text-blue-600 dark:text-blue-400' : ''}`)
+              span= 'Genre'
+              if currentPage === 'genres'
+                div(class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full")
+            a(href="/movies" class=`relative text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 font-medium ${currentPage === 'movies' ? 'text-blue-600 dark:text-blue-400' : ''}`)
+              span= 'Movie'
+              if currentPage === 'movies'
+                div(class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full")
           
-          div(class="flex-1 max-w-md mx-6 relative")
-            form(action="/search" method="GET" class="relative")
+          div(class="flex-1 max-w-md mx-8 relative")
+            form(action="/search" method="GET" class="relative group")
+              div(class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-300")
               input(
                 type="text" 
                 name="q" 
-                placeholder="Cari anime..." 
+                placeholder="Cari anime favorit Anda..." 
                 value=keyword || ""
-                class="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-200"
+                class="relative w-full px-6 py-3 pl-12 pr-6 border-2 border-gray-300 dark:border-gray-500 rounded-2xl bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 dark:focus:border-blue-400 transition-all duration-300 backdrop-blur-sm placeholder-gray-600 dark:placeholder-gray-300"
                 autocomplete="off"
                 id="searchInput"
               )
-              button(type="submit" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500")
-                svg(class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              button(type="submit" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200")
+                svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                   path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
             
-            div(id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg mt-1 hidden search-suggestions z-50")
+            div(id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white/98 dark:bg-gray-800/98 border border-gray-300/60 dark:border-gray-600/60 rounded-2xl shadow-2xl mt-2 hidden search-suggestions z-50 backdrop-blur-xl")
           
-          div(class="flex items-center space-x-2")
-            button(id="darkModeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200")
-              svg(id="sunIcon" class="w-5 h-5 text-yellow-500 dark:hidden" fill="currentColor" viewBox="0 0 20 20")
+          div(class="flex items-center space-x-3")
+            button(id="darkModeToggle" class="p-3 rounded-2xl bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-700 border border-gray-300/60 dark:border-gray-600/60 transition-all duration-300 hover:scale-110 hover:shadow-lg")
+              svg(id="sunIcon" class="w-5 h-5 text-yellow-600 dark:hidden" fill="currentColor" viewBox="0 0 20 20")
                 path(fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd")
-              svg(id="moonIcon" class="w-5 h-5 text-gray-300 hidden dark:block" fill="currentColor" viewBox="0 0 20 20")
+              svg(id="moonIcon" class="w-5 h-5 text-gray-200 hidden dark:block" fill="currentColor" viewBox="0 0 20 20")
                 path(d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z")
             
-            button(id="mobileMenuBtn" class="md:hidden p-2 text-gray-600 dark:text-gray-300")
+            button(id="mobileMenuBtn" class="lg:hidden p-3 text-gray-700 dark:text-gray-200 hover:bg-white/90 dark:hover:bg-gray-800/90 rounded-2xl transition-all duration-300")
               svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16")
         
-        div(id="mobileMenu" class="md:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700")
-          div(class="flex flex-col space-y-3 pt-4")
-            a(href="/" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'home' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Beranda
-            a(href="/ongoing" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'ongoing' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Ongoing
-            a(href="/complete" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'complete' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Complete
-            a(href="/genres" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'genres' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Genre
-            a(href="/movies" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'movies' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Movies
-
-
+        div(id="mobileMenu" class="lg:hidden hidden mt-6 pb-6 border-t border-gray-300/60 dark:border-gray-600/60")
+          div(class="flex flex-col space-y-4 pt-6")
+            a(href="/" class=`text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium ${currentPage === 'home' ? 'text-blue-600 dark:text-blue-400' : ''}`) Beranda
+            a(href="/ongoing" class=`text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium ${currentPage === 'ongoing' ? 'text-blue-600 dark:text-blue-400' : ''}`) Ongoing
+            a(href="/complete" class=`text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium ${currentPage === 'complete' ? 'text-blue-600 dark:text-blue-400' : ''}`) Complete
+            a(href="/genres" class=`text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium ${currentPage === 'genres' ? 'text-blue-600 dark:text-blue-400' : ''}`) Genre
+            a(href="/movies" class=`text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium ${currentPage === 'movies' ? 'text-blue-600 dark:text-blue-400' : ''}`) Movies
 
     main(class="min-h-screen")
       block content
 
-    footer(class="bg-gray-900 dark:bg-gray-950 text-white mt-12 transition-colors duration-300")
-      div(class="container mx-auto px-4 py-8")
-        div(class="grid grid-cols-1 md:grid-cols-4 gap-8")
-          div(class="col-span-1 md:col-span-2")
-            div(class="flex items-center space-x-2 mb-4")
-              img(src="/images/logo-white.png" alt="KitaNime" class="h-8 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/400?text=KN';")
-              span(class="text-xl font-bold") KitaNime
-            p(class="text-gray-400 mb-4") Platform streaming anime subtitle Indonesia terlengkap dan terbaru. Nikmati ribuan anime berkualitas tinggi dengan subtitle Indonesia.
+    footer(class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white mt-16 transition-all duration-500 overflow-hidden")
+      // Background Pattern
+      div(class="absolute inset-0 opacity-10")
+        div(class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.1\'%3E%3Ccircle cx=\'30\' cy=\'30\' r=\'2\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');")
+      
+      // Enhanced Overlay
+      div(class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent")
+      
+      div(class="relative container mx-auto px-6 py-16")
+        // Main Footer Content
+        div(class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12")
+          
+          // Brand Section
+          div(class="col-span-1 md:col-span-2 lg:col-span-1")
+            div(class="flex items-center space-x-3 mb-6")
+              div(class="relative group")
+                img(src="/images/logo.png" alt="KitaNime" class="h-12 w-auto rounded-2xl transition-all duration-300 group-hover:scale-110" onerror="this.onerror=null;this.src='https://placehold.co/400?text=KN';")
+                div(class="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity duration-300")
+              div(class="flex flex-col")
+                span(class="text-3xl font-bold bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent") KitaNime
+                span(class="text-sm text-blue-200/80") Streaming Anime Terlengkap
+            
+            p(class="text-gray-200/90 mb-6 text-base leading-relaxed max-w-sm") Platform streaming anime subtitle Indonesia terlengkap dan terbaru. Nikmati ribuan anime berkualitas tinggi dengan subtitle Indonesia yang akurat dan berkualitas.
+            
+            // Social Media Links
             div(class="flex space-x-4")
-              a(href="#" class="text-gray-400 hover:text-white transition-colors")
-                svg(class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24")
+              a(href="#" class="group p-3 bg-white/10 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-600 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-blue-500/25")
+                svg(class="w-5 h-5 text-blue-300 group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24")
                   path(d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z")
-              a(href="#" class="text-gray-400 hover:text-white transition-colors")
-                svg(class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24")
+              a(href="#" class="group p-3 bg-white/10 hover:bg-gradient-to-r hover:from-sky-500 hover:to-blue-600 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-sky-500/25")
+                svg(class="w-5 h-5 text-sky-300 group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24")
                   path(d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z")
+              a(href="#" class="group p-3 bg-white/10 hover:bg-gradient-to-r hover:from-pink-500 hover:to-rose-600 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-pink-500/25")
+                svg(class="w-5 h-5 text-pink-300 group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24")
+                  path(d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z")
+              a(href="#" class="group p-3 bg-white/10 hover:bg-gradient-to-r hover:from-green-500 hover:to-emerald-600 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-2xl hover:shadow-green-500/25")
+                svg(class="w-5 h-5 text-green-300 group-hover:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24")
+                  path(d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z")
+          
+          // Quick Links Section
+          div(class="col-span-1")
+            h3(class="text-lg font-bold text-white mb-6 flex items-center")
+              svg(class="w-5 h-5 mr-3 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z")
+              span Menu Cepat
+            div(class="space-y-3")
+              a(href="/ongoing" class="group flex items-center text-gray-200/80 hover:text-blue-300 transition-all duration-300 hover:translate-x-2")
+                svg(class="w-4 h-4 mr-3 group-hover:text-blue-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z")
+                span Anime Ongoing
+              a(href="/complete" class="group flex items-center text-gray-200/80 hover:text-green-300 transition-all duration-300 hover:translate-x-2")
+                svg(class="w-4 h-4 mr-3 group-hover:text-green-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z")
+                span Anime Complete
+              a(href="/genres" class="group flex items-center text-gray-200/80 hover:text-purple-300 transition-all duration-300 hover:translate-x-2")
+                svg(class="w-4 h-4 mr-3 group-hover:text-purple-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
+                span Genre
+              a(href="/movies" class="group flex items-center text-gray-200/80 hover:text-orange-300 transition-all duration-300 hover:translate-x-2")
+                svg(class="w-4 h-4 mr-3 group-hover:text-orange-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z")
+                span Movies
+              a(href="/search" class="group flex items-center text-gray-200/80 hover:text-pink-300 transition-all duration-300 hover:translate-x-2")
+                svg(class="w-4 h-4 mr-3 group-hover:text-pink-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
+                span Cari Anime
+          
+          // Support Section
+          div(class="col-span-1")
+            h3(class="text-lg font-bold text-white mb-6 flex items-center")
+              svg(class="w-5 h-5 mr-3 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5z")
+              span Dukungan
+            div(class="space-y-3")
+              a(href="/contact" class="group flex items-center text-gray-200/80 hover:text-green-300 transition-all duration-300 hover:translate-x-2")
+                svg(class="w-4 h-4 mr-3 group-hover:text-green-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z")
+                span Kontak Kami
+              a(href="/faq" class="group flex items-center text-gray-200/80 hover:text-green-300 transition-all duration-300 hover:translate-x-2")
+                svg(class="w-4 h-4 mr-3 group-hover:text-green-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
+                span FAQ
+              a(href="/privacy" class="group flex items-center text-gray-200/80 hover:text-green-300 transition-all duration-300 hover:translate-x-2")
+                svg(class="w-4 h-4 mr-3 group-hover:text-green-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z")
+                span Privasi
+              a(href="/terms" class="group flex items-center text-gray-200/80 hover:text-green-300 transition-all duration-300 hover:translate-x-2")
+                svg(class="w-4 h-4 mr-3 group-hover:text-green-400 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
+                span Syarat & Ketentuan
+          
+          // Newsletter Section
+          div(class="col-span-1")
+            h3(class="text-lg font-bold text-white mb-6 flex items-center")
+              svg(class="w-5 h-5 mr-3 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4 19h6a2 2 0 002-2V7a2 2 0 00-2-2H4a2 2 0 00-2 2v10a2 2 0 002 2z")
+              span Update Terbaru
+            p(class="text-gray-200/80 text-sm mb-4") Dapatkan notifikasi anime terbaru dan update episode langsung ke email Anda.
+            
+            // Newsletter Form
+            form(class="space-y-3")
+              div(class="relative")
+                input(type="email" placeholder="Masukkan email Anda" class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300")
+                button(type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white p-2 rounded-xl transition-all duration-300 hover:scale-110")
+                  svg(class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                    path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8")
+            
+            // Stats
+            div(class="grid grid-cols-2 gap-4 mt-6")
+              div(class="text-center p-3 bg-white/5 rounded-2xl border border-white/10")
+                div(class="text-2xl font-bold text-blue-300") 1000+
+                div(class="text-xs text-gray-300") Anime
+              div(class="text-center p-3 bg-white/5 rounded-2xl border border-white/10")
+                <div class="text-2xl font-bold text-green-300">50K+</div>
+                <div class="text-xs text-gray-300">Pengguna</div>
+        
+        // Bottom Footer
+        div(class="pt-8 border-t border-white/10")
+          div(class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0")
+            div(class="flex items-center space-x-2 text-gray-300/80 text-sm")
+              svg(class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z")
+              span © 2024 KitaNime. Semua hak dilindungi.
+            
+            div(class="flex items-center space-x-6 text-sm")
+              a(href="/sitemap" class="text-gray-300/80 hover:text-white transition-colors duration-300") Sitemap
+              a(href="/dmca" class="text-gray-300/80 hover:text-white transition-colors duration-300") DMCA
+              a(href="/report" class="text-gray-300/80 hover:text-white transition-colors duration-300") Report
+              a(href="/feedback" class="text-gray-300/80 hover:text-white transition-colors duration-300") Feedback
 
     if showCookieConsent
-      div(id="cookieConsent" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50")
-        div(class="flex items-start space-x-3")
+      div(id="cookieConsent" class="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-sm bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-2xl shadow-2xl p-6 z-50")
+        div(class="flex items-start space-x-4")
           div(class="flex-shrink-0")
-            svg(class="w-5 h-5 text-primary-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            svg(class="w-6 h-6 text-blue-600 dark:text-blue-400 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
           div(class="flex-1")
-            p(class="text-sm text-gray-600 mb-3") Website ini menggunakan cookie untuk meningkatkan pengalaman browsing Anda.
-            div(class="flex space-x-2")
-              button(id="acceptCookies" class="px-3 py-1 bg-primary-600 text-white text-sm rounded hover:bg-primary-700 transition-colors") Terima
-              button(id="declineCookies" class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-colors") Tolak
+            p(class="text-sm text-gray-700 dark:text-gray-200 mb-4") Website ini menggunakan cookie untuk meningkatkan pengalaman browsing Anda.
+            div(class="flex space-x-3")
+              button(id="acceptCookies" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-xl transition-colors") Terima
+              button(id="declineCookies" class="px-4 py-2 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 text-gray-700 dark:text-gray-200 text-sm rounded-xl transition-colors") Tolak
 
     script.
+      // Enhanced dark mode toggle with smooth transitions
       const darkModeToggle = document.getElementById('darkModeToggle');
       const html = document.documentElement;
       
@@ -144,15 +342,40 @@ html(lang="id" class="scroll-smooth")
       }
       
       darkModeToggle?.addEventListener('click', function() {
+        // Add transition class for smooth color changes
+        html.style.transition = 'all 0.5s ease';
         html.classList.toggle('dark');
         localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        
+        // Remove transition after animation
+        setTimeout(() => {
+          html.style.transition = '';
+        }, 500);
       });
 
+      // Enhanced mobile menu with animations
       document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
         const menu = document.getElementById('mobileMenu');
-        menu.classList.toggle('hidden');
+        if (menu.classList.contains('hidden')) {
+          menu.classList.remove('hidden');
+          menu.style.opacity = '0';
+          menu.style.transform = 'translateY(-10px)';
+          
+          setTimeout(() => {
+            menu.style.opacity = '1';
+            menu.style.transform = 'translateY(0)';
+          }, 10);
+        } else {
+          menu.style.opacity = '0';
+          menu.style.transform = 'translateY(-10px)';
+          
+          setTimeout(() => {
+            menu.classList.add('hidden');
+          }, 200);
+        }
       });
 
+      // Enhanced search with better UX
       const searchInput = document.getElementById('searchInput');
       const searchSuggestions = document.getElementById('searchSuggestions');
       let searchTimeout;
@@ -163,7 +386,10 @@ html(lang="id" class="scroll-smooth")
         clearTimeout(searchTimeout);
         
         if (query.length < 2) {
-          searchSuggestions.classList.add('hidden');
+          searchSuggestions.style.opacity = '0';
+          setTimeout(() => {
+            searchSuggestions.classList.add('hidden');
+          }, 200);
           return;
         }
         
@@ -173,38 +399,107 @@ html(lang="id" class="scroll-smooth")
             .then(data => {
               if (data.suggestions && data.suggestions.length > 0) {
                 searchSuggestions.innerHTML = data.suggestions.map(anime => 
-                  `<a href="/anime/${anime.slug}" class="flex items-center space-x-3 p-3 hover:bg-gray-50 border-b border-gray-100 last:border-b-0">
-                    <img src="${anime.poster}" alt="${anime.title}" class="w-10 h-14 object-cover rounded" onerror="this.onerror=null;this.src='https://placehold.co/400x560?text=No+Image';">
-                    <span class="text-sm font-medium text-gray-900">${anime.title}</span>
+                  `<a href="/anime/${anime.slug}" class="flex items-center space-x-3 p-4 hover:bg-blue-50 dark:hover:bg-blue-900/30 border-b border-gray-200/60 dark:border-gray-600/60 last:border-b-0 transition-all duration-200 hover:scale-105 rounded-xl">
+                    <img src="${anime.poster}" alt="${anime.title}" class="w-12 h-16 object-cover rounded-xl" onerror="this.onerror=null;this.src='https://placehold.co/400x560?text=No+Image';">
+                    <div class="flex-1">
+                      <span class="text-sm font-medium text-gray-900 dark:text-gray-100 block">${anime.title}</span>
+                      <span class="text-xs text-gray-600 dark:text-gray-300">Klik untuk melihat detail</span>
+                    </div>
                   </a>`
                 ).join('');
+                
                 searchSuggestions.classList.remove('hidden');
+                searchSuggestions.style.opacity = '0';
+                
+                setTimeout(() => {
+                  searchSuggestions.style.opacity = '1';
+                }, 10);
               } else {
-                searchSuggestions.classList.add('hidden');
+                searchSuggestions.style.opacity = '0';
+                setTimeout(() => {
+                  searchSuggestions.classList.add('hidden');
+                }, 200);
               }
             })
             .catch(() => {
-              searchSuggestions.classList.add('hidden');
+              searchSuggestions.style.opacity = '0';
+              setTimeout(() => {
+                searchSuggestions.classList.add('hidden');
+              }, 200);
             });
         }, 300);
       });
 
+      // Enhanced click outside detection
       document.addEventListener('click', function(e) {
         if (!searchInput?.contains(e.target) && !searchSuggestions?.contains(e.target)) {
-          searchSuggestions?.classList.add('hidden');
+          searchSuggestions.style.opacity = '0';
+          setTimeout(() => {
+            searchSuggestions.classList.add('hidden');
+          }, 200);
         }
       });
 
+      // Enhanced cookie consent
       document.getElementById('acceptCookies')?.addEventListener('click', function() {
         fetch('/cookie-consent', { method: 'POST' })
           .then(() => {
-            document.getElementById('cookieConsent').style.display = 'none';
+            const consent = document.getElementById('cookieConsent');
+            consent.style.opacity = '0';
+            consent.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+              consent.style.display = 'none';
+            }, 300);
           });
       });
 
       document.getElementById('declineCookies')?.addEventListener('click', function() {
-        document.getElementById('cookieConsent').style.display = 'none';
+        const consent = document.getElementById('cookieConsent');
+        consent.style.opacity = '0';
+        consent.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          consent.style.display = 'none';
+        }, 300);
       });
+
+      // Add smooth scroll behavior for all internal links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Add intersection observer for fade-in animations
+      if ('IntersectionObserver' in window) {
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+            }
+          });
+        }, observerOptions);
+
+        // Observe all anime cards for fade-in effect
+        document.querySelectorAll('.anime-card').forEach(card => {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(20px)';
+          card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          observer.observe(card);
+        });
+      }
 
     script(src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js")
     

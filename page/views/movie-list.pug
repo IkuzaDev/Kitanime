@@ -1,31 +1,48 @@
 extends layout
 
 block content
-  div(class="container mx-auto px-4 py-6")
+  div(class="container mx-auto px-6 py-8")
+    // Hero Header
+    section(class="mb-12 relative overflow-hidden")
+      div(class="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-red-500/10 to-pink-500/10 rounded-3xl")
+      div(class="relative bg-gradient-to-r from-white/80 to-white/60 dark:from-gray-800/80 dark:to-gray-700/60 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-gray-600/30")
+        div(class="max-w-4xl mx-auto text-center")
+          div(class="mb-6")
+            div(class="inline-flex items-center space-x-2 bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-3 rounded-full text-sm font-medium mb-4 animate-float")
+              svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2")
+              span Koleksi Movie Anime
+          h1(class="text-4xl md:text-5xl font-bold mb-4 leading-tight")
+            span(class="text-gray-900 dark:text-gray-100") Genre 
+            span(class="gradient-text") #{genreName}
+          p(class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto") Daftar anime movie dengan genre #{genreName} yang tersedia untuk ditonton.
+
     div(class="grid grid-cols-1 lg:grid-cols-4 gap-8")
       div(class="lg:col-span-3")
-        div(class="mb-6")
-          nav(class="mb-4")
-            ol(class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400")
-              li: a(href="/" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200") Beranda
-              li: span /
-              li: a(href="/genres" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200") Genre
-              li: span /
-              li(class="text-gray-900 dark:text-gray-100 font-medium")= genreName
-          
-          h1(class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2") Genre #{genreName}
-          p(class="text-gray-600 dark:text-gray-400") Daftar anime dengan genre #{genreName}
+        // Breadcrumb Navigation
+        div(class="mb-8")
+          nav(class="mb-6")
+            ol(class="flex items-center space-x-3 text-sm text-gray-500 dark:text-gray-400")
+              li: a(href="/" class="hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200 flex items-center")
+                svg(class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
+                span Beranda
+              li: span(class="text-gray-400 dark:text-gray-500") /
+              li: a(href="/genres" class="hover:text-orange-600 dark:hover:text-orange-400 transition-colors duration-200") Genre
+              li: span(class="text-gray-400 dark:text-gray-500") /
+              li(class="text-orange-600 dark:text-orange-400 font-medium")= genreName
 
         if animeList && animeList.length > 0
-          div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8")
+          // Anime Grid
+          div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-8")
             each anime in animeList
               div(class="anime-card group relative")
                 a(href=`/movies/${anime.years}/${anime.month}/${anime.slug}`)
-                  div(class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl dark:shadow-gray-900/50 overflow-hidden transform transition-all duration-300 hover:scale-105 border border-gray-100 dark:border-gray-700")
+                  div(class="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl dark:shadow-gray-900/50 overflow-hidden transform transition-all duration-500 hover:scale-105 border border-white/20 dark:border-gray-700/30")
                     div(class="relative overflow-hidden")
                       img(src=anime.poster alt=anime.title class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
                       div(class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300")
-                      div(class="absolute top-3 left-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg backdrop-blur-sm")= 'Movie'
+                      div(class="absolute top-3 left-3 bg-gradient-to-r from-orange-500 to-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg backdrop-blur-sm")= 'Movie'
                       if anime.rating
                         div(class="absolute top-3 right-3 bg-black/70 backdrop-blur-sm text-white text-xs px-2 py-1 rounded-full flex items-center")
                           svg(class="w-3 h-3 mr-1 text-yellow-400" fill="currentColor" viewBox="0 0 20 20")
@@ -35,52 +52,179 @@ block content
                         div(class="flex items-center justify-between text-white")
                           h3(class="font-bold text-sm text-gray-100 dark:text-gray-100 line-clamp-2 mb-2 transition-colors duration-200")= anime.title
 
+          // Pagination
           if pagination && pagination.last_visible_page !== 0
             nav(class="flex justify-center")
-              div(class="flex items-center space-x-2")
-                if pagination.has_previous_page
-                  a(href=`/movies/?page=${pagination.current_page - 1}` class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200") Sebelumnya
-                
-                each page in Array.from({length: Math.min(5, pagination.last_visible_page)}, (_, i) => {const start = Math.max(1, pagination.current_page - 2);return start + i;}).filter(p => p <= pagination.last_visible_page)
-                  if page === pagination.current_page
-                    span(class="px-4 py-2 bg-primary-600 dark:bg-primary-500 text-white rounded-lg font-medium")= page
-                  else
-                    a(href=`/movies/?page=${page}` class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200")= page
-                
-                if pagination.has_next_page
-                  a(href=`/movies/?page=${pagination.current_page + 1}` class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200") Selanjutnya
+              div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-4 border border-white/20 dark:border-gray-700/30")
+                div(class="flex items-center space-x-2")
+                  if pagination.has_previous_page
+                    a(href=`/movies/?page=${pagination.current_page - 1}` class="px-4 py-2 bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 text-orange-700 dark:text-orange-300 rounded-2xl hover:from-orange-200 hover:to-red-200 dark:hover:from-orange-800/50 dark:hover:to-red-800/50 hover:text-orange-800 dark:hover:text-orange-200 transition-all duration-300 hover:scale-105") Sebelumnya
+                  
+                  each page in Array.from({length: Math.min(5, pagination.last_visible_page)}, (_, i) => {const start = Math.max(1, pagination.current_page - 2);return start + i;}).filter(p => p <= pagination.last_visible_page)
+                    if page === pagination.current_page
+                      span(class="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-2xl font-bold")= page
+                    else
+                      a(href=`/movies/?page=${page}` class="px-4 py-2 bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 text-orange-700 dark:text-orange-300 rounded-2xl hover:from-orange-200 hover:to-red-200 dark:hover:from-orange-800/50 dark:hover:to-red-800/50 hover:text-orange-800 dark:hover:text-orange-200 transition-all duration-300 hover:scale-105")= page
+                  
+                  if pagination.has_next_page
+                    a(href=`/movies/?page=${pagination.current_page + 1}` class="px-4 py-2 bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 text-orange-700 dark:text-orange-300 rounded-2xl hover:from-orange-200 hover:to-red-200 dark:hover:from-orange-800/50 dark:hover:to-red-800/50 hover:text-orange-800 dark:hover:text-orange-200 transition-all duration-300 hover:scale-105") Selanjutnya
 
         else
-          div(class="text-center py-12")
-            svg(class="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+          // No Anime Found
+          div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-16 border border-white/20 dark:border-gray-700/30 text-center")
+            svg(class="w-24 h-24 text-gray-400 dark:text-gray-500 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
-            h3(class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2") Tidak ada anime ditemukan
-            p(class="text-gray-600 dark:text-gray-400 mb-4") Belum ada anime dengan genre #{genreName} yang tersedia
-            a(href="/genres" class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium transition-colors duration-200") Lihat Genre Lain
+            h3(class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4") Tidak ada anime ditemukan
+            p(class="text-gray-600 dark:text-gray-400 mb-6 text-lg") Belum ada anime dengan genre #{genreName} yang tersedia
+            a(href="/genres" class="inline-flex items-center space-x-2 bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg")
+              svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
+              span Lihat Genre Lain
 
       div(class="lg:col-span-1")
-
-        div(class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 border border-gray-100 dark:border-gray-700 transition-colors duration-300")
-          h3(class="font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center")
-            svg(class="w-5 h-5 mr-2 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+        // Quick Menu Section
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
+          h3(class="font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center text-lg")
+            svg(class="w-6 h-6 mr-3 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z")
             span Menu Cepat
-          div(class="space-y-3")
-            a(href="/" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+          div(class="space-y-4")
+            a(href="/" class="group flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 p-3 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:scale-105")
+              svg(class="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
               span Beranda
-            a(href="/ongoing" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            a(href="/ongoing" class="group flex items-center text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 transition-all duration-300 p-3 rounded-2xl hover:bg-green-50 dark:hover:bg-green-900/20 hover:scale-105")
+              svg(class="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z")
               span Anime Ongoing
-            a(href="/complete" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            a(href="/complete" class="group flex items-center text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all duration-300 p-3 rounded-2xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:scale-105")
+              svg(class="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z")
               span Anime Complete
-            a(href="/genres" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            a(href="/genres" class="group flex items-center text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 p-3 rounded-2xl hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:scale-105")
+              svg(class="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
               span Semua Genre
+
+        // About Section
+        div(class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/30 dark:border-gray-600/40 transition-all duration-500 hover:shadow-2xl")
+          h3(class="font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center text-lg")
+            svg(class="w-6 h-6 mr-3 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
+            span Tentang Movie Anime
+          p(class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed") Koleksi movie anime terbaik dengan kualitas tinggi. Nikmati cerita lengkap dalam satu film dengan subtitle Indonesia yang akurat dan berkualitas.
+
+  // Scroll to Top Button
+  button(id="scrollToTop" class="fixed bottom-8 right-8 bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white p-4 rounded-full shadow-2xl hover:shadow-orange-500/25 transition-all duration-300 hover:scale-110 opacity-0 invisible z-50")
+    svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18")
+
+block scripts
+  script.
+    // Enhanced movie card animations
+    document.addEventListener('DOMContentLoaded', function() {
+      const movieCards = document.querySelectorAll('.movie-card');
+      
+      // Stagger animation for cards
+      movieCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
+    });
+
+    // Smooth scrolling functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Smooth scroll for all internal links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Smooth scroll for pagination links
+      document.querySelectorAll('a[href*="page="]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          // Add smooth scroll to top when changing pages
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      });
+
+      // Scroll to top button functionality
+      const scrollToTopBtn = document.getElementById('scrollToTop');
+      
+      // Show/hide scroll to top button
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+          scrollToTopBtn.classList.add('opacity-100', 'visible');
+        } else {
+          scrollToTopBtn.classList.add('opacity-0', 'invisible');
+          scrollToTopBtn.classList.remove('opacity-100', 'visible');
+        }
+      });
+
+      // Smooth scroll to top when button is clicked
+      scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+
+      // Enhanced smooth scroll for all links
+      document.querySelectorAll('a').forEach(link => {
+        if (link.href && link.href.includes(window.location.origin)) {
+          link.addEventListener('click', function(e) {
+            // Only apply smooth scroll for same-page navigation
+            if (this.href.includes('#')) {
+              e.preventDefault();
+              const targetId = this.href.split('#')[1];
+              const targetElement = document.getElementById(targetId);
+              if (targetElement) {
+                targetElement.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
+            }
+          });
+        }
+      });
+    });
+
+    // Smooth scroll behavior for the entire page
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Enhanced scroll animations
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const parallaxElements = document.querySelectorAll('.hero-header');
+      
+      parallaxElements.forEach(element => {
+        const speed = 0.5;
+        element.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+
+    // Smooth scroll for mobile devices
+    if ('ontouchstart' in window) {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
 
 

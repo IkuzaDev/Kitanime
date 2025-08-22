@@ -1,120 +1,270 @@
 extends layout
 
 block content
-  div(class="container mx-auto px-4 py-6")
+  div(class="container mx-auto px-6 py-8")
+    // Hero Header
+    section(class="mb-12 relative overflow-hidden")
+      div(class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-teal-500/10 to-cyan-500/10 rounded-3xl")
+      div(class="relative bg-gradient-to-r from-white/80 to-white/60 dark:from-gray-800/80 dark:to-gray-700/60 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-gray-600/30")
+        div(class="max-w-4xl mx-auto text-center")
+          div(class="mb-6")
+            div(class="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-6 py-3 rounded-full text-sm font-medium mb-4 animate-float")
+              svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
+              span Download Batch Lengkap
+          h1(class="text-4xl md:text-5xl font-bold mb-4 leading-tight")
+            span(class="text-gray-900 dark:text-gray-100") Download Batch 
+            span(class="gradient-text") #{anime.title}
+          p(class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto") Download semua episode anime ini dalam satu paket lengkap dengan kualitas terbaik dan subtitle Indonesia.
+
     div(class="grid grid-cols-1 lg:grid-cols-4 gap-8")
       div(class="lg:col-span-3")
-        nav(class="mb-4")
-          ol(class="flex items-center space-x-2 text-sm text-gray-500")
-            li: a(href="/" class="hover:text-primary-600") Beranda
-            li: span /
-            li: a(href=`/anime/${anime.slug}` class="hover:text-primary-600")= anime.title
-            li: span /
-            li(class="text-gray-900 font-medium") Download Batch
+        // Breadcrumb Navigation
+        nav(class="mb-8")
+          ol(class="flex items-center space-x-3 text-sm text-gray-500 dark:text-gray-400")
+            li: a(href="/" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors duration-200 flex items-center")
+              svg(class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
+              span Beranda
+            li: span(class="text-gray-400 dark:text-gray-500") /
+            li: a(href=`/anime/${anime.slug}` class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors duration-200")= anime.title
+            li: span(class="text-gray-400 dark:text-gray-500") /
+            li(class="text-emerald-600 dark:text-emerald-400 font-medium") Download Batch
 
-        div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
-          div(class="flex items-start space-x-4")
-            img(src=anime.poster alt=anime.title class="w-24 h-32 object-cover rounded-lg flex-shrink-0")
+        // Anime Info Card
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
+          div(class="flex items-start space-x-6")
+            img(src=anime.poster alt=anime.title class="w-32 h-40 object-cover rounded-2xl flex-shrink-0 shadow-lg")
             div(class="flex-1")
-              h1(class="text-xl md:text-2xl font-bold text-gray-900 mb-2")= `Download Batch ${anime.title}`
+              h2(class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-3")= `Download Batch ${anime.title}`
               if anime.synopsis
-                p(class="text-gray-600 text-sm leading-relaxed line-clamp-3")= anime.synopsis
-              div(class="flex items-center space-x-4 mt-4")
-                a(href=`/anime/${anime.slug}` class="text-primary-600 hover:text-primary-700 font-medium text-sm") ← Kembali ke Detail
+                p(class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mb-4")= anime.synopsis
+              div(class="flex items-center space-x-4")
+                a(href=`/anime/${anime.slug}` class="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg")
+                  svg(class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                    path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7")
+                  span Kembali ke Detail
 
         if batchLinks && batchLinks.length > 0
-          div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
-            h2(class="text-lg font-bold text-gray-900 mb-4") Link Download Batch
-            div(class="space-y-4")
+          // Download Links Section
+          div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
+            div(class="flex items-center space-x-3 mb-6")
+              div(class="w-1 h-8 bg-gradient-to-b from-emerald-500 to-teal-600 rounded-full")
+              h3(class="text-2xl font-bold text-gray-900 dark:text-gray-100") Link Download Batch
+              span(class="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-200 px-3 py-1 rounded-full text-sm font-medium")= batchLinks.length + ' Paket'
+            
+            div(class="space-y-6")
               each link in batchLinks
-                div(class="border border-gray-200 rounded-lg p-4 hover:border-primary-300 transition-colors")
-                  div(class="flex items-center justify-between mb-3")
-                    h3(class="font-medium text-gray-900")= link.quality || "Download Batch"
+                div(class="bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-3xl p-6 border border-emerald-200/50 dark:border-emerald-700/30 hover:border-emerald-300 dark:hover:border-emerald-600 transition-all duration-300 hover:shadow-lg")
+                  div(class="flex items-center justify-between mb-4")
+                    h4(class="font-bold text-gray-900 dark:text-gray-100 text-lg")= link.quality || "Download Batch"
                     if link.size
-                      span(class="text-sm text-gray-500")= link.size
+                      span(class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium")= link.size
                   
                   if link.description
-                    p(class="text-sm text-gray-600 mb-3")= link.description
+                    p(class="text-sm text-gray-600 dark:text-gray-400 mb-4")= link.description
                   
-                  div(class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3")
+                  div(class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4")
                     if link.links && link.links.length > 0
                       each downloadLink in link.links
-                        a(href=downloadLink.url target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-primary-50 hover:text-primary-700 transition-colors")
-                          div(class="flex items-center")
-                            svg(class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
-                            span(class="font-medium")= downloadLink.provider || "Download"
-                          svg(class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                            path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14")
+                        a(href=downloadLink.url target="_blank" rel="noopener noreferrer" class="group bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-700 rounded-2xl p-4 border-2 border-emerald-200 dark:border-emerald-700 hover:border-emerald-400 dark:hover:border-emerald-500 transition-all duration-300 hover:scale-105 hover:shadow-lg")
+                          div(class="flex items-center justify-between")
+                            div(class="flex items-center space-x-3")
+                              svg(class="w-6 h-6 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
+                              span(class="font-semibold text-gray-700 dark:text-gray-300")= downloadLink.provider || "Download"
+                            svg(class="w-5 h-5 text-gray-400 group-hover:text-emerald-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14")
                     else
-                      a(href=link.url target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-primary-50 hover:text-primary-700 transition-colors")
-                        div(class="flex items-center")
-                          svg(class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                            path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
-                          span(class="font-medium") Download Batch
-                        svg(class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                          path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14")
+                      a(href=link.url target="_blank" rel="noopener noreferrer" class="group bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-700 rounded-2xl p-4 border-2 border-emerald-200 dark:border-emerald-700 hover:border-emerald-400 dark:hover:border-emerald-500 transition-all duration-300 hover:scale-105 hover:shadow-lg")
+                          div(class="flex items-center justify-between")
+                            div(class="flex items-center space-x-3")
+                              svg(class="w-6 h-6 text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
+                              span(class="font-semibold text-gray-700 dark:text-gray-300") Download Batch
+                            svg(class="w-5 h-5 text-gray-400 group-hover:text-emerald-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14")
 
         else
-          div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
-            div(class="text-center py-8")
-              svg(class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
-              h3(class="text-lg font-medium text-gray-900 mb-2") Belum ada link download
-              p(class="text-gray-600") Link download batch untuk anime ini belum tersedia
+          // No Download Links
+          div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-12 border border-white/20 dark:border-gray-700/30 text-center")
+            svg(class="w-20 h-20 text-gray-400 dark:text-gray-500 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
+            h3(class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-3") Belum ada link download
+            p(class="text-gray-600 dark:text-gray-400 mb-6") Link download batch untuk anime ini belum tersedia
 
-        div(class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6")
-          h3(class="font-medium text-blue-900 mb-3") Cara Download
-          div(class="space-y-2 text-sm text-blue-800")
-            div(class="flex items-start")
-              span(class="font-medium mr-2") 1.
+        // Download Instructions
+        div(class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-3xl p-8 border border-blue-200/50 dark:border-blue-700/30 transition-all duration-500 hover:shadow-xl")
+          h3(class="font-bold text-blue-900 dark:text-blue-100 mb-6 flex items-center text-lg")
+            svg(class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
+            span Cara Download
+          div(class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-800 dark:text-blue-200")
+            div(class="flex items-start space-x-3 p-3 bg-white/50 dark:bg-white/10 rounded-2xl")
+              span(class="font-bold text-blue-600 dark:text-blue-400 text-lg") 1.
               span Klik link download yang tersedia
-            div(class="flex items-start")
-              span(class="font-medium mr-2") 2.
+            div(class="flex items-start space-x-3 p-3 bg-white/50 dark:bg-white/10 rounded-2xl")
+              span(class="font-bold text-blue-600 dark:text-blue-400 text-lg") 2.
               span Tunggu beberapa detik hingga muncul tombol download
-            div(class="flex items-start")
-              span(class="font-medium mr-2") 3.
+            div(class="flex items-start space-x-3 p-3 bg-white/50 dark:bg-white/10 rounded-2xl")
+              span(class="font-bold text-blue-600 dark:text-blue-400 text-lg") 3.
               span Klik tombol download untuk memulai unduhan
-            div(class="flex items-start")
-              span(class="font-medium mr-2") 4.
+            div(class="flex items-start space-x-3 p-3 bg-white/50 dark:bg-white/10 rounded-2xl")
+              span(class="font-bold text-blue-600 dark:text-blue-400 text-lg") 4.
               span Ekstrak file yang sudah didownload menggunakan WinRAR atau 7-Zip
 
       div(class="lg:col-span-1")
+        // Download Info Section
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
+          h3(class="font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center text-lg")
+            svg(class="w-6 h-6 mr-3 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
+            span Informasi Download
+          div(class="space-y-4 text-sm")
+            div(class="flex items-center justify-between p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl")
+              span(class="font-medium text-emerald-800 dark:text-emerald-200") Format:
+              span(class="text-emerald-700 dark:text-emerald-300") MP4/MKV
+            div(class="flex items-center justify-between p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl")
+              span(class="font-medium text-emerald-800 dark:text-emerald-200") Subtitle:
+              span(class="text-emerald-700 dark:text-emerald-300") Indonesia
+            div(class="flex items-center justify-between p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl")
+              span(class="font-medium text-emerald-800 dark:text-emerald-200") Kualitas:
+              span(class="text-emerald-700 dark:text-emerald-300") 480p, 720p, 1080p
+            div(class="flex items-center justify-between p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl")
+              span(class="font-medium text-emerald-800 dark:text-emerald-200") Audio:
+              span(class="text-emerald-700 dark:text-emerald-300") Japanese
 
-        div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
-          h3(class="font-bold text-gray-900 mb-4") Informasi Download
-          div(class="space-y-3 text-sm")
-            div
-              span(class="font-medium text-gray-700") Format:
-              span(class="text-gray-600 ml-2") MP4/MKV
-            div
-              span(class="font-medium text-gray-700") Subtitle:
-              span(class="text-gray-600 ml-2") Indonesia
-            div
-              span(class="font-medium text-gray-700") Kualitas:
-              span(class="text-gray-600 ml-2") 480p, 720p, 1080p
-            div
-              span(class="font-medium text-gray-700") Audio:
-              span(class="text-gray-600 ml-2") Japanese
-
-        div(class="bg-white rounded-lg shadow-sm p-6 mb-6")
-          h3(class="font-bold text-gray-900 mb-4") Aksi Lainnya
-          div(class="space-y-3")
-            a(href=`/anime/${anime.slug}` class="flex items-center text-gray-600 hover:text-primary-600 transition-colors")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+        // Quick Actions Section
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
+          h3(class="font-bold text-gray-900 dark:text-gray-100 mb-6 flex items-center text-lg")
+            svg(class="w-6 h-6 mr-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z")
+            span Aksi Lainnya
+          div(class="space-y-4")
+            a(href=`/anime/${anime.slug}` class="group flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 p-3 rounded-2xl hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:scale-105")
+              svg(class="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
               span Detail Anime
-            a(href=`/anime/${anime.slug}/episodes` class="flex items-center text-gray-600 hover:text-primary-600 transition-colors")
-              svg(class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            a(href=`/anime/${anime.slug}/episodes` class="group flex items-center text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 p-3 rounded-2xl hover:bg-purple-50 dark:hover:bg-purple-900/20 hover:scale-105")
+              svg(class="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z")
               span Streaming Online
 
-        div(class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-6")
-          h3(class="font-medium text-yellow-900 mb-3") Tips Download
-          div(class="space-y-2 text-sm text-yellow-800")
-            div • Gunakan koneksi internet yang stabil
-            div • Pastikan ruang penyimpanan cukup
-            div • Gunakan download manager untuk file besar
-            div • Scan file dengan antivirus setelah download
+        // Download Tips Sidebar
+        div(class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/30 dark:border-gray-600/40 transition-all duration-500 hover:shadow-2xl")
+          h3(class="font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center text-lg")
+            svg(class="w-6 h-6 mr-3 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
+            span Tips Download
+          div(class="space-y-4")
+            div(class="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl border border-emerald-200 dark:border-emerald-700/30")
+              h4(class="font-semibold text-emerald-800 dark:text-emerald-200 mb-2") Tips Download Aman
+              ul(class="text-sm text-emerald-700 dark:text-emerald-300 space-y-2")
+                li • Gunakan antivirus yang terupdate
+                li • Download dari link resmi saja
+                li • Periksa ukuran file sebelum download
+                li • Pastikan koneksi internet stabil
+
+  // Scroll to Top Button
+  button(id="scrollToTop" class="fixed bottom-8 right-8 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white p-4 rounded-full shadow-2xl hover:shadow-emerald-500/25 transition-all duration-300 hover:scale-110 opacity-0 invisible z-50")
+    svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18")
+
+block scripts
+  script.
+    // Enhanced download link animations
+    document.addEventListener('DOMContentLoaded', function() {
+      const downloadLinks = document.querySelectorAll('.download-link');
+      
+      // Stagger animation for download links
+      downloadLinks.forEach((link, index) => {
+        link.style.opacity = '0';
+        link.style.transform = 'translateY(20px)';
+        
+        setTimeout(() => {
+          link.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+          link.style.opacity = '1';
+          link.style.transform = 'translateY(0)';
+        }, index * 100);
+      });
+    });
+
+    // Smooth scrolling functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Smooth scroll for all internal links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Scroll to top button functionality
+      const scrollToTopBtn = document.getElementById('scrollToTop');
+      
+      // Show/hide scroll to top button
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+          scrollToTopBtn.classList.add('opacity-100', 'visible');
+        } else {
+          scrollToTopBtn.classList.add('opacity-0', 'invisible');
+          scrollToTopBtn.classList.remove('opacity-100', 'visible');
+        }
+      });
+
+      // Smooth scroll to top when button is clicked
+      scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+
+      // Enhanced smooth scroll for all links
+      document.querySelectorAll('a').forEach(link => {
+        if (link.href && link.href.includes(window.location.origin)) {
+          link.addEventListener('click', function(e) {
+            // Only apply smooth scroll for same-page navigation
+            if (this.href.includes('#')) {
+              e.preventDefault();
+              const targetId = this.href.split('#')[1];
+              const targetElement = document.getElementById(targetId);
+              if (targetElement) {
+                targetElement.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
+            }
+          });
+        }
+      });
+    });
+
+    // Smooth scroll behavior for the entire page
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Enhanced scroll animations
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const parallaxElements = document.querySelectorAll('.hero-header');
+      
+      parallaxElements.forEach(element => {
+        const speed = 0.5;
+        element.style.transform = `translateY(${scrolled * speed}px)`;
+      });
+    });
+
+    // Smooth scroll for mobile devices
+    if ('ontouchstart' in window) {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
 
 

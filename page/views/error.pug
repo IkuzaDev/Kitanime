@@ -1,38 +1,183 @@
 extends layout
 
 block content
-  div(class="container mx-auto px-4 py-12")
-    div(class="max-w-md mx-auto text-center")
-      div(class="mb-8")
-        if error.status === 404
-          svg(class="w-24 h-24 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-            path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.5-.935-6.072-2.456M3 12a9 9 0 1118 0 9 9 0 01-18 0z")
-        else
-          svg(class="w-24 h-24 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-            path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z")
-      
-      h1(class="text-4xl font-bold text-gray-900 mb-4")= error.status || 500
-      
-      h2(class="text-xl font-medium text-gray-700 mb-6")
-        if error.status === 404
-          | Halaman Tidak Ditemukan
-        else
-          | Terjadi Kesalahan
-      
-      p(class="text-gray-600 mb-8")= error.message || "Terjadi kesalahan yang tidak terduga"
-      
-      div(class="space-y-4")
-        a(href="/" class="inline-block bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors font-medium") Kembali ke Beranda
+  div(class="min-h-screen bg-gradient-to-br from-gray-50 via-red-50 to-pink-50 dark:from-gray-900 dark:via-red-900/20 dark:to-pink-900/20 flex items-center justify-center py-12")
+    div(class="container mx-auto px-6")
+      div(class="max-w-2xl mx-auto text-center")
+        // Error Icon
+        div(class="mb-8 relative")
+          div(class="absolute inset-0 bg-gradient-to-br from-red-500/20 via-pink-500/20 to-orange-500/20 rounded-full blur-3xl")
+          if error.status === 404
+            div(class="relative bg-gradient-to-br from-blue-500 to-purple-600 p-8 rounded-full inline-block shadow-2xl")
+              svg(class="w-32 h-32 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.5-.935-6.072-2.456M3 12a9 9 0 1118 0 9 9 0 01-18 0z")
+          else
+            div(class="relative bg-gradient-to-br from-red-500 to-pink-600 p-8 rounded-full inline-block shadow-2xl")
+              svg(class="w-32 h-32 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z")
         
-        if error.status === 404
-          div
-            a(href="/search" class="text-primary-600 hover:text-primary-700 font-medium") Coba Cari Anime
-        else
-          div
-            button(onclick="history.back()" class="text-primary-600 hover:text-primary-700 font-medium") Kembali ke Halaman Sebelumnya
+        // Error Content
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl p-12 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-3xl")
+          h1(class="text-6xl md:text-8xl font-bold text-gray-900 dark:text-gray-100 mb-6")= error.status || 500
+          
+          h2(class="text-2xl md:text-3xl font-bold text-gray-700 dark:text-gray-200 mb-8")
+            if error.status === 404
+              | Halaman Tidak Ditemukan
+            else
+              | Terjadi Kesalahan
+          
+          p(class="text-lg text-gray-600 dark:text-gray-300 mb-10 leading-relaxed")= error.message || "Terjadi kesalahan yang tidak terduga"
+          
+          // Action Buttons
+          div(class="space-y-4 mb-10")
+            a(href="/" class="inline-flex items-center space-x-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl")
+              svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
+              span Kembali ke Beranda
+            
+            if error.status === 404
+              div(class="pt-4")
+                a(href="/search" class="inline-flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium text-lg transition-colors duration-300")
+                  svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                    path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
+                  span Coba Cari Anime
+            else
+              div(class="pt-4")
+                button(onclick="history.back()" class="inline-flex items-center space-x-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-medium text-lg transition-colors duration-300")
+                  svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                    path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18")
+                  span Kembali ke Halaman Sebelumnya
 
-      if process.env.NODE_ENV !== 'production' && error.stack
-        div(class="mt-12 text-left")
-          details(class="bg-gray-100 rounded-lg p-4")
-            summary(class="cursor-pointer font-medium text-gray-700 mb-2") Debug Information
-            pre(class="text-xs text-gray-600 overflow-auto")= error.stack
+        // Debug Information Section
+        div(class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/30 dark:border-gray-600/40 transition-all duration-500 hover:shadow-2xl")
+          details(class="group")
+            summary(class="cursor-pointer text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4 flex items-center hover:text-red-600 dark:hover:text-red-400 transition-colors duration-300")
+              svg(class="w-6 h-6 mr-3 group-open:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
+              span Informasi Debug
+            div(class="text-sm text-gray-600 dark:text-gray-300 space-y-2")
+              if error && error.status
+                div(class="flex items-center space-x-2")
+                  span(class="font-medium") Status:
+                  span(class="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-lg text-xs")= error.status
+              if error && error.message
+                div(class="flex items-start space-x-2")
+                  span(class="font-medium mt-1") Message:
+                  span(class="px-3 py-2 bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 rounded-lg text-xs flex-1")= error.message
+              div(class="flex items-center space-x-2")
+                span(class="font-medium") Timestamp:
+                span(class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-lg text-xs")= new Date().toLocaleString('id-ID')
+
+  // Scroll to Top Button
+  button(id="scrollToTop" class="fixed bottom-8 right-8 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white p-4 rounded-full shadow-2xl hover:shadow-red-500/25 transition-all duration-300 hover:scale-110 opacity-0 invisible z-50")
+    svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+      path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18")
+
+block scripts
+  script.
+    // Enhanced error page animations
+    document.addEventListener('DOMContentLoaded', function() {
+      const errorIcon = document.querySelector('.error-icon');
+      const errorContent = document.querySelector('.error-content');
+      
+      // Stagger animation for error elements
+      if (errorIcon) {
+        errorIcon.style.opacity = '0';
+        errorIcon.style.transform = 'scale(0.8)';
+        
+        setTimeout(() => {
+          errorIcon.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+          errorIcon.style.opacity = '1';
+          errorIcon.style.transform = 'scale(1)';
+        }, 200);
+      }
+      
+      if (errorContent) {
+        errorContent.style.opacity = '0';
+        errorContent.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+          errorContent.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+          errorContent.style.opacity = '1';
+          errorContent.style.transform = 'translateY(0)';
+        }, 400);
+      }
+    });
+
+    // Smooth scrolling functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Smooth scroll for all internal links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // Scroll to top button functionality
+      const scrollToTopBtn = document.getElementById('scrollToTop');
+      
+      // Show/hide scroll to top button
+      window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+          scrollToTopBtn.classList.add('opacity-100', 'visible');
+        } else {
+          scrollToTopBtn.classList.add('opacity-0', 'invisible');
+          scrollToTopBtn.classList.remove('opacity-100', 'visible');
+        }
+      });
+
+      // Smooth scroll to top when button is clicked
+      scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+
+      // Enhanced smooth scroll for all links
+      document.querySelectorAll('a').forEach(link => {
+        if (link.href && link.href.includes(window.location.origin)) {
+          link.addEventListener('click', function(e) {
+            // Only apply smooth scroll for same-page navigation
+            if (this.href.includes('#')) {
+              e.preventDefault();
+              const targetId = this.href.split('#')[1];
+              const targetElement = document.getElementById(targetId);
+              if (targetElement) {
+                targetElement.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
+            }
+          });
+        }
+      });
+    });
+
+    // Smooth scroll behavior for the entire page
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Enhanced scroll animations
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const parallaxElements = document.querySelectorAll('.error-icon');
+      
+      parallaxElements.forEach(element => {
+        const speed = 0.3;
+        element.style.transform = `translateY(${scrolled * speed}px) scale(1)`;
+      });
+    });
+
+    // Smooth scroll for mobile devices
+    if ('ontouchstart' in window) {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
