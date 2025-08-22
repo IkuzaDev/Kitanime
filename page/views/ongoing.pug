@@ -187,15 +187,6 @@ block scripts
       });
     });
 
-    // Parallax effect for hero section
-    window.addEventListener('scroll', function() {
-      const scrolled = window.pageYOffset;
-      const heroSection = document.querySelector('.hero-header');
-      if (heroSection) {
-        heroSection.style.transform = `translateY(${scrolled * 0.1}px)`;
-      }
-    });
-
     // Smooth scrolling functionality
     document.addEventListener('DOMContentLoaded', function() {
       // Smooth scroll for all internal links
@@ -209,17 +200,6 @@ block scripts
               block: 'start'
             });
           }
-        });
-      });
-
-      // Smooth scroll for pagination links
-      document.querySelectorAll('a[href*="page="]').forEach(link => {
-        link.addEventListener('click', function(e) {
-          // Add smooth scroll to top when changing pages
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
         });
       });
 
@@ -269,15 +249,10 @@ block scripts
     // Smooth scroll behavior for the entire page
     document.documentElement.style.scrollBehavior = 'smooth';
     
-    // Enhanced scroll animations
+    // Enhanced scroll animations (removed parallax for better performance)
     window.addEventListener('scroll', function() {
-      const scrolled = window.pageYOffset;
-      const parallaxElements = document.querySelectorAll('.hero-header');
-      
-      parallaxElements.forEach(element => {
-        const speed = 0.5;
-        element.style.transform = `translateY(${scrolled * speed}px)`;
-      });
+      // Hero section is now fixed, no parallax effect
+      // This prevents lag during scrolling
     });
 
     // Smooth scroll for mobile devices

@@ -166,15 +166,10 @@ block scripts
     // Smooth scroll behavior for the entire page
     document.documentElement.style.scrollBehavior = 'smooth';
     
-    // Enhanced scroll animations
+    // Enhanced scroll animations (removed parallax for better performance)
     window.addEventListener('scroll', function() {
-      const scrolled = window.pageYOffset;
-      const parallaxElements = document.querySelectorAll('.error-icon');
-      
-      parallaxElements.forEach(element => {
-        const speed = 0.3;
-        element.style.transform = `translateY(${scrolled * speed}px) scale(1)`;
-      });
+      // Error icon is now fixed, no parallax effect
+      // This prevents lag during scrolling
     });
 
     // Smooth scroll for mobile devices
