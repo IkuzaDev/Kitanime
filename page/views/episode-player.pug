@@ -1,12 +1,12 @@
 extends layout
 
 block content
-  div(class="container mx-auto px-6 py-8")
-    div(class="grid grid-cols-1 lg:grid-cols-4 gap-8")
+  div(class="container mx-auto px-4 sm:px-6 py-4 sm:py-8")
+    div(class="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8")
       div(class="lg:col-span-3")
         // Breadcrumb Navigation
-        nav(class="mb-8")
-          ol(class="flex items-center space-x-3 text-sm")
+        nav(class="mb-6 sm:mb-8")
+          ol(class="flex items-center space-x-2 sm:space-x-3 text-xs sm:text-sm overflow-x-auto pb-2")
             li: a(href="/" class="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 flex items-center") 
               svg(class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
@@ -17,7 +17,7 @@ block content
             li(class="text-indigo-600 dark:text-indigo-400 font-semibold") Episode #{episode.number}
 
         // Video Player Section
-        div(class="relative bg-gradient-to-br from-gray-900 to-black rounded-3xl overflow-hidden shadow-2xl mb-8 group transition-all duration-500 hover:shadow-3xl")
+        div(class="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl mb-6 sm:mb-8 group transition-colors duration-300 hover:shadow-3xl will-change-transform")
           div(id="playerLoading" class="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center z-20 transition-opacity duration-300")
             div(class="text-center text-white")
               div(class="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-500 mx-auto mb-6")
@@ -55,9 +55,9 @@ block content
                 button(id="speedBtn" class="bg-black/50 hover:bg-black/70 px-4 py-2 rounded-xl text-sm transition-all duration-200 hover:scale-105") 1x
 
         // Auto Next Episode Toggle
-        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-white/20 dark:border-gray-700/30 transition-colors duration-300 hover:shadow-2xl will-change-transform")
           div(class="flex items-center justify-between")
-            div(class="flex items-center space-x-4")
+            div(class="flex items-center space-x-3 sm:space-x-4")
               div(class="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl transition-colors duration-300")
                 svg(class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                   path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
@@ -70,37 +70,37 @@ block content
               div(class="relative w-12 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600 dark:peer-checked:bg-indigo-500")
 
         // Episode Navigation
-        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-6 mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
-          div(class="flex items-center justify-between")
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-white/20 dark:border-gray-700/30 transition-colors duration-300 hover:shadow-2xl will-change-transform")
+          div(class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between episode-navigation")
             div(class="flex-1")
               if navigation.isPrev
-                a(href=`/anime/${anime.slug}/episode/${navigation.prev}` class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 text-gray-700 dark:text-gray-200 rounded-2xl hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-600 dark:hover:to-gray-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg")
+                a(href=`/anime/${anime.slug}/episode/${navigation.prev}` class="inline-flex items-center w-full sm:w-auto justify-center px-4 sm:px-6 py-3 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 text-gray-700 dark:text-gray-200 rounded-2xl hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-600 dark:hover:to-gray-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg")
                   svg(class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                     path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7")
-                  span(class="font-medium") Episode Sebelumnya
+                  span(class="font-medium text-sm sm:text-base") Episode Sebelumnya
               else
-                div(class="text-gray-400 dark:text-gray-500 font-medium px-6 py-3") Episode Pertama
+                div(class="text-gray-400 dark:text-gray-500 font-medium px-4 sm:px-6 py-3 text-center sm:text-left") Episode Pertama
             
-            div(class="text-center px-6")
-              div(class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl px-6 py-3 transition-all duration-300")
-                span(class="text-white font-bold text-xl") #{episode.number}
+            div(class="text-center px-4 sm:px-6 order-first sm:order-none")
+              div(class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl px-4 sm:px-6 py-3 transition-all duration-300")
+                span(class="text-white font-bold text-lg sm:text-xl") #{episode.number}
                 if navigation.all_episodes && navigation.all_episodes.length > 0
-                  span(class="text-indigo-200 text-sm ml-2") / #{navigation.all_episodes.length}
+                  span(class="text-indigo-200 text-xs sm:text-sm ml-1 sm:ml-2") / #{navigation.all_episodes.length}
             
-            div(class="flex-1 text-right")
+            div(class="flex-1 text-center sm:text-right")
               if navigation.isNext
-                a(href=`/anime/${anime.slug}/episode/${navigation.next}` class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-600 text-white rounded-2xl hover:from-indigo-700 hover:to-purple-700 dark:hover:from-indigo-600 dark:hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-xl")
-                  span(class="font-medium") Episode Selanjutnya
+                a(href=`/anime/${anime.slug}/episode/${navigation.next}` class="inline-flex items-center w-full sm:w-auto justify-center px-4 sm:px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-600 text-white rounded-2xl hover:from-indigo-700 hover:to-purple-700 dark:hover:from-indigo-600 dark:hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-xl")
+                  span(class="font-medium text-sm sm:text-base") Episode Selanjutnya
                   svg(class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                     path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
               else
-                div(class="text-gray-400 dark:text-gray-500 font-medium px-6 py-3") Episode Terakhir
+                div(class="text-gray-400 dark:text-gray-500 font-medium px-4 sm:px-6 py-3 text-center sm:text-right") Episode Terakhir
 
         // Download Section
         if episode.download_links && (episode.download_links.mp4 || episode.download_links.mkv)
-          div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl border border-white/20 dark:border-gray-700/30 overflow-hidden transition-all duration-500 hover:shadow-2xl")
-            button(onclick="toggleDownloads()" class="w-full p-6 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300")
-              div(class="flex items-center space-x-4")
+          div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-white/20 dark:border-gray-700/30 overflow-hidden transition-all duration-500 hover:shadow-2xl")
+            button(onclick="toggleDownloads()" class="w-full p-4 sm:p-6 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300")
+              div(class="flex items-center space-x-3 sm:space-x-4")
                 div(class="p-3 bg-green-100 dark:bg-green-900/30 rounded-2xl transition-colors duration-300")
                   svg(class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                     path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
@@ -162,7 +162,7 @@ block content
 
       div(class="lg:col-span-1")
         // Anime Info Sidebar
-        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 mb-6 sm:mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
           a(href=`/anime/${anime.slug}` class="block group")
             div(class="relative overflow-hidden rounded-2xl mb-6")
               img(src=anime.poster alt=anime.title class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
@@ -177,7 +177,7 @@ block content
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
 
         // Share Section Sidebar
-        div(class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-xl p-8 border border-white/30 dark:border-gray-600/40 transition-all duration-500 hover:shadow-2xl")
+        div(class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 border border-white/30 dark:border-gray-600/40 transition-all duration-500 hover:shadow-2xl")
           h3(class="font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center text-lg")
             svg(class="w-6 h-6 mr-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z")
@@ -193,7 +193,7 @@ block content
               span Copy Link
 
   // Scroll to Top Button
-  button(id="scrollToTop" class="fixed bottom-8 right-8 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white p-4 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-110 opacity-0 invisible z-50")
+  button(id="scrollToTop" class="fixed bottom-4 sm:bottom-8 right-4 sm:right-8 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white p-3 sm:p-4 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-110 opacity-0 invisible z-50")
     svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
       path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18")
 
@@ -218,9 +218,40 @@ block scripts
       }
     });
 
-    // Smooth scrolling functionality
+    // Optimized scrolling functionality
     document.addEventListener('DOMContentLoaded', function() {
-      // Smooth scroll for all internal links
+      // Throttled scroll handler for better performance
+      let ticking = false;
+      const scrollToTopBtn = document.getElementById('scrollToTop');
+      
+      function updateScrollButton() {
+        if (window.pageYOffset > 300) {
+          scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+          scrollToTopBtn.classList.add('opacity-100', 'visible');
+        } else {
+          scrollToTopBtn.classList.add('opacity-0', 'invisible');
+          scrollToTopBtn.classList.remove('opacity-100', 'visible');
+        }
+        ticking = false;
+      }
+      
+      // Optimized scroll event listener with throttling
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          requestAnimationFrame(updateScrollButton);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      // Smooth scroll to top when button is clicked
+      scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+
+      // Optimized smooth scroll for internal links only
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
           e.preventDefault();
@@ -233,65 +264,181 @@ block scripts
           }
         });
       });
-
-      // Scroll to top button functionality
-      const scrollToTopBtn = document.getElementById('scrollToTop');
-      
-      // Show/hide scroll to top button
-      window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-          scrollToTopBtn.classList.remove('opacity-0', 'invisible');
-          scrollToTopBtn.classList.add('opacity-100', 'visible');
-        } else {
-          scrollToTopBtn.classList.add('opacity-0', 'invisible');
-          scrollToTopBtn.classList.remove('opacity-100', 'visible');
-        }
-      });
-
-      // Smooth scroll to top when button is clicked
-      scrollToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      });
-
-      // Enhanced smooth scroll for all links
-      document.querySelectorAll('a').forEach(link => {
-        if (link.href && link.href.includes(window.location.origin)) {
-          link.addEventListener('click', function(e) {
-            // Only apply smooth scroll for same-page navigation
-            if (this.href.includes('#')) {
-              e.preventDefault();
-              const targetId = this.href.split('#')[1];
-              const targetElement = document.getElementById(targetId);
-              if (targetElement) {
-                targetElement.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'start'
-                });
-              }
-            }
-          });
-        }
-      });
     });
 
-    // Smooth scroll behavior for the entire page
-    document.documentElement.style.scrollBehavior = 'smooth';
+    // Remove global smooth scroll for better performance
+    // document.documentElement.style.scrollBehavior = 'smooth';
     
-    // Enhanced scroll animations (removed parallax for better performance)
+    // Responsive improvements for mobile
+    function adjustLayoutForMobile() {
+      const isMobile = window.innerWidth < 768;
+      const container = document.querySelector('.container');
+      
+      if (isMobile) {
+        // Ensure proper spacing on mobile
+        document.body.style.paddingBottom = '80px';
+        
+        // Adjust video player aspect ratio for mobile
+        const videoPlayer = document.querySelector('#player');
+        if (videoPlayer) {
+          videoPlayer.style.aspectRatio = '16/9';
+        }
+      } else {
+        document.body.style.paddingBottom = '';
+      }
+    }
+    
+    // Call on load and resize
+    adjustLayoutForMobile();
+    window.addEventListener('resize', adjustLayoutForMobile);
+    
+    // Optimized scroll handling for better performance
+    let scrollTimeout;
     window.addEventListener('scroll', function() {
-      // Hero section is now fixed, no parallax effect
-      // This prevents lag during scrolling
-    });
+      // Clear previous timeout to prevent multiple executions
+      clearTimeout(scrollTimeout);
+      
+      // Use timeout to throttle scroll events
+      scrollTimeout = setTimeout(function() {
+        // Only execute heavy operations when scrolling stops
+        // This prevents lag during active scrolling
+      }, 100);
+    }, { passive: true });
 
     // Smooth scroll for mobile devices
     if ('ontouchstart' in window) {
       document.documentElement.style.scrollBehavior = 'smooth';
     }
 
-    // Enhanced share functionality
+          // Enhanced share functionality
+      
+      // Ensure episode navigation is fully visible on mobile
+      function ensureEpisodeNavigationVisible() {
+        const episodeNav = document.querySelector('.bg-white\\/80.dark\\:bg-gray-800\\/80');
+        if (episodeNav && window.innerWidth < 768) {
+          // Add extra margin to prevent cutoff
+          episodeNav.style.marginBottom = '2rem';
+          
+          // Ensure buttons don't overflow
+          const buttons = episodeNav.querySelectorAll('a, div');
+          buttons.forEach(button => {
+            button.style.minWidth = '0';
+            button.style.flexShrink = '1';
+          });
+        }
+      }
+      
+      // Call on load
+      ensureEpisodeNavigationVisible();
+      
+      // Ensure download section is fully visible on mobile
+      function ensureDownloadSectionVisible() {
+        const downloadSection = document.querySelector('.bg-white\\/80.dark\\:bg-gray-800\\/80.backdrop-blur-xl.rounded-2xl');
+        if (downloadSection && window.innerWidth < 768) {
+          // Add extra margin to prevent cutoff
+          downloadSection.style.marginBottom = '2rem';
+          
+          // Ensure content doesn't overflow
+          const content = downloadSection.querySelector('#downloadContent');
+          if (content) {
+            content.style.maxHeight = 'none';
+            content.style.overflow = 'visible';
+          }
+        }
+      }
+      
+      // Call on load
+      ensureDownloadSectionVisible();
+      
+      // Ensure sidebar is fully visible on mobile
+      function ensureSidebarVisible() {
+        const sidebars = document.querySelectorAll('.lg\\:col-span-1 > div');
+        if (sidebars.length > 0 && window.innerWidth < 768) {
+          sidebars.forEach(sidebar => {
+            // Add extra margin to prevent cutoff
+            sidebar.style.marginBottom = '2rem';
+            
+            // Ensure content doesn't overflow
+            sidebar.style.overflow = 'visible';
+            sidebar.style.maxHeight = 'none';
+          });
+        }
+      }
+      
+      // Call on load
+      ensureSidebarVisible();
+      
+      // Add responsive CSS for better mobile layout and scroll performance
+      function addResponsiveCSS() {
+        if (window.innerWidth < 768) {
+          const style = document.createElement('style');
+          style.textContent = `
+            @media (max-width: 767px) {
+              .container {
+                padding-left: 1rem !important;
+                padding-right: 1rem !important;
+              }
+              
+              .bg-white\\/80.dark\\:bg-gray-800\\/80 {
+                margin-bottom: 2rem !important;
+                border-radius: 1rem !important;
+              }
+              
+              .lg\\:col-span-1 > div {
+                margin-bottom: 2rem !important;
+                border-radius: 1rem !important;
+              }
+              
+              #player {
+                border-radius: 1rem !important;
+              }
+              
+              .episode-navigation {
+                flex-direction: column !important;
+                gap: 1rem !important;
+              }
+              
+              .episode-navigation > div {
+                width: 100% !important;
+                text-align: center !important;
+              }
+            }
+            
+            /* Scroll performance optimizations */
+            * {
+              scroll-behavior: auto !important;
+            }
+            
+            .will-change-transform {
+              will-change: transform;
+            }
+            
+            .bg-white\\/80.dark\\:bg-gray-800\\/80 {
+              transform: translateZ(0);
+              backface-visibility: hidden;
+            }
+            
+            /* Reduce backdrop-filter on scroll for better performance */
+            @media (prefers-reduced-motion: reduce) {
+              .backdrop-blur-xl {
+                backdrop-filter: none !important;
+              }
+              
+              .transition-all {
+                transition: none !important;
+              }
+              
+              .hover\\:shadow-2xl:hover {
+                box-shadow: none !important;
+              }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+      }
+      
+      // Call on load
+      addResponsiveCSS();
     function shareEpisode() {
       if (navigator.share) {
         navigator.share({

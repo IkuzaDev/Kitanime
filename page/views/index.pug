@@ -30,16 +30,20 @@ block content
       div(class="lg:col-span-3")
         if ongoingAnime && ongoingAnime.length > 0
           section(class="mb-12")
-            div(class="flex items-center justify-between mb-8")
-              div(class="flex items-center space-x-3")
-                div(class="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full")
-                h2(class="text-3xl font-bold text-gray-800 dark:text-gray-100") Anime Ongoing Terbaru
-              a(href="/ongoing" class="group bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center space-x-2")
+            div(class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 space-y-4 sm:space-y-0 section-header")
+              div(class="flex items-center space-x-4")
+                div(class="relative accent-line")
+                  div(class="w-2 h-10 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full shadow-lg")
+                  div(class="absolute inset-0 bg-gradient-to-b from-blue-400 to-purple-500 rounded-full opacity-75 animate-pulse")
+                div
+                  h2(class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-1") Anime Ongoing Terbaru
+                  p(class="text-sm text-gray-600 dark:text-gray-400") Episode terbaru setiap minggu
+              a(href="/ongoing" class="group bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl hover:shadow-blue-500/25")
                 span Lihat Semua
                 svg(class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                   path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
             
-            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6")
+            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6")
               each anime in ongoingAnime.slice(0, 12)
                 div(class="anime-card group relative")
                   a(href=`/anime/${anime.slug}`)
@@ -59,16 +63,20 @@ block content
 
         if completeAnime && completeAnime.length > 0
           section(class="mb-12")
-            div(class="flex items-center justify-between mb-8")
-              div(class="flex items-center space-x-3")
-                div(class="w-1 h-8 bg-gradient-to-b from-green-500 to-emerald-600 rounded-full")
-                h2(class="text-3xl font-bold text-gray-800 dark:text-gray-100") Anime Complete Terbaru
-              a(href="/complete" class="group bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center space-x-2")
+            div(class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 space-y-4 sm:space-y-0 section-header")
+              div(class="flex items-center space-x-4")
+                div(class="relative accent-line")
+                  div(class="w-2 h-10 bg-gradient-to-b from-green-500 to-emerald-600 rounded-full shadow-lg")
+                  div(class="absolute inset-0 bg-gradient-to-b from-green-400 to-emerald-500 rounded-full opacity-75 animate-pulse")
+                div
+                  h2(class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-1") Anime Complete Terbaru
+                  p(class="text-sm text-gray-600 dark:text-gray-400") Anime lengkap siap ditonton
+              a(href="/complete" class="group bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl hover:shadow-green-500/25")
                 span Lihat Semua
                 svg(class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                   path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
             
-            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6")
+            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6")
               each anime in completeAnime.slice(0, 12)
                 div(class="anime-card group relative")
                   a(href=`/anime/${anime.slug}`)
@@ -117,9 +125,23 @@ block content
             svg(class="w-6 h-6 mr-3 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.99 1.99 0 013 12V7a4 4 0 014-4z")
             span Genre Populer
-          div(class="flex flex-wrap gap-3")
-            each genre in []
-              a(href=`/genres/${genre.toLowerCase()}` class="px-4 py-2 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 text-purple-700 dark:text-purple-300 text-sm rounded-2xl hover:from-purple-200 hover:to-pink-200 dark:hover:from-purple-800/50 dark:hover:to-pink-800/50 hover:text-purple-800 dark:hover:text-purple-200 transition-all duration-300 hover:scale-105 border border-purple-200/50 dark:border-purple-700/30")= genre
+          div(class="space-y-3")
+            a(href="/genres/action" class="group flex items-center justify-between text-gray-700 dark:text-gray-200 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 p-3 rounded-2xl hover:bg-purple-50 dark:hover:bg-purple-900/20")
+              span Action
+              svg(class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
+            a(href="/genres/comedy" class="group flex items-center justify-between text-gray-700 dark:text-gray-200 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 p-3 rounded-2xl hover:bg-purple-50 dark:hover:bg-purple-900/20")
+              span Comedy
+              svg(class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
+            a(href="/genres/romance" class="group flex items-center justify-between text-gray-700 dark:text-gray-200 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 p-3 rounded-2xl hover:bg-purple-50 dark:hover:bg-purple-900/20")
+              span Romance
+              svg(class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
+            a(href="/genres/fantasy" class="group flex items-center justify-between text-gray-700 dark:text-gray-200 hover:text-purple-600 dark:hover:text-purple-400 transition-all duration-300 p-3 rounded-2xl hover:bg-purple-50 dark:hover:bg-purple-900/20")
+              span Fantasy
+              svg(class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
 
         // About Section
         div(class="bg-gradient-to-br from-blue-50 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-3xl p-8 border border-blue-200/50 dark:border-blue-700/30 transition-all duration-500 hover:shadow-xl")

@@ -41,6 +41,150 @@ html(lang="id" class="scroll-smooth")
       .search-suggestions {
         max-height: 300px;
         overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+      }
+      
+      .search-suggestions::-webkit-scrollbar {
+        width: 4px;
+      }
+      
+      .search-suggestions::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      
+      .search-suggestions::-webkit-scrollbar-thumb {
+        background: rgba(156, 163, 175, 0.5);
+        border-radius: 2px;
+      }
+      
+      .search-suggestions::-webkit-scrollbar-thumb:hover {
+        background: rgba(156, 163, 175, 0.7);
+      }
+      
+      /* Mobile menu improvements */
+      #mobileMenu {
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+      }
+      
+      #mobileMenu::-webkit-scrollbar {
+        width: 4px;
+      }
+      
+      #mobileMenu::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      
+      #mobileMenu::-webkit-scrollbar-thumb {
+        background: rgba(156, 163, 175, 0.5);
+        border-radius: 2px;
+      }
+      
+      #mobileMenu::-webkit-scrollbar-thumb:hover {
+        background: rgba(156, 163, 175, 0.7);
+      }
+      
+      /* Ensure mobile menu doesn't overflow on small screens */
+      @media (max-height: 600px) {
+        #mobileMenu {
+          max-height: calc(100vh - 80px);
+        }
+      }
+      
+      /* Smooth transitions for mobile menu */
+      #mobileMenu {
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+      
+      /* Prevent body scroll when mobile menu is open */
+      body.menu-open {
+        overflow: hidden;
+      }
+      
+      /* Responsive improvements for very small screens */
+      @media (max-width: 375px) {
+        .container {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        
+        #mobileMenu {
+          margin-left: -1rem;
+          margin-right: -1rem;
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+      }
+      
+      /* Ensure proper z-index and backdrop for mobile menu */
+      #mobileMenu {
+        z-index: 60;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+      
+      /* Improve mobile menu button touch target */
+      #mobileMenuBtn {
+        min-width: 44px;
+        min-height: 44px;
+      }
+      
+      /* Ensure mobile menu doesn't interfere with other elements */
+      #mobileMenu * {
+        z-index: inherit;
+      }
+      
+      /* Enhanced section headers */
+      .section-header {
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .section-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+        animation: shimmer 2s ease-in-out infinite;
+      }
+      
+      @keyframes shimmer {
+        0%, 100% { transform: translateX(-100%); }
+        50% { transform: translateX(100%); }
+      }
+      
+      /* Enhanced accent line */
+      .accent-line {
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .accent-line::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        animation: glow 3s ease-in-out infinite;
+      }
+      
+      /* Responsive text sizing */
+      .responsive-title {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        line-height: 1.2;
+      }
+      
+      .responsive-subtitle {
+        font-size: clamp(0.875rem, 2vw, 1rem);
+        line-height: 1.4;
       }
       
       .ad-slot {
@@ -119,13 +263,13 @@ html(lang="id" class="scroll-smooth")
   body(class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-all duration-500")
     header(class="sticky top-0 z-50 transition-all duration-500")
       div(class="absolute inset-0 bg-gradient-to-r from-white/90 to-white/70 dark:from-gray-900/90 dark:to-gray-800/70 backdrop-blur-xl border-b border-white/30 dark:border-gray-600/40")
-      nav(class="relative container mx-auto px-6 py-4")
+      nav(class="relative container mx-auto px-4 sm:px-6 py-3 sm:py-4")
         div(class="flex items-center justify-between")
           a(href="/" class="flex items-center group")
             div(class="relative")
-              img(src="/images/logo.png" alt="KitaNime" class="h-10 w-auto rounded-xl transition-transform duration-300 group-hover:scale-110", onerror="this.onerror=null;this.src='https://placehold.co/400?text=KN';")
+              img(src="/images/logo.png" alt="KitaNime" class="h-8 sm:h-10 w-auto rounded-xl transition-transform duration-300 group-hover:scale-110", onerror="this.onerror=null;this.src='https://placehold.co/400?text=KN';")
               div(class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300")
-            span(class="ml-3 text-2xl font-bold gradient-text") KitaNime
+            span(class="ml-2 sm:ml-3 text-lg sm:text-2xl font-bold gradient-text") KitaNime
           
           div(class="hidden lg:flex items-center space-x-8")
             a(href="/" class=`relative text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 font-medium ${currentPage === 'home' ? 'text-blue-600 dark:text-blue-400' : ''}`)
@@ -149,7 +293,8 @@ html(lang="id" class="scroll-smooth")
               if currentPage === 'movies'
                 div(class="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full")
           
-          div(class="flex-1 max-w-md mx-8 relative")
+          // Search Bar - Hidden on mobile, visible on desktop
+          div(class="hidden lg:block flex-1 max-w-md mx-8 relative")
             form(action="/search" method="GET" class="relative group")
               div(class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-300")
               input(
@@ -168,23 +313,53 @@ html(lang="id" class="scroll-smooth")
             div(id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white/98 dark:bg-gray-800/98 border border-gray-300/60 dark:border-gray-600/60 rounded-2xl shadow-2xl mt-2 hidden search-suggestions z-50 backdrop-blur-xl")
           
           div(class="flex items-center space-x-3")
-            button(id="darkModeToggle" class="p-3 rounded-2xl bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-700 border border-gray-300/60 dark:border-gray-600/60 transition-all duration-300 hover:scale-110 hover:shadow-lg")
+            button(id="darkModeToggle" class="hidden lg:block p-3 rounded-2xl bg-white/90 dark:bg-gray-800/90 hover:bg-white dark:hover:bg-gray-700 border border-gray-300/60 dark:border-gray-600/60 transition-all duration-300 hover:scale-110 hover:shadow-lg")
               svg(id="sunIcon" class="w-5 h-5 text-yellow-600 dark:hidden" fill="currentColor" viewBox="0 0 20 20")
                 path(fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd")
               svg(id="moonIcon" class="w-5 h-5 text-gray-200 hidden dark:block" fill="currentColor" viewBox="0 0 20 20")
                 path(d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z")
             
-            button(id="mobileMenuBtn" class="lg:hidden p-3 text-gray-700 dark:text-gray-200 hover:bg-white/90 dark:hover:bg-gray-800/90 rounded-2xl transition-all duration-300")
+            button(id="mobileMenuBtn" class="lg:hidden p-2.5 sm:p-3 text-gray-700 dark:text-gray-200 hover:bg-white/90 dark:hover:bg-gray-800/90 rounded-2xl transition-all duration-300")
               svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16")
         
-        div(id="mobileMenu" class="lg:hidden hidden mt-6 pb-6 border-t border-gray-300/60 dark:border-gray-600/60")
-          div(class="flex flex-col space-y-4 pt-6")
-            a(href="/" class=`text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium ${currentPage === 'home' ? 'text-blue-600 dark:text-blue-400' : ''}`) Beranda
-            a(href="/ongoing" class=`text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium ${currentPage === 'ongoing' ? 'text-blue-600 dark:text-blue-400' : ''}`) Ongoing
-            a(href="/complete" class=`text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium ${currentPage === 'complete' ? 'text-blue-600 dark:text-blue-400' : ''}`) Complete
-            a(href="/genres" class=`text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium ${currentPage === 'genres' ? 'text-blue-600 dark:text-blue-400' : ''}`) Genre
-            a(href="/movies" class=`text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium ${currentPage === 'movies' ? 'text-blue-600 dark:text-blue-400' : ''}`) Movies
+        div(id="mobileMenu" class="lg:hidden hidden mt-4 sm:mt-6 pb-4 sm:pb-6 border-t border-gray-300/60 dark:border-gray-600/60")
+          div(class="flex flex-col space-y-4 sm:space-y-6 pt-4 sm:pt-6")
+            // Mobile Search Bar
+            div(class="relative")
+              form(action="/search" method="GET" class="relative group")
+                div(class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-300")
+                input(
+                  type="text" 
+                  name="q" 
+                  placeholder="Cari anime favorit..." 
+                  value=keyword || ""
+                  class="relative w-full px-3 sm:px-4 py-2.5 sm:py-3 pl-10 sm:pl-12 pr-3 sm:pr-4 border-2 border-gray-300 dark:border-gray-500 rounded-2xl bg-white/95 dark:bg-gray-800/95 text-gray-900 dark:text-gray-100 focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 dark:focus:border-blue-400 transition-all duration-300 backdrop-blur-sm placeholder-gray-600 dark:placeholder-gray-300 text-sm sm:text-base"
+                  autocomplete="off"
+                  id="mobileSearchInput"
+                )
+                button(type="submit" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200")
+                  svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                    path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
+              
+              div(id="mobileSearchSuggestions" class="absolute top-full left-0 right-0 bg-white/98 dark:bg-gray-800/98 border border-gray-300/60 dark:border-gray-600/60 rounded-2xl shadow-2xl mt-2 hidden search-suggestions z-50 backdrop-blur-xl max-h-64 overflow-y-auto")
+            
+            // Mobile Dark Mode Toggle
+            div(class="flex items-center justify-center p-3 sm:p-4 bg-gray-50 dark:bg-gray-800/50 rounded-2xl border border-gray-200 dark:border-gray-600/30")
+              button(id="mobileDarkModeToggle" class="flex items-center space-x-2 sm:space-x-3 p-2.5 sm:p-3 rounded-2xl bg-white/90 dark:bg-gray-700/90 hover:bg-white dark:hover:bg-gray-600 border border-gray-300/60 dark:border-gray-500/60 transition-all duration-300 hover:scale-105 hover:shadow-lg")
+                svg(id="mobileSunIcon" class="w-5 h-5 text-yellow-600 dark:hidden" fill="currentColor" viewBox="0 0 20 20")
+                  path(fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a0 0 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a0 0 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd")
+                svg(id="mobileMoonIcon" class="w-5 h-5 text-gray-200 hidden dark:block" fill="currentColor" viewBox="0 0 20 20")
+                  path(d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z")
+                span(class="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-200") Toggle Theme
+            
+            // Mobile Navigation Links
+            div(class="space-y-3 sm:space-y-4")
+              a(href="/" class=`block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium text-sm sm:text-base py-2 px-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 ${currentPage === 'home' ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : ''}`) Beranda
+              a(href="/ongoing" class=`block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium text-sm sm:text-base py-2 px-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 ${currentPage === 'ongoing' ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : ''}`) Ongoing
+              a(href="/complete" class=`block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium text-sm sm:text-base py-2 px-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 ${currentPage === 'complete' ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : ''}`) Complete
+              a(href="/genres" class=`block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium text-sm sm:text-base py-2 px-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 ${currentPage === 'genres' ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : ''}`) Genre
+              a(href="/movies" class=`block text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 font-medium text-sm sm:text-base py-2 px-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800/50 ${currentPage === 'movies' ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20' : ''}`) Movies
 
     main(class="min-h-screen")
       block content
@@ -353,6 +528,20 @@ html(lang="id" class="scroll-smooth")
         }, 500);
       });
 
+      // Mobile dark mode toggle functionality
+      const mobileDarkModeToggle = document.getElementById('mobileDarkModeToggle');
+      mobileDarkModeToggle?.addEventListener('click', function() {
+        // Add transition class for smooth color changes
+        html.style.transition = 'all 0.5s ease';
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        
+        // Remove transition after animation
+        setTimeout(() => {
+          html.style.transition = '';
+        }, 500);
+      });
+
       // Enhanced mobile menu with animations
       document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
         const menu = document.getElementById('mobileMenu');
@@ -361,6 +550,9 @@ html(lang="id" class="scroll-smooth")
           menu.style.opacity = '0';
           menu.style.transform = 'translateY(-10px)';
           
+          // Prevent body scroll when menu is open
+          document.body.style.overflow = 'hidden';
+          
           setTimeout(() => {
             menu.style.opacity = '1';
             menu.style.transform = 'translateY(0)';
@@ -368,6 +560,40 @@ html(lang="id" class="scroll-smooth")
         } else {
           menu.style.opacity = '0';
           menu.style.transform = 'translateY(-10px)';
+          
+          // Restore body scroll when menu is closed
+          document.body.style.overflow = '';
+          
+          setTimeout(() => {
+            menu.classList.add('hidden');
+          }, 200);
+        }
+      });
+
+      // Close mobile menu when clicking on navigation links
+      document.querySelectorAll('#mobileMenu a[href]').forEach(link => {
+        link.addEventListener('click', function() {
+          const menu = document.getElementById('mobileMenu');
+          menu.style.opacity = '0';
+          menu.style.transform = 'translateY(-10px)';
+          document.body.style.overflow = '';
+          
+          setTimeout(() => {
+            menu.classList.add('hidden');
+          }, 200);
+        });
+      });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', function(e) {
+        const menu = document.getElementById('mobileMenu');
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        
+        if (menu && !menu.classList.contains('hidden') && 
+            !menu.contains(e.target) && !menuBtn.contains(e.target)) {
+          menu.style.opacity = '0';
+          menu.style.transform = 'translateY(-10px)';
+          document.body.style.overflow = '';
           
           setTimeout(() => {
             menu.classList.add('hidden');
@@ -378,7 +604,10 @@ html(lang="id" class="scroll-smooth")
       // Enhanced search with better UX
       const searchInput = document.getElementById('searchInput');
       const searchSuggestions = document.getElementById('searchSuggestions');
+      const mobileSearchInput = document.getElementById('mobileSearchInput');
+      const mobileSearchSuggestions = document.getElementById('mobileSearchSuggestions');
       let searchTimeout;
+      let mobileSearchTimeout;
 
       searchInput?.addEventListener('input', function() {
         const query = this.value.trim();
@@ -388,7 +617,7 @@ html(lang="id" class="scroll-smooth")
         if (query.length < 2) {
           searchSuggestions.style.opacity = '0';
           setTimeout(() => {
-            searchSuggestions.classList.add('hidden');
+          searchSuggestions.classList.add('hidden');
           }, 200);
           return;
         }
@@ -430,12 +659,70 @@ html(lang="id" class="scroll-smooth")
         }, 300);
       });
 
+      // Mobile search functionality
+      mobileSearchInput?.addEventListener('input', function() {
+        const query = this.value.trim();
+        
+        clearTimeout(mobileSearchTimeout);
+        
+        if (query.length < 2) {
+          mobileSearchSuggestions.style.opacity = '0';
+          setTimeout(() => {
+            mobileSearchSuggestions.classList.add('hidden');
+          }, 200);
+          return;
+        }
+        
+        mobileSearchTimeout = setTimeout(() => {
+          fetch(`/api/search/suggestions?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+              if (data.suggestions && data.suggestions.length > 0) {
+                mobileSearchSuggestions.innerHTML = data.suggestions.map(anime => 
+                  `<a href="/anime/${anime.slug}" class="flex items-center space-x-3 p-4 hover:bg-blue-50 dark:hover:bg-blue-900/30 border-b border-gray-200/60 dark:border-gray-600/60 last:border-b-0 transition-all duration-200 hover:scale-105 rounded-xl">
+                    <img src="${anime.poster}" alt="${anime.title}" class="w-12 h-16 object-cover rounded-xl" onerror="this.onerror=null;this.src='https://placehold.co/400x560?text=No+Image';">
+                    <div class="flex-1">
+                      <span class="text-sm font-medium text-gray-900 dark:text-gray-100 block">${anime.title}</span>
+                      <span class="text-xs text-gray-600 dark:text-gray-300">Klik untuk melihat detail</span>
+                    </div>
+                  </a>`
+                ).join('');
+                
+                mobileSearchSuggestions.classList.remove('hidden');
+                mobileSearchSuggestions.style.opacity = '0';
+                
+                setTimeout(() => {
+                  mobileSearchSuggestions.style.opacity = '1';
+                }, 10);
+              } else {
+                mobileSearchSuggestions.style.opacity = '0';
+                setTimeout(() => {
+                  mobileSearchSuggestions.classList.add('hidden');
+                }, 200);
+              }
+            })
+            .catch(() => {
+              mobileSearchSuggestions.style.opacity = '0';
+              setTimeout(() => {
+                mobileSearchSuggestions.classList.add('hidden');
+              }, 200);
+            });
+        }, 300);
+      });
+
       // Enhanced click outside detection
       document.addEventListener('click', function(e) {
         if (!searchInput?.contains(e.target) && !searchSuggestions?.contains(e.target)) {
           searchSuggestions.style.opacity = '0';
           setTimeout(() => {
             searchSuggestions.classList.add('hidden');
+          }, 200);
+        }
+        
+        if (!mobileSearchInput?.contains(e.target) && !mobileSearchSuggestions?.contains(e.target)) {
+          mobileSearchSuggestions.style.opacity = '0';
+          setTimeout(() => {
+            mobileSearchSuggestions.classList.add('hidden');
           }, 200);
         }
       });

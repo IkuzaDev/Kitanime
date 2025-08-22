@@ -8,14 +8,14 @@ block content
       div(class="relative bg-gradient-to-r from-white/90 to-white/70 dark:from-gray-800/90 dark:to-gray-700/70 backdrop-blur-xl rounded-3xl p-12 border border-white/30 dark:border-gray-600/40")
         div(class="max-w-4xl mx-auto text-center")
           div(class="mb-8")
-            div(class="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full text-sm font-medium mb-6 animate-float")
+            div(class="inline-flex items-center space-x-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full text-sm font-medium mb-6 animate-float shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105")
               svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z")
               span Anime Ongoing Terbaru
-          h1(class="text-5xl md:text-6xl font-bold mb-6 leading-tight")
+          h1(class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight")
             span(class="text-gray-800 dark:text-gray-100") Koleksi 
             span(class="gradient-text") Anime Ongoing
-          p(class="text-xl md:text-2xl text-gray-700 dark:text-gray-200 mb-8 leading-relaxed max-w-3xl mx-auto") Temukan anime ongoing terbaru dengan episode terupdate setiap minggunya. Jangan sampai ketinggalan episode terbaru dari anime favorit Anda.
+          p(class="text-lg sm:text-xl md:text-2xl text-gray-700 dark:text-gray-200 mb-8 leading-relaxed max-w-3xl mx-auto") Temukan anime ongoing terbaru dengan episode terupdate setiap minggunya. Jangan sampai ketinggalan episode terbaru dari anime favorit Anda.
 
     // Breadcrumb
     nav(class="mb-8")
@@ -31,12 +31,17 @@ block content
       div(class="lg:col-span-3")
         // Main Content
         div(class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-3xl shadow-xl p-8 mb-8 border border-white/30 dark:border-gray-600/40 transition-all duration-500 hover:shadow-2xl")
-          div(class="flex items-center justify-between mb-8")
-            div(class="flex items-center space-x-3")
-              div(class="w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full")
-              h2(class="text-3xl font-bold text-gray-800 dark:text-gray-100") Daftar Anime Ongoing
+                      div(class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 space-y-4 sm:space-y-0 section-header")
+            div(class="flex items-center space-x-4")
+                              div(class="relative accent-line")
+                  div(class="w-2 h-10 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full shadow-lg")
+                  div(class="absolute inset-0 bg-gradient-to-b from-blue-400 to-purple-500 rounded-full opacity-75 animate-pulse")
+              div
+                h2(class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 mb-1") Daftar Anime Ongoing
+                p(class="text-sm text-gray-600 dark:text-gray-400") Total #{animeList && animeList.length ? animeList.length : 0} anime ongoing
             div(class="flex items-center space-x-2")
-              span(class="text-gray-600 dark:text-gray-300 text-sm")= (animeList && animeList.length ? animeList.length : 0) + ' Anime'
+              div(class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg")
+                span= (animeList && animeList.length ? animeList.length : 0) + ' Anime'
           
           if animeList && animeList.length > 0
             div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6")
