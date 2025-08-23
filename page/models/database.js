@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const bcrypt = require('bcrypt');
 
-const dbPath = path.join(__dirname, '..', 'data', 'kitanime.db');
+const dbPath = path.join(__dirname, '..', 'data', 'freenime.db');
 
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
@@ -86,7 +86,7 @@ async function insertDefaultData() {
         try {
           const hashedPassword = await bcrypt.hash('admin123', 10);
           db.run(`INSERT INTO admin_users (username, password_hash, email) VALUES
-            ('admin', ?, 'admin@kitanime.com')`, [hashedPassword]);
+            ('admin', ?, 'admin@freenime.com')`, [hashedPassword]);
         } catch (error) {
           reject(error);
           return;
@@ -116,7 +116,7 @@ async function insertDefaultData() {
 
       if (row.count === 0) {
         db.run(`INSERT INTO settings (key, value, description) VALUES
-          ('site_title', 'KitaNime - Streaming Anime Subtitle Indonesia', 'Judul website'),
+          ('site_title', 'FreeNime - Streaming Anime Subtitle Indonesia', 'Judul website'),
           ('site_description', 'Nonton anime subtitle Indonesia terlengkap dan terbaru', 'Deskripsi website'),
           ('cookie_consent_enabled', '1', 'Enable cookie consent popup'),
           ('adsense_enabled', '0', 'Enable Google AdSense')`);

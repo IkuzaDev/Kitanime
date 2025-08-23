@@ -1,4 +1,4 @@
-# Panduan Deployment KitaNime di cPanel
+# Panduan Deployment FreeNime di cPanel
 
 ## Langkah-langkah Deploy di cPanel
 
@@ -51,8 +51,8 @@ Pastikan file berikut sudah ada di project:
 - Port ini akan di-handle otomatis oleh cPanel
 
 #### Database SQLite
-- Database SQLite (`kitanime.db`) akan berjalan otomatis
-- Pastikan file `kitanime.db` memiliki permission 644
+- Database SQLite (`freenime.db`) akan berjalan otomatis
+- Pastikan file `freenime.db` memiliki permission 644
 
 #### Error 503 Service Unavailable
 - Restart aplikasi dari cPanel
@@ -74,7 +74,7 @@ Pastikan file berikut sudah ada di project:
 - Cek **"Metrics"** untuk melihat resource usage
 
 ### 10. Backup
-- Backup database: Download file `kitanime.db`
+- Backup database: Download file `freenime.db`
 - Backup file: Download seluruh project folder
 
 ### Tips Keamanan

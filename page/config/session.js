@@ -7,7 +7,7 @@ function createSessionConfig() {
   const isVercel = process.env.VERCEL === '1';
   
   const baseConfig = {
-    secret: process.env.SESSION_SECRET || 'kitanime-secret-key-change-in-production',
+    secret: process.env.SESSION_SECRET || 'freenime-secret-key-change-in-production',
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -16,7 +16,7 @@ function createSessionConfig() {
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
       sameSite: isProduction ? 'strict' : 'lax'
     },
-    name: 'kitanime.sid'
+    name: 'freenime.sid'
   };
 
   // Use SQLite store for production and Vercel deployment

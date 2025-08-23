@@ -43,7 +43,7 @@ class AnimeApiService {
         params,
         timeout: 10000,
         headers: {
-          'User-Agent': 'KitaNime/1.0'
+          'User-Agent': 'FreeNime/1.0'
         }
       });
 
