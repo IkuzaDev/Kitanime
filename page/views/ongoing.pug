@@ -44,7 +44,7 @@ block content
                 span= (animeList && animeList.length ? animeList.length : 0) + ' Anime'
           
           if animeList && animeList.length > 0
-            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 anime-grid")
+            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 anime-grid")
               each anime in animeList
                 div(class="anime-card group relative")
                   a(href=`/anime/${anime.slug}`)
@@ -53,15 +53,15 @@ block content
                         img(src=anime.poster alt=anime.title class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
                         div(class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500")
                         if anime.current_episode
-                          div(class="absolute top-3 left-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm animate-glow z-10")= anime.current_episode
+                          div(class="absolute top-3 left-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs sm:text-sm lg:text-xs font-bold px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 lg:py-2 rounded-full shadow-lg backdrop-blur-sm animate-glow z-10")= anime.current_episode
                         if anime.newest_release_date
-                          div(class="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full border border-white/20 z-10")= anime.newest_release_date
+                          div(class="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white text-xs sm:text-sm lg:text-xs px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 lg:py-2 rounded-full border border-white/20 z-10")= anime.newest_release_date
                         div(class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500")
                           div(class="flex items-center justify-between text-white")
                             div(class="flex items-center space-x-2")
                               h3(class="font-bold text-sm text-gray-100 line-clamp-2 mb-2 transition-colors duration-200")= anime.title
                             if anime.release_day
-                              button(class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-3 py-1 rounded-full text-xs font-medium transition-colors duration-200")= anime.release_day
+                              span(class="text-white text-xs sm:text-sm font-medium transition-colors duration-200")= anime.release_day
                       //- div(class="p-4")
                       //-   h3(class="font-bold text-gray-800 dark:text-gray-100 text-sm mb-2 line-clamp-2")= anime.title
                         if anime.rating

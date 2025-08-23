@@ -51,7 +51,7 @@ block content
               
               p(class="text-gray-600 dark:text-gray-300 mb-6") Ditemukan #{searchResults.length} hasil untuk "#{keyword}"
               
-              div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 anime-grid")
+              div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 anime-grid")
                 each anime in searchResults
                   div(class="anime-card group relative")
                     a(href=`/anime/${anime.slug}`)

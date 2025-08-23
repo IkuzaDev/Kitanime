@@ -194,7 +194,7 @@ app.use('/api', apiRoutes);
 // 404 handler
 app.use((req, res) => {
   res.status(404).render('error', {
-    title: 'Halaman Tidak Ditemukan - KitaNime',
+    title: 'Halaman Tidak Ditemukan - FreeNime',
     error: {
       status: 404,
       message: 'Halaman yang Anda cari tidak ditemukan'
@@ -206,7 +206,7 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).render('error', {
-    title: 'Terjadi Kesalahan - KitaNime',
+    title: 'Terjadi Kesalahan - FreeNime',
     error: {
       status: err.status || 500,
       message: process.env.NODE_ENV === 'production' ? 
@@ -229,7 +229,7 @@ async function startServer() {
     
     // Start server only for local development
     app.listen(PORT, () => {
-      console.log(`KitaNime server running on port ${PORT}`);
+      console.log(`FreeNime server running on port ${PORT}`);
       console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log(`Server ready for cPanel deployment`);
     });

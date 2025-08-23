@@ -34,7 +34,7 @@ block content
 
         if animeList && animeList.length > 0
           // Anime Grid
-          div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-8 anime-grid")
+          div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 mb-8 anime-grid")
             each anime in animeList
               div(class="anime-card group relative")
                 a(href=`/movies/${anime.years}/${anime.month}/${anime.slug}`)
@@ -123,7 +123,7 @@ block scripts
   script.
     // Enhanced movie card animations
     document.addEventListener('DOMContentLoaded', function() {
-      const movieCards = document.querySelectorAll('.movie-card');
+      const movieCards = document.querySelectorAll('.anime-card');
       
       // Stagger animation for cards
       movieCards.forEach((card, index) => {

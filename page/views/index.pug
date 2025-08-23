@@ -14,7 +14,7 @@ block content
               span Streaming Anime Terlengkap
           h1(class="text-5xl md:text-6xl font-bold mb-6 leading-tight")
             span(class="text-gray-800 dark:text-gray-100") Selamat Datang di 
-            span(class="gradient-text") KitaNime
+                            span(class="gradient-text") FreeNime
           p(class="text-xl md:text-2xl text-gray-700 dark:text-gray-200 mb-8 leading-relaxed max-w-3xl mx-auto") Platform streaming anime subtitle Indonesia terlengkap. Nikmati ribuan anime berkualitas tinggi dengan subtitle Indonesia yang akurat dan berkualitas.
           div(class="flex flex-col sm:flex-row gap-4 justify-center items-center")
             a(href="/ongoing" class="hero-btn group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25 flex items-center space-x-2")
@@ -43,7 +43,7 @@ block content
                 svg(class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                   path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
             
-            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 anime-grid")
+            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 anime-grid")
               each anime in ongoingAnime.slice(0, 12)
                 div(class="anime-card group relative")
                   a(href=`/anime/${anime.slug}`)
@@ -52,14 +52,14 @@ block content
                         img(src=anime.poster alt=anime.title class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
                         div(class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500")
                         if anime.current_episode
-                          div(class="absolute top-3 left-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm animate-glow z-10")= anime.current_episode
+                          div(class="absolute top-3 left-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs sm:text-sm lg:text-xs font-bold px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 lg:py-2 rounded-full shadow-lg backdrop-blur-sm animate-glow z-10")= anime.current_episode
                         if anime.newest_release_date
-                          div(class="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full border border-white/20 z-10")= anime.newest_release_date
+                          div(class="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white text-xs sm:text-sm lg:text-xs px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 lg:py-2 rounded-full border border-white/20 z-10")= anime.newest_release_date
                         div(class="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500")
                           div(class="flex items-center justify-between text-white")
                             div(class="flex items-center space-x-2")
                               h3(class="font-bold text-sm text-gray-100 line-clamp-2 mb-2 transition-colors duration-200")= anime.title
-                            button(class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-3 py-1 rounded-full text-xs font-medium transition-colors duration-200")= anime.release_day
+                            span(class="text-white text-xs sm:text-sm font-medium transition-colors duration-200")= anime.release_day
 
         if completeAnime && completeAnime.length > 0
           section(class="mb-12")
@@ -76,7 +76,7 @@ block content
                 svg(class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                   path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
             
-            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 anime-grid")
+            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 anime-grid")
               each anime in completeAnime.slice(0, 12)
                 div(class="anime-card group relative")
                   a(href=`/anime/${anime.slug}`)
@@ -84,9 +84,9 @@ block content
                       div(class="relative overflow-hidden")
                         img(src=anime.poster alt=anime.title class="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
                         div(class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500")
-                        div(class="absolute top-3 left-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg backdrop-blur-sm") Complete
+                        div(class="absolute top-3 left-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs sm:text-sm lg:text-xs font-bold px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 lg:py-2 rounded-full shadow-lg backdrop-blur-sm") Complete
                         if anime.rating
-                          div(class="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full flex items-center border border-white/20")
+                          div(class="absolute top-3 right-3 bg-black/80 backdrop-blur-sm text-white text-xs sm:text-sm lg:text-xs px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 lg:py-2 rounded-full flex items-center border border-white/20")
                             svg(class="w-3 h-3 mr-1 text-yellow-400" fill="currentColor" viewBox="0 0 20 20")
                               path(d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z")
                             span= anime.rating
@@ -148,7 +148,7 @@ block content
           h3(class="font-bold text-blue-900 dark:text-blue-100 mb-4 flex items-center text-lg")
             svg(class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
-            span Tentang KitaNime
+                            span Tentang FreeNime
           p(class="text-blue-800 dark:text-blue-200 text-sm leading-relaxed") Platform streaming anime terlengkap dengan subtitle Indonesia berkualitas tinggi. Nikmati pengalaman menonton anime yang tak terlupakan dengan kualitas terbaik.
 
     // Scroll to Top Button
