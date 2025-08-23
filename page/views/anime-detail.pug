@@ -44,19 +44,19 @@ block content
                           a(href=`/genres/${genre.slug}` class="px-3 py-2 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 text-purple-700 dark:text-purple-300 text-sm rounded-2xl hover:from-purple-200 hover:to-pink-200 dark:hover:from-purple-800/50 dark:hover:to-pink-800/50 hover:text-purple-800 dark:hover:text-purple-200 transition-all duration-300 hover:scale-105 border border-purple-200/50 dark:border-purple-700/30")= genre.slug
                   
                 if anime.synopsis
-                    div(class="mb-6")
-                      h3(class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center")
-                        svg(class="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                          path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
-                        span Sinopsis:
-                    p(class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed")= anime.synopsis
-                  
-                  div(class="flex flex-wrap gap-4 mt-6")
+                  div(class="mb-6")
+                    h3(class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center")
+                      svg(class="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                        path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
+                      span Sinopsis:
+                  p(class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed")= anime.synopsis
+                
+                div(class="flex flex-wrap gap-4 mt-6")
                   if anime.batch_links && anime.batch_links.length > 0
-                      a(href=`/anime/${anime.slug}/batch` class="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-3 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg")
-                        svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-                          path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
-                        span Download Batch
+                    a(href=`/anime/${anime.slug}/batch` class="inline-flex items-center space-x-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-3 rounded-2xl font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg")
+                      svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                        path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
+                      span Download Batch
 
           // Episodes Section
           if anime.episodes && anime.episodes.length > 0
