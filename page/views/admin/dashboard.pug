@@ -1,8 +1,8 @@
 extends layout
 
 block content
-  div(class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8")
-    div(class="bg-white rounded-lg shadow p-6")
+  div(class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 admin-grid")
+    div(class="bg-white rounded-lg shadow p-4 sm:p-6")
       div(class="flex items-center")
         div(class="flex-shrink-0")
           div(class="w-8 h-8 bg-primary-100 rounded-md flex items-center justify-center")
@@ -12,7 +12,7 @@ block content
           p(class="text-sm font-medium text-gray-600") API Endpoints
           p(class="text-2xl font-semibold text-gray-900")= stats.apiEndpoints || 0
 
-    div(class="bg-white rounded-lg shadow p-6")
+    div(class="bg-white rounded-lg shadow p-4 sm:p-6")
       div(class="flex items-center")
         div(class="flex-shrink-0")
           div(class="w-8 h-8 bg-green-100 rounded-md flex items-center justify-center")
@@ -22,7 +22,7 @@ block content
           p(class="text-sm font-medium text-gray-600") Total Slot Iklan
           p(class="text-2xl font-semibold text-gray-900")= stats.adSlots || 0
 
-    div(class="bg-white rounded-lg shadow p-6")
+    div(class="bg-white rounded-lg shadow p-4 sm:p-6")
       div(class="flex items-center")
         div(class="flex-shrink-0")
           div(class="w-8 h-8 bg-blue-100 rounded-md flex items-center justify-center")
@@ -32,11 +32,11 @@ block content
           p(class="text-sm font-medium text-gray-600") Slot Iklan Aktif
           p(class="text-2xl font-semibold text-gray-900")= stats.activeAdSlots || 0
 
-  div(class="grid grid-cols-1 lg:grid-cols-2 gap-8")
+  div(class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 admin-grid")
     div(class="bg-white rounded-lg shadow")
-      div(class="px-6 py-4 border-b border-gray-200")
+      div(class="px-4 sm:px-6 py-4 border-b border-gray-200")
         h3(class="text-lg font-medium text-gray-900") Aksi Cepat
-      div(class="p-6")
+      div(class="p-4 sm:p-6")
         div(class="space-y-4")
           a(href="/admin/api-endpoints" class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors")
             svg(class="w-8 h-8 text-primary-600 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
@@ -69,9 +69,9 @@ block content
               p(class="text-sm text-gray-600") Lihat tampilan website secara real-time
 
     div(class="bg-white rounded-lg shadow")
-      div(class="px-6 py-4 border-b border-gray-200")
+      div(class="px-4 sm:px-6 py-4 border-b border-gray-200")
         h3(class="text-lg font-medium text-gray-900") Informasi Sistem
-      div(class="p-6")
+      div(class="p-4 sm:p-6")
         div(class="space-y-4")
           div(class="flex justify-between")
             span(class="text-sm font-medium text-gray-600") Versi Node.js:

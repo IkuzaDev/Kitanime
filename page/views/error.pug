@@ -1,37 +1,37 @@
 extends layout
 
 block content
-  div(class="min-h-screen bg-gradient-to-br from-gray-50 via-red-50 to-pink-50 dark:from-gray-900 dark:via-red-900/20 dark:to-pink-900/20 flex items-center justify-center py-12")
-    div(class="container mx-auto px-6")
+  div(class="min-h-screen bg-gradient-to-br from-gray-50 via-red-50 to-pink-50 dark:from-gray-900 dark:via-red-900/20 dark:to-pink-900/20 flex items-center justify-center py-8 sm:py-12")
+    div(class="container mx-auto px-4 sm:px-6")
       div(class="max-w-2xl mx-auto text-center")
         // Error Icon
-        div(class="mb-8 relative")
+        div(class="mb-6 sm:mb-8 relative")
           div(class="absolute inset-0 bg-gradient-to-br from-red-500/20 via-pink-500/20 to-orange-500/20 rounded-full blur-3xl")
         if error.status === 404
-            div(class="relative bg-gradient-to-br from-blue-500 to-purple-600 p-8 rounded-full inline-block shadow-2xl")
-              svg(class="w-32 h-32 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            div(class="relative bg-gradient-to-br from-blue-500 to-purple-600 p-6 sm:p-8 rounded-full inline-block shadow-2xl")
+              svg(class="w-24 h-24 sm:w-32 sm:h-32 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24")
             path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.5-.935-6.072-2.456M3 12a9 9 0 1118 0 9 9 0 01-18 0z")
         else
-            div(class="relative bg-gradient-to-br from-red-500 to-pink-600 p-8 rounded-full inline-block shadow-2xl")
-              svg(class="w-32 h-32 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            div(class="relative bg-gradient-to-br from-red-500 to-pink-600 p-6 sm:p-8 rounded-full inline-block shadow-2xl")
+              svg(class="w-24 h-24 sm:w-32 sm:h-32 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24")
             path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z")
       
         // Error Content
-        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl p-12 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-3xl")
-          h1(class="text-6xl md:text-8xl font-bold text-gray-900 dark:text-gray-100 mb-6")= error.status || 500
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 sm:p-12 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-3xl")
+          h1(class="text-4xl sm:text-6xl md:text-8xl font-bold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6")= error.status || 500
       
-          h2(class="text-2xl md:text-3xl font-bold text-gray-700 dark:text-gray-200 mb-8")
+          h2(class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-700 dark:text-gray-200 mb-6 sm:mb-8")
         if error.status === 404
           | Halaman Tidak Ditemukan
         else
           | Terjadi Kesalahan
       
-          p(class="text-lg text-gray-600 dark:text-gray-300 mb-10 leading-relaxed")= error.message || "Terjadi kesalahan yang tidak terduga"
+          p(class="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-8 sm:mb-10 leading-relaxed")= error.message || "Terjadi kesalahan yang tidak terduga"
           
           // Action Buttons
-          div(class="space-y-4 mb-10")
-            a(href="/" class="inline-flex items-center space-x-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl")
-              svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+          div(class="space-y-4 mb-8 sm:mb-10")
+            a(href="/" class="inline-flex items-center space-x-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl")
+              svg(class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
               span Kembali ke Beranda
         

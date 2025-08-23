@@ -259,6 +259,127 @@ html(lang="id" class="scroll-smooth")
       .border-contrast-dark {
         border-color: rgba(75, 85, 99, 0.5);
       }
+      
+      /* Enhanced responsive spacing */
+      @media (max-width: 640px) {
+        .container {
+          padding-left: 1rem;
+          padding-right: 1rem;
+        }
+        
+        .hero-section {
+          padding: 2rem 1rem;
+        }
+        
+        .hero-section h1 {
+          font-size: 2rem;
+          line-height: 1.2;
+        }
+        
+        .hero-section p {
+          font-size: 1rem;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .hero-section {
+          padding: 3rem 1.5rem;
+        }
+        
+        .hero-section h1 {
+          font-size: 2.5rem;
+        }
+        
+        .hero-section p {
+          font-size: 1.125rem;
+        }
+      }
+      
+      /* Improved card grid responsiveness */
+      @media (max-width: 480px) {
+        .anime-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.75rem;
+        }
+      }
+      
+      @media (min-width: 481px) and (max-width: 640px) {
+        .anime-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+        }
+      }
+      
+      @media (min-width: 641px) and (max-width: 768px) {
+        .anime-grid {
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.25rem;
+        }
+      }
+      
+      @media (min-width: 769px) and (max-width: 1024px) {
+        .anime-grid {
+          grid-template-columns: repeat(5, 1fr);
+          gap: 1.5rem;
+        }
+      }
+      
+      @media (min-width: 1025px) {
+        .anime-grid {
+          grid-template-columns: repeat(6, 1fr);
+          gap: 1.5rem;
+        }
+      }
+      
+      /* Enhanced mobile navigation */
+      @media (max-width: 1024px) {
+        .desktop-nav {
+          display: none;
+        }
+        
+        .mobile-nav-toggle {
+          display: block;
+        }
+      }
+      
+      /* Improved sidebar responsiveness */
+      @media (max-width: 1024px) {
+        .sidebar {
+          margin-top: 2rem;
+        }
+        
+        .sidebar-content {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1.5rem;
+        }
+      }
+      
+      /* Enhanced button responsiveness */
+      @media (max-width: 640px) {
+        .btn-primary, .btn-secondary {
+          padding: 0.75rem 1.5rem;
+          font-size: 0.875rem;
+        }
+        
+        .hero-btn {
+          padding: 0.875rem 1.75rem;
+          font-size: 1rem;
+        }
+      }
+      
+      /* Improved form responsiveness */
+      @media (max-width: 640px) {
+        .search-form input {
+          padding: 0.75rem 1rem;
+          font-size: 1rem;
+        }
+        
+        .search-form button {
+          padding: 0.75rem 1.5rem;
+          font-size: 0.875rem;
+        }
+      }
 
   body(class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-all duration-500")
     header(class="sticky top-0 z-50 transition-all duration-500")

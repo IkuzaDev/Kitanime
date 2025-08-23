@@ -26,7 +26,7 @@ block content
               h2(class="text-2xl font-bold text-gray-900 dark:text-gray-100") Semua Genre
               span(class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm font-medium")= genres.length + ' Genre'
             
-            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6")
+            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 genre-grid")
               each genre in genres
                 a(href=`/genres/${genre.slug}` class="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-lg hover:shadow-2xl dark:shadow-gray-900/50 p-8 transition-all duration-500 hover:scale-105 text-center border border-white/20 dark:border-gray-700/30 hover:border-purple-300 dark:hover:border-purple-500")
                   div(class="w-20 h-20 bg-gradient-to-br from-purple-100 to-pink-200 dark:from-purple-900/50 dark:to-pink-900/50 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:from-purple-200 group-hover:to-pink-300 dark:group-hover:from-purple-800/70 dark:group-hover:to-pink-800/70")
@@ -45,7 +45,7 @@ block content
               h2(class="text-2xl font-bold text-gray-900 dark:text-gray-100") Genre Populer
               span(class="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm font-medium") 8 Genre
             
-            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6")
+            div(class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 genre-grid")
               each genre in ['Action', 'Adventure', 'Comedy', 'Drama', 'Fantasy', 'Romance', 'Sci-Fi', 'Thriller']
                 a(href=`/genres/${genre.toLowerCase()}` class="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-lg hover:shadow-2xl dark:shadow-gray-900/50 p-8 transition-all duration-500 hover:scale-105 text-center border border-white/20 dark:border-gray-700/30 hover:border-purple-300 dark:hover:border-purple-500")
                   div(class="w-20 h-20 bg-gradient-to-br from-purple-100 to-pink-200 dark:from-purple-900/50 dark:to-pink-900/50 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 group-hover:from-purple-200 group-hover:to-pink-300 dark:group-hover:from-purple-800/70 dark:group-hover:to-pink-800/70")

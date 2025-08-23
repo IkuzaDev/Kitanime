@@ -43,13 +43,20 @@ block content
                       each genre in anime.genres
                           a(href=`/genres/${genre.slug}` class="px-3 py-2 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 text-purple-700 dark:text-purple-300 text-sm rounded-2xl hover:from-purple-200 hover:to-pink-200 dark:hover:from-purple-800/50 dark:hover:to-pink-800/50 hover:text-purple-800 dark:hover:text-purple-200 transition-all duration-300 hover:scale-105 border border-purple-200/50 dark:border-purple-700/30")= genre.slug
                   
-                if anime.synopsis
-                  div(class="mb-6")
+                if anime.synopsis && anime.synopsis.trim() !== ''
+                  div(class="mb-6 synopsis-container")
                     h3(class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center")
                       svg(class="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                         path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
                       span Sinopsis:
-                  p(class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed")= anime.synopsis
+                    p(class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-4 synopsis-text")= anime.synopsis
+                else
+                  div(class="mb-6 synopsis-container")
+                    h3(class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 flex items-center")
+                      svg(class="w-4 h-4 mr-2 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                        path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 0118 0z")
+                      span Sinopsis:
+                    p(class="synopsis-fallback") Sinopsis tidak tersedia
                 
                 div(class="flex flex-wrap gap-4 mt-6")
                   if anime.batch_links && anime.batch_links.length > 0
@@ -66,7 +73,7 @@ block content
                 h2(class="text-2xl font-bold text-gray-900 dark:text-gray-100") Daftar Episode
                 span(class="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium")= anime.episodes.length + ' Episode'
               
-              div(class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-6")
+              div(class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-6 episode-grid")
                 each episode in anime.episodes.slice(0, 24)
                   a(href=`/anime/${anime.slug}/episode/${episode.episode}` class="group bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 hover:from-blue-100 hover:to-purple-100 dark:hover:from-blue-800/30 dark:hover:to-purple-800/30 border-2 border-blue-200 dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-500 rounded-2xl p-8 text-center transition-all duration-300 hover:scale-105 hover:shadow-lg min-h-[140px] flex flex-col justify-center")
                     div(class="text-base font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200 mb-3") Episode #{episode.episode}

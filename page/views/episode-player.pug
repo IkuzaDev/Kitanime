@@ -6,28 +6,28 @@ block content
       div(class="lg:col-span-3")
         // Breadcrumb Navigation
         nav(class="mb-6 sm:mb-8")
-          ol(class="flex items-center space-x-2 sm:space-x-3 text-xs sm:text-sm overflow-x-auto pb-2")
-            li: a(href="/" class="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 flex items-center") 
+          ol(class="flex items-center space-x-2 sm:space-x-3 text-xs sm:text-sm overflow-x-auto pb-2 scrollbar-hide")
+            li: a(href="/" class="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 flex items-center whitespace-nowrap") 
               svg(class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
               span Beranda
-            li: span(class="text-gray-400 dark:text-gray-500") /
-            li: a(href=`/anime/${anime.slug}` class="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200")= anime.title
-            li: span(class="text-gray-400 dark:text-gray-500") /
-            li(class="text-indigo-600 dark:text-indigo-400 font-semibold") Episode #{episode.number}
+            li: span(class="text-gray-400 dark:text-gray-500 whitespace-nowrap") /
+            li: a(href=`/anime/${anime.slug}` class="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 whitespace-nowrap")= anime.title
+            li: span(class="text-gray-400 dark:text-gray-500 whitespace-nowrap") /
+            li(class="text-indigo-600 dark:text-indigo-400 font-semibold whitespace-nowrap") Episode #{episode.number}
 
         // Video Player Section
-        div(class="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl mb-6 sm:mb-8 group transition-colors duration-300 hover:shadow-3xl will-change-transform")
+        div(class="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl mb-6 sm:mb-8 group transition-colors duration-300 hover:shadow-3xl will-change-transform video-player-container")
           div(id="playerLoading" class="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center z-20 transition-opacity duration-300")
             div(class="text-center text-white")
-              div(class="animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-500 mx-auto mb-6")
+              div(class="animate-spin rounded-full h-16 w-16 border-b-4 border-b-4 border-indigo-500 mx-auto mb-6")
               p(class="text-xl font-bold mb-2") Memuat Video...
               p(class="text-lg text-gray-300") Mohon tunggu sebentar
 
-          div(class="h-full")
+          div(class="relative w-full")
             video(
               id="player"
-              class="aspect-video w-full h-full"
+              class="w-full h-auto max-h-[70vh] sm:max-h-none sm:aspect-video"
               preload="metadata"
               poster='/stream?url='+anime.poster
               crossorigin="anonymous"
@@ -45,14 +45,12 @@ block content
               
               p(class="text-white text-center p-4") Browser Anda tidak mendukung video player.
 
-          div(class="absolute top-0 left-0 right-0 bg-gradient-to-t from-transparent via-black/50 to-black p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300")
+          // Video title overlay (minimal)
+          div(class="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 to-transparent p-3 md:p-6 pointer-events-none z-10")
             div(class="flex items-center justify-between text-white")
-              div(class="flex items-center space-x-4")
-                h2(class="text-xl font-bold")= anime.title
-                span(class="text-sm bg-indigo-600 px-3 py-1 rounded-full font-medium") Episode #{episode.number}
-              div(class="flex items-center space-x-3")
-                button(id="qualityBtn" class="bg-black/50 hover:bg-black/70 px-4 py-2 rounded-xl text-sm transition-all duration-200 hover:scale-105") Auto
-                button(id="speedBtn" class="bg-black/50 hover:bg-black/70 px-4 py-2 rounded-xl text-sm transition-all duration-200 hover:scale-105") 1x
+              div(class="flex items-center space-x-2 md:space-x-4 min-w-0")
+                h2(class="text-sm md:text-xl font-bold truncate")= anime.title
+                span(class="text-xs md:text-sm bg-indigo-600 px-2 md:px-3 py-1 md:py-1.5 rounded-full font-medium flex-shrink-0") Episode #{episode.number}
 
         // Auto Next Episode Toggle
         div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-white/20 dark:border-gray-700/30 transition-colors duration-300 hover:shadow-2xl will-change-transform")
@@ -90,11 +88,15 @@ block content
             div(class="flex-1 text-center sm:text-right")
               if navigation.isNext
                 a(href=`/anime/${anime.slug}/episode/${navigation.next}` class="inline-flex items-center w-full sm:w-auto justify-center px-4 sm:px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-600 text-white rounded-2xl hover:from-indigo-700 hover:to-purple-700 dark:hover:from-indigo-600 dark:hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-xl")
-                  span(class="font-medium text-sm sm:text-base") Episode Selanjutnya
+                  span(class="text-sm sm:text-base") Episode Selanjutnya
                   svg(class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                     path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
               else
                 div(class="text-gray-400 dark:text-gray-500 font-medium px-4 sm:px-6 py-3 text-center sm:text-right") Episode Terakhir
+          
+          // Episode navigation info (no custom controls)
+          div(class="text-center mt-4 pt-4 border-t border-gray-200 dark:border-gray-600")
+            p(class="text-sm text-gray-500 dark:text-gray-400") Gunakan kontrol Plyr player untuk memutar video
 
         // Download Section
         if episode.download_links && (episode.download_links.mp4 || episode.download_links.mkv)
@@ -169,8 +171,10 @@ block content
               div(class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300")
           h3(class="font-bold text-gray-900 dark:text-gray-100 mb-4 text-xl")
             a(href=`/anime/${anime.slug}` class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300")= anime.title
-          if anime.synopsis
+          if anime.synopsis && anime.synopsis.trim() !== ''
             p(class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-6")= anime.synopsis
+          else
+            p(class="text-sm text-gray-500 dark:text-gray-400 line-clamp-3 mb-6 italic") Sinopsis tidak tersedia
           a(href=`/anime/${anime.slug}` class="inline-flex items-center text-indigo-600 dark:text-indigo-400 text-sm hover:text-indigo-700 dark:hover:text-indigo-300 font-medium transition-colors duration-300")
             span Lihat Detail Anime
             svg(class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
@@ -199,21 +203,48 @@ block content
 
 block scripts
   script.
-    // Enhanced video player functionality
+    // Simplified video player functionality - using only Plyr
     document.addEventListener('DOMContentLoaded', function() {
-      const videoPlayer = document.querySelector('video');
-      if (videoPlayer) {
-        // Add custom controls if needed
-        videoPlayer.addEventListener('play', function() {
-          console.log('Video started playing');
-        });
-        
-        videoPlayer.addEventListener('pause', function() {
-          console.log('Video paused');
-        });
-        
-        videoPlayer.addEventListener('ended', function() {
-          console.log('Video ended');
+      console.log('Video player initialized with Plyr only');
+      
+      // Ensure mobile controls are properly configured
+      if (window.innerWidth <= 768) {
+        // Mobile-specific Plyr configuration
+        if (player) {
+          // Ensure controls are always visible on mobile
+          player.config.hideControls = false;
+          
+          // Better mobile experience
+          player.config.clickToPlay = true;
+          player.config.keyboard = { focused: true, global: false };
+          
+          // Mobile-friendly settings
+          player.config.settings = ['quality', 'speed'];
+          player.config.quality = { default: 360, options: !{JSON.stringify(episode.qlist)}, forced: true };
+          player.config.speed = { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] };
+        }
+      }
+      
+      // Fix progress bar duplication after player is ready
+      if (player) {
+        player.on('ready', () => {
+          // Remove any duplicate progress bars
+          const progressBars = document.querySelectorAll('.plyr__progress');
+          if (progressBars.length > 1) {
+            // Keep only the first one
+            for (let i = 1; i < progressBars.length; i++) {
+              progressBars[i].remove();
+            }
+          }
+          
+          // Remove any duplicate volume bars
+          const volumeBars = document.querySelectorAll('.plyr__volume');
+          if (volumeBars.length > 1) {
+            // Keep only the first one
+            for (let i = 1; i < volumeBars.length; i++) {
+              volumeBars[i].remove();
+            }
+          }
         });
       }
     });
@@ -312,64 +343,12 @@ block scripts
 
           // Enhanced share functionality
       
-      // Ensure episode navigation is fully visible on mobile
-      function ensureEpisodeNavigationVisible() {
-        const episodeNav = document.querySelector('.bg-white\\/80.dark\\:bg-gray-800\\/80');
-        if (episodeNav && window.innerWidth < 768) {
-          // Add extra margin to prevent cutoff
-          episodeNav.style.marginBottom = '2rem';
-          
-          // Ensure buttons don't overflow
-          const buttons = episodeNav.querySelectorAll('a, div');
-          buttons.forEach(button => {
-            button.style.minWidth = '0';
-            button.style.flexShrink = '1';
-          });
-        }
-      }
+
       
-      // Call on load
-      ensureEpisodeNavigationVisible();
       
-      // Ensure download section is fully visible on mobile
-      function ensureDownloadSectionVisible() {
-        const downloadSection = document.querySelector('.bg-white\\/80.dark\\:bg-gray-800\\/80.backdrop-blur-xl.rounded-2xl');
-        if (downloadSection && window.innerWidth < 768) {
-          // Add extra margin to prevent cutoff
-          downloadSection.style.marginBottom = '2rem';
-          
-          // Ensure content doesn't overflow
-          const content = downloadSection.querySelector('#downloadContent');
-          if (content) {
-            content.style.maxHeight = 'none';
-            content.style.overflow = 'visible';
-          }
-        }
-      }
-      
-      // Call on load
-      ensureDownloadSectionVisible();
-      
-      // Ensure sidebar is fully visible on mobile
-      function ensureSidebarVisible() {
-        const sidebars = document.querySelectorAll('.lg\\:col-span-1 > div');
-        if (sidebars.length > 0 && window.innerWidth < 768) {
-          sidebars.forEach(sidebar => {
-            // Add extra margin to prevent cutoff
-            sidebar.style.marginBottom = '2rem';
-            
-            // Ensure content doesn't overflow
-            sidebar.style.overflow = 'visible';
-            sidebar.style.maxHeight = 'none';
-          });
-        }
-      }
-      
-      // Call on load
-      ensureSidebarVisible();
-      
-      // Add responsive CSS for better mobile layout and scroll performance
-      function addResponsiveCSS() {
+
+    // Add responsive CSS for better mobile layout and scroll performance
+    function addResponsiveCSS() {
         if (window.innerWidth < 768) {
           const style = document.createElement('style');
           style.textContent = `
@@ -393,14 +372,276 @@ block scripts
                 border-radius: 1rem !important;
               }
               
-              .episode-navigation {
-                flex-direction: column !important;
-                gap: 1rem !important;
+
+            }
+            
+
+            
+            /* Mobile video player optimizations - YouTube-like */
+            @media (max-width: 767px) {
+              /* Progress bar styling - prevent duplication */
+              .plyr__progress {
+                height: 4px !important;
+                margin: 0 8px !important;
+                position: relative !important;
               }
               
-              .episode-navigation > div {
+              /* Ensure only one progress bar is visible */
+              .plyr__progress__input {
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
                 width: 100% !important;
-                text-align: center !important;
+                height: 100% !important;
+                opacity: 1 !important;
+                z-index: 2 !important;
+              }
+              
+              .plyr__progress__played {
+                background: #3b82f6 !important;
+                height: 100% !important;
+                border-radius: 2px !important;
+              }
+              
+              .plyr__progress__buffer {
+                background: rgba(255, 255, 255, 0.3) !important;
+                height: 100% !important;
+                border-radius: 2px !important;
+              }
+              
+              /* Volume bar styling - smaller than progress bar */
+              .plyr__volume {
+                width: 60px !important;
+                margin: 0 8px !important;
+                position: relative !important;
+              }
+              
+              .plyr__volume__display {
+                height: 3px !important;
+                background: rgba(255, 255, 255, 0.3) !important;
+                border-radius: 1.5px !important;
+              }
+              
+              .plyr__volume__display .plyr__volume__played {
+                background: #3b82f6 !important;
+                height: 100% !important;
+                border-radius: 1.5px !important;
+              }
+              
+              /* Control buttons - centered and properly sized */
+              .plyr__controls {
+                padding: 8px 12px !important;
+                background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)) !important;
+              }
+              
+              .plyr__control {
+                width: 32px !important;
+                height: 32px !important;
+                margin: 0 4px !important;
+              }
+              
+              .plyr__control--overlaid {
+                width: 48px !important;
+                height: 48px !important;
+                background: rgba(0, 0, 0, 0.8) !important;
+                border: 2px solid rgba(255, 255, 255, 0.2) !important;
+              }
+              
+              /* Time display */
+              .plyr__time {
+                font-size: 12px !important;
+                color: #ffffff !important;
+                margin: 0 8px !important;
+              }
+              
+              /* Settings and fullscreen buttons */
+              .plyr__menu__container {
+                background: rgba(0, 0, 0, 0.9) !important;
+                border-radius: 8px !important;
+                padding: 8px !important;
+              }
+              
+              .plyr__menu__item {
+                padding: 8px 12px !important;
+                font-size: 14px !important;
+              }
+              
+              /* Hide large play button on mobile for better UX */
+              .plyr__control--overlaid {
+                display: none !important;
+              }
+            }
+            
+            /* Tablet optimizations */
+            @media (min-width: 768px) and (max-width: 1023px) {
+              .plyr__progress {
+                height: 6px !important;
+              }
+              
+              .plyr__volume {
+                width: 80px !important;
+              }
+              
+              .plyr__control {
+                width: 36px !important;
+                height: 36px !important;
+              }
+            }
+            
+            /* Desktop optimizations */
+            @media (min-width: 1024px) {
+              .plyr__progress {
+                height: 8px !important;
+              }
+              
+              .plyr__volume {
+                width: 100px !important;
+              }
+              
+              .plyr__control {
+                width: 40px !important;
+                height: 40px !important;
+              }
+            }
+            
+            /* Global Plyr improvements */
+            .plyr {
+              border-radius: 12px !important;
+              overflow: hidden !important;
+            }
+            
+            /* Fix progress bar duplication globally */
+            .plyr__progress {
+              position: relative !important;
+              overflow: visible !important;
+            }
+            
+            .plyr__progress__input {
+              position: absolute !important;
+              top: 0 !important;
+              left: 0 !important;
+              width: 100% !important;
+              height: 100% !important;
+              opacity: 1 !important;
+              z-index: 2 !important;
+              cursor: pointer !important;
+            }
+            
+            .plyr__progress__played,
+            .plyr__progress__buffer {
+              height: 100% !important;
+              border-radius: inherit !important;
+            }
+            
+            /* Fix volume bar duplication */
+            .plyr__volume {
+              position: relative !important;
+              overflow: visible !important;
+            }
+            
+            .plyr__volume__display {
+              position: relative !important;
+              overflow: visible !important;
+            }
+            
+            .plyr__volume__input {
+              position: absolute !important;
+              top: 0 !important;
+              left: 0 !important;
+              width: 100% !important;
+              height: 100% !important;
+              opacity: 1 !important;
+              z-index: 2 !important;
+              cursor: pointer !important;
+            }
+            
+            .plyr__video-wrapper {
+              border-radius: 12px !important;
+              overflow: hidden !important;
+            }
+            
+            /* Ensure controls are always visible on mobile */
+            .plyr--hide-controls .plyr__controls {
+              opacity: 1 !important;
+              visibility: visible !important;
+            }
+            
+            /* Better touch targets for mobile */
+            .plyr__control {
+              min-width: 32px !important;
+              min-height: 32px !important;
+              touch-action: manipulation !important;
+            }
+            
+            /* Prevent any hidden duplicate elements */
+            .plyr__progress__input[type="range"] {
+              -webkit-appearance: none !important;
+              appearance: none !important;
+              background: transparent !important;
+              border: none !important;
+              outline: none !important;
+            }
+            
+            .plyr__volume__input[type="range"] {
+              -webkit-appearance: none !important;
+              appearance: none !important;
+              background: transparent !important;
+              border: none !important;
+              outline: none !important;
+            }
+            
+            /* Ensure proper layering */
+            .plyr__progress__played {
+              z-index: 1 !important;
+            }
+            
+            .plyr__progress__buffer {
+              z-index: 0 !important;
+            }
+            
+            .plyr__volume__played {
+              z-index: 1 !important;
+            }
+            
+            /* Improved progress bar interaction */
+            .plyr__progress__input {
+              cursor: pointer !important;
+              touch-action: manipulation !important;
+            }
+            
+            /* Volume control improvements */
+            .plyr__volume__input {
+              cursor: pointer !important;
+              touch-action: manipulation !important;
+            }
+            
+            /* Video player container improvements */
+            .video-player-container {
+              position: relative !important;
+              overflow: hidden !important;
+            }
+            
+            .video-player-container .plyr {
+              width: 100% !important;
+              height: auto !important;
+            }
+            
+            /* Mobile-specific video player improvements */
+            @media (max-width: 767px) {
+              .video-player-container {
+                margin: 0 -1rem !important;
+                border-radius: 0 !important;
+              }
+              
+              .video-player-container .plyr {
+                border-radius: 0 !important;
+              }
+              
+              /* Ensure video fills mobile screen properly */
+              .video-player-container video {
+                width: 100% !important;
+                height: auto !important;
+                max-height: 70vh !important;
               }
             }
             
@@ -542,7 +783,9 @@ block scripts
       seekTime: 10,
       volume: 0.8,
       clickToPlay: true,
-      disableContextMenu: false
+      disableContextMenu: false,
+      hideControls: false,
+      resetOnEnd: false
     });
     const video = player.media;
     const playerContainer = document.querySelector('#player');
@@ -613,6 +856,14 @@ block scripts
       setTimeout(() => {
         loadingOverlay.style.pointerEvents = 'none';
       }, 300);
+    });
+
+    player.on('play', event => {
+      console.log('Video started playing');
+    });
+
+    player.on('pause', event => {
+      console.log('Video paused');
     });
 
     player.on('ready', event => {
@@ -781,84 +1032,16 @@ block scripts
       }
     });
 
-    let touchStartX = 0;
-    let touchStartY = 0;
 
-    playerContainer.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-    });
 
-    playerContainer.addEventListener('touchmove', (e) => {
-      if (!player.duration) return;
-      
-      const touchX = e.touches[0].clientX;
-      const touchY = e.touches[0].clientY;
-      const deltaX = touchX - touchStartX;
-      const deltaY = touchY - touchStartY;
-      
-      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-        e.preventDefault();
-        const seekAmount = (deltaX / window.innerWidth) * 30;
-        const newTime = Math.max(0, Math.min(player.duration, player.currentTime + seekAmount));
-        seekTo(newTime);
-      }
-    });
 
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && player.paused) {
-        if (!player.hasUserInteracted) {
-          player.play().catch(console.log);
-        }
-      }
-    }, { threshold: 0.6 });
-    
-    observer.observe(playerContainer);
 
-    player.hasUserInteracted = false;
-    ['click', 'keydown', 'touchstart'].forEach(event => {
-      playerContainer.addEventListener(event, () => {
-        player.hasUserInteracted = true;
-      }, { once: true });
-    });
 
-    document.getElementById('qualityBtn')?.addEventListener('click', () => {
-      player.elements.settings.click();
-    });
 
-    document.getElementById('speedBtn')?.addEventListener('click', () => {
-      const speeds = [0.5, 0.75, 1, 1.25, 1.5, 2];
-      const currentIndex = speeds.indexOf(player.speed);
-      const nextIndex = (currentIndex + 1) % speeds.length;
-      player.speed = speeds[nextIndex];
-      document.getElementById('speedBtn').textContent = `${speeds[nextIndex]}x`;
-    });
 
-    if (typeof performance !== 'undefined' && performance.mark) {
-      performance.mark('player-init-start');
-      
-      player.on('ready', () => {
-        performance.mark('player-ready');
-        performance.measure('player-init-time', 'player-init-start', 'player-ready');
-      });
-    }
-
-    let errorCount = 0;
-    const maxRetries = 3;
-
-    player.on('error', () => {
-      errorCount++;
-      if (errorCount < maxRetries) {
-        console.log(`Attempting recovery ${errorCount}/${maxRetries}`);
-        setTimeout(() => {
-          player.restart();
-        }, 2000);
-      }
-    });
 
     window.addEventListener('beforeunload', () => {
       if (player) {
         player.destroy();
       }
-      observer.disconnect();
     });
