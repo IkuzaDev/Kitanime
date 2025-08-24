@@ -1,8 +1,8 @@
-# 🎌 FreeNime - Anime Streaming Platform
+# 🎌 KitaNime - Anime Streaming Platform
 
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white) ![Pug](https://img.shields.io/badge/Pug-A86454?style=for-the-badge&logo=pug&logoColor=white) ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
 
-> FreeNime adalah platform streaming anime modern dengan subtitle Indonesia yang menyediakan ribuan anime berkualitas tinggi. Dilengkapi dengan sistem scraping otomatis, admin panel yang powerful, dan antarmuka yang responsif untuk pengalaman menonton anime terbaik.
+> KitaNime adalah platform streaming anime modern dengan subtitle Indonesia yang menyediakan ribuan anime berkualitas tinggi. Dilengkapi dengan sistem scraping otomatis, admin panel yang powerful, dan antarmuka yang responsif untuk pengalaman menonton anime terbaik.
 
 ## ✨ Fitur Utama
 
@@ -30,9 +30,9 @@
 
 ## 🖼️ Preview Aplikasi
 
-> Preview dari FreeNime Anime Streaming Platform
+> Preview dari KitaNime Anime Streaming Platform
 
-![Homepage FreeNime](page/public/images/preview-home.png)
+![Homepage KitaNime](page/public/images/preview-home.png)
 ![Anime Detail](page/public/images/preview-detail.png)
 ![Video Player](page/public/images/preview-player.png)
 ![Admin Dashboard](page/public/images/preview-admin.png)
@@ -60,7 +60,7 @@
 
 ## 🏗️ Arsitektur Sistem
 
-FreeNime terdiri dari dua komponen utama:
+KitaNime terdiri dari dua komponen utama:
 
 ### 📺 Frontend Application (`/page`)
 - Web interface untuk user
@@ -83,8 +83,8 @@ FreeNime terdiri dari dua komponen utama:
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/IkuzaDev/freenime.git
-cd freenime
+git clone https://github.com/IkuzaDev/kitanime.git
+cd kitanime
 ```
 
 ### 2. Setup API Service
@@ -115,7 +115,7 @@ Database SQLite akan otomatis dibuat saat pertama kali menjalankan aplikasi.
 ## 📂 Struktur Project
 
 ```
-freenime/
+kitanime/
 ├── api/                    # API Service
 │   ├── src/
 │   │   ├── lib/           # Core scraping libraries
@@ -150,7 +150,7 @@ freenime/
 │   │   ├── js/            # Client-side scripts
 │   │   └── images/        # Images and media
 │   ├── data/              # Database files
-│   │   └── freenime.db    # SQLite database
+│   │   └── kitanime.db    # SQLite database
 │   └── app.js             # Main application
 │
 └── README.md              # Project documentation
@@ -257,9 +257,9 @@ NODE_ENV=production
 module.exports = {
   port: process.env.PORT || 3001,
   apiBaseUrl: process.env.API_URL || 'http://localhost:3000',
-  sessionSecret: process.env.SESSION_SECRET || 'freenime-secret',
+  sessionSecret: process.env.SESSION_SECRET || 'kitanime-secret',
   database: {
-    path: './data/freenime.db'
+    path: './data/kitanime.db'
   }
 };
 ```
@@ -327,7 +327,7 @@ npm run dev
 3. **Database Setup**
 ```bash
 # Database akan otomatis dibuat saat pertama kali menjalankan aplikasi
-# Lokasi: page/data/freenime.db
+# Lokasi: page/data/kitanime.db
 ```
 
 ### Code Style & Standards
@@ -439,8 +439,8 @@ Proyek ini dilisensikan di bawah [MIT License](LICENSE).
 ## 📞 Kontak & Support
 
 - 📧 **Email**: dragon.studio.official@gmail.com
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/IkuzaDev/freenime/issues)
-- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/IkuzaDev/freenime/discussions)
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/IkuzaDev/kitanime/issues)
+- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/IkuzaDev/kitanime/discussions)
 
 ---
 

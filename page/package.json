@@ -1,5 +1,5 @@
 {
-  "name": "freenime-streaming",
+  "name": "kitanime-streaming",
   "version": "1.0.0",
   "description": "Anime streaming web application with real-time API integration",
   "main": "app.js",
@@ -42,6 +42,6 @@
     "express",
     "pug"
   ],
-  "author": "FreeNime Team",
+  "author": "KitaNime Team",
   "license": "MIT"
 }

@@ -27,7 +27,7 @@ router.get('/login', (req, res) => {
   }
 
   res.render('admin/login', {
-    title: 'Admin Login - FreeNime',
+    title: 'Admin Login - KitaNime',
     layout: 'admin/layout',
     error: req.query.error
   });
@@ -81,7 +81,7 @@ router.get('/', requireAuth, async (req, res) => {
     ]);
 
     res.render('admin/dashboard', {
-      title: 'Admin Dashboard - FreeNime',
+      title: 'Admin Dashboard - KitaNime',
       layout: 'admin/layout',
       user: req.session.adminUser,
       stats: {
@@ -94,7 +94,7 @@ router.get('/', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('Admin dashboard error:', error);
     res.render('admin/error', {
-      title: 'Error - Admin FreeNime',
+      title: 'Error - Admin KitaNime',
       layout: 'admin/layout',
       error: 'Tidak dapat memuat dashboard'
     });
@@ -106,7 +106,7 @@ router.get('/api-endpoints', requireAuth, async (req, res) => {
     const endpoints = await getAllApiEndpoints();
 
     res.render('admin/api-endpoints', {
-      title: 'Kelola API Endpoints - Admin FreeNime',
+      title: 'Kelola API Endpoints - Admin KitaNime',
       layout: 'admin/layout',
       user: req.session.adminUser,
       endpoints,
@@ -115,7 +115,7 @@ router.get('/api-endpoints', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('API endpoints page error:', error);
     res.render('admin/error', {
-      title: 'Error - Admin FreeNime',
+      title: 'Error - Admin KitaNime',
       layout: 'admin/layout',
       error: 'Tidak dapat memuat data API endpoints'
     });
@@ -141,7 +141,7 @@ router.get('/ad-slots', requireAuth, async (req, res) => {
     const adSlots = await getAllAdSlots();
 
     res.render('admin/ad-slots', {
-      title: 'Kelola Slot Iklan - Admin FreeNime',
+      title: 'Kelola Slot Iklan - Admin KitaNime',
       layout: 'admin/layout',
       user: req.session.adminUser,
       adSlots,
@@ -150,7 +150,7 @@ router.get('/ad-slots', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('Ad slots page error:', error);
     res.render('admin/error', {
-      title: 'Error - Admin FreeNime',
+      title: 'Error - Admin KitaNime',
       layout: 'admin/layout',
       error: 'Tidak dapat memuat data slot iklan'
     });
@@ -207,7 +207,7 @@ router.get('/settings', requireAuth, async (req, res) => {
     ]);
 
     res.render('admin/settings', {
-      title: 'Pengaturan - Admin FreeNime',
+      title: 'Pengaturan - Admin KitaNime',
       layout: 'admin/layout',
       user: req.session.adminUser,
       settings: {
@@ -221,7 +221,7 @@ router.get('/settings', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('Settings page error:', error);
     res.render('admin/error', {
-      title: 'Error - Admin FreeNime',
+      title: 'Error - Admin KitaNime',
       layout: 'admin/layout',
       error: 'Tidak dapat memuat pengaturan'
     });
@@ -248,7 +248,7 @@ router.post('/settings', requireAuth, async (req, res) => {
 
 router.get('/preview', requireAuth, (req, res) => {
   res.render('admin/preview', {
-    title: 'Preview Website - Admin FreeNime',
+    title: 'Preview Website - Admin KitaNime',
     layout: 'admin/layout',
     user: req.session.adminUser
   });
