@@ -1,33 +1,33 @@
 extends layout
 
 block content
-  div(class="container mx-auto px-4 sm:px-6 py-4 sm:py-8")
-    div(class="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8")
+  div(class="container mx-auto px-3 sm:px-6 py-3 sm:py-8")
+    div(class="grid grid-cols-1 lg:grid-cols-4 gap-3 sm:gap-8")
       div(class="lg:col-span-3")
-        // Breadcrumb Navigation
-        nav(class="mb-6 sm:mb-8")
+        // Breadcrumb Navigation - Mobile Optimized
+        nav(class="mb-4 sm:mb-8")
           ol(class="flex items-center space-x-2 sm:space-x-3 text-xs sm:text-sm overflow-x-auto pb-2 scrollbar-hide")
-            li: a(href="/" class="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 flex items-center whitespace-nowrap") 
-              svg(class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            li: a(href="/" class="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 flex items-center whitespace-nowrap text-xs sm:text-sm") 
+              svg(class="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
-              span Beranda
-            li: span(class="text-gray-400 dark:text-gray-500 whitespace-nowrap") /
-            li: a(href=`/anime/${anime.slug}` class="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 whitespace-nowrap")= anime.title
-            li: span(class="text-gray-400 dark:text-gray-500 whitespace-nowrap") /
-            li(class="text-indigo-600 dark:text-indigo-400 font-semibold whitespace-nowrap") Episode #{episode.number}
+              span(class="text-xs sm:text-sm") Beranda
+            li: span(class="text-gray-400 dark:text-gray-500 whitespace-nowrap text-xs sm:text-sm") /
+            li: a(href=`/anime/${anime.slug}` class="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-200 whitespace-nowrap text-xs sm:text-sm truncate max-w-[120px] sm:max-w-none")= anime.title
+            li: span(class="text-gray-400 dark:text-gray-500 whitespace-nowrap text-xs sm:text-sm") /
+            li(class="text-indigo-600 dark:text-indigo-400 font-semibold whitespace-nowrap text-xs sm:text-sm") Episode #{episode.number}
 
-        // Video Player Section
-        div(class="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl mb-6 sm:mb-8 group transition-colors duration-300 hover:shadow-3xl will-change-transform video-player-container")
+        // Video Player Section - Mobile Optimized
+        div(class="relative bg-gradient-to-br from-gray-900 to-black rounded-xl sm:rounded-3xl overflow-hidden shadow-2xl mb-4 sm:mb-8 group transition-colors duration-300 hover:shadow-3xl will-change-transform video-player-container")
           div(id="playerLoading" class="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center z-20 transition-opacity duration-300")
-            div(class="text-center text-white")
-              div(class="animate-spin rounded-full h-16 w-16 border-b-4 border-b-4 border-indigo-500 mx-auto mb-6")
-              p(class="text-xl font-bold mb-2") Memuat Video...
-              p(class="text-lg text-gray-300") Mohon tunggu sebentar
+            div(class="text-center text-white p-4")
+              div(class="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-b-4 border-indigo-500 mx-auto mb-4 sm:mb-6")
+              p(class="text-lg sm:text-xl font-bold mb-2") Memuat Video...
+              p(class="text-sm sm:text-lg text-gray-300") Mohon tunggu sebentar
 
           div(class="relative w-full")
             video(
               id="player"
-              class="w-full h-auto max-h-[70vh] sm:max-h-none sm:aspect-video"
+              class="w-full h-auto max-h-[50vh] sm:max-h-[70vh] lg:max-h-none lg:aspect-video"
               preload="metadata"
               poster='/stream?url='+anime.poster
               crossorigin="anonymous"
@@ -43,71 +43,84 @@ block content
                   each source in episode.qlist
                     source(src=episode.quality[source] type="video/mp4" size=source)
               
-              p(class="text-white text-center p-4") Browser Anda tidak mendukung video player.
+              p(class="text-white text-center p-4 text-sm sm:text-base") Browser Anda tidak mendukung video player.
 
-          // Video title overlay (minimal)
-          div(class="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 to-transparent p-3 md:p-6 pointer-events-none z-10")
+          // Video title overlay - Mobile Optimized
+          div(class="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 to-transparent p-2 sm:p-3 md:p-6 pointer-events-none z-10")
             div(class="flex items-center justify-between text-white")
-              div(class="flex items-center space-x-2 md:space-x-4 min-w-0")
-                h2(class="text-sm md:text-xl font-bold truncate")= anime.title
-                span(class="text-xs md:text-sm bg-indigo-600 px-2 md:px-3 py-1 md:py-1.5 rounded-full font-medium flex-shrink-0") Episode #{episode.number}
+              div(class="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-1")
+                h2(class="text-xs sm:text-sm md:text-xl font-bold truncate")= anime.title
+                span(class="text-xs sm:text-sm bg-indigo-600 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-medium flex-shrink-0") Episode #{episode.number}
 
-        // Auto Next Episode Toggle
-        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-white/20 dark:border-gray-700/30 transition-colors duration-300 hover:shadow-2xl will-change-transform")
-          div(class="flex items-center justify-between")
+        // Auto Next Episode Toggle - Mobile Optimized
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-xl p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 border border-white/20 dark:border-gray-700/30 transition-colors duration-300 hover:shadow-2xl will-change-transform")
+          div(class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0")
+            // Left side - Icon and text
             div(class="flex items-center space-x-3 sm:space-x-4")
-              div(class="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-2xl transition-colors duration-300")
-                svg(class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+              div(class="p-2.5 sm:p-3 bg-gradient-to-r from-indigo-100 to-purple-100 dark:from-indigo-900/40 dark:to-purple-900/40 rounded-xl sm:rounded-2xl transition-all duration-300 hover:from-indigo-200 hover:to-purple-200 dark:hover:from-indigo-800/50 dark:hover:to-purple-800/50")
+                svg(class="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                   path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
-              div
-                h3(class="font-semibold text-gray-900 dark:text-gray-100 text-lg") Auto Next Episode
-                p(class="text-sm text-gray-500 dark:text-gray-400") Otomatis putar episode selanjutnya
+              div(class="min-w-0 flex-1")
+                h3(class="font-bold text-gray-900 dark:text-gray-100 text-sm sm:text-base lg:text-lg leading-tight") Auto Next Episode
+                p(class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed") Otomatis putar episode selanjutnya setelah episode selesai
             
-            label(for="autonexteps" class="relative inline-flex items-center cursor-pointer")
-              input(id="autonexteps" type="checkbox" class="sr-only peer")
-              div(class="relative w-12 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600 dark:peer-checked:bg-indigo-500")
+            // Right side - Toggle switch with better positioning
+            div(class="flex items-center justify-center sm:justify-end")
+              label(for="autonexteps" class="relative inline-flex items-center cursor-pointer group")
+                input(id="autonexteps" type="checkbox" class="sr-only peer")
+                div(class="relative w-11 h-6 sm:w-14 sm:h-7 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 sm:after:h-6 sm:after:w-6 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-indigo-500 peer-checked:to-purple-600 dark:peer-checked:from-indigo-400 dark:peer-checked:to-purple-500 hover:shadow-lg transition-all duration-300")
+                  // Status indicator
+                  div(class="absolute inset-0 flex items-center justify-center opacity-0 peer-checked:opacity-100 transition-opacity duration-300")
+                    svg(class="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="currentColor" viewBox="0 0 20 20")
+                      path(fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd")
+                
+                // Status text indicator
+                div(class="ml-3 sm:ml-4 text-center sm:text-right")
+                  div(id="autoNextStatus" class="text-xs sm:text-sm font-medium text-gray-500 dark:text-gray-400 transition-colors duration-300")
+                    span(class="peer-checked:hidden") Nonaktif
+                    span(class="hidden peer-checked:inline text-indigo-600 dark:text-indigo-400 font-semibold") Aktif
 
-        // Episode Navigation
-        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 mb-6 sm:mb-8 border border-white/20 dark:border-gray-700/30 transition-colors duration-300 hover:shadow-2xl will-change-transform")
-          div(class="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between episode-navigation")
-            div(class="flex-1")
+        // Episode Navigation - Mobile Optimized
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-xl p-3 sm:p-4 lg:p-6 mb-4 sm:mb-6 lg:mb-8 border border-white/20 dark:border-gray-700/30 transition-colors duration-300 hover:shadow-2xl will-change-transform")
+          div(class="flex flex-col space-y-3 sm:space-y-4 lg:space-y-0 lg:flex-row lg:items-center lg:justify-between episode-navigation")
+            div(class="flex-1 order-2 lg:order-1")
               if navigation.isPrev
-                a(href=`/anime/${anime.slug}/episode/${navigation.prev}` class="inline-flex items-center w-full sm:w-auto justify-center px-4 sm:px-6 py-3 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 text-gray-700 dark:text-gray-200 rounded-2xl hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-600 dark:hover:to-gray-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg")
-                  svg(class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                a(href=`/anime/${anime.slug}/episode/${navigation.prev}` class="inline-flex items-center w-full lg:w-auto justify-center px-3 sm:px-4 lg:px-6 py-2 sm:py-3 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 text-gray-700 dark:text-gray-200 rounded-xl sm:rounded-2xl hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-600 dark:hover:to-gray-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-xs sm:text-sm")
+                  svg(class="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                     path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7")
-                  span(class="font-medium text-sm sm:text-base") Episode Sebelumnya
+                  span(class="font-medium") Episode Sebelumnya
               else
-                div(class="text-gray-400 dark:text-gray-500 font-medium px-4 sm:px-6 py-3 text-center sm:text-left") Episode Pertama
+                div(class="text-gray-400 dark:text-gray-500 font-medium px-3 sm:px-4 lg:px-6 py-2 sm:py-3 text-center lg:text-left text-xs sm:text-sm") Episode Pertama
             
-            div(class="text-center px-4 sm:px-6 order-first sm:order-none")
-              div(class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl px-4 sm:px-6 py-3 transition-all duration-300")
-                span(class="text-white font-bold text-lg sm:text-xl") #{episode.number}
+            div(class="text-center px-3 sm:px-4 lg:px-6 order-1 lg:order-none")
+              div(class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl sm:rounded-2xl px-3 sm:px-4 lg:px-6 py-2 sm:py-3 transition-all duration-300")
+                span(class="text-white font-bold text-base sm:text-lg lg:text-xl") #{episode.number}
                 if navigation.all_episodes && navigation.all_episodes.length > 0
                   span(class="text-indigo-200 text-xs sm:text-sm ml-1 sm:ml-2") / #{navigation.all_episodes.length}
             
-            div(class="flex-1 text-center sm:text-right")
+            div(class="flex-1 text-center lg:text-right order-3")
               if navigation.isNext
-                a(href=`/anime/${anime.slug}/episode/${navigation.next}` class="inline-flex items-center w-full sm:w-auto justify-center px-4 sm:px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-600 text-white rounded-2xl hover:from-indigo-700 hover:to-purple-700 dark:hover:from-indigo-600 dark:hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-xl")
-                  span(class="text-sm sm:text-base") Episode Selanjutnya
-                  svg(class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                a(href=`/anime/${anime.slug}/episode/${navigation.next}` class="inline-flex items-center w-full lg:w-auto justify-center px-3 sm:px-4 lg:px-6 py-2 sm:py-3 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-600 text-white rounded-xl sm:rounded-2xl hover:from-indigo-700 hover:to-purple-700 dark:hover:from-indigo-600 dark:hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-xl text-xs sm:text-sm")
+                  span(class="font-medium") Episode Selanjutnya
+                  svg(class="w-4 h-4 sm:w-5 sm:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                     path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
               else
-                div(class="text-gray-400 dark:text-gray-500 font-medium px-4 sm:px-6 py-3 text-center sm:text-right") Episode Terakhir
+                div(class="text-gray-400 dark:text-gray-500 font-medium px-3 sm:px-4 lg:px-6 py-2 sm:py-3 text-center lg:text-right text-xs sm:text-sm") Episode Terakhir
           
-          // Episode navigation info (no custom controls)
-          div(class="text-center mt-4 pt-4 border-t border-gray-200 dark:border-gray-600")
-            p(class="text-sm text-gray-500 dark:text-gray-400") Gunakan kontrol Plyr player untuk memutar video
+          // Episode navigation info - Mobile Optimized
+          div(class="text-center mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200 dark:border-gray-600")
+            p(class="text-xs sm:text-sm text-gray-500 dark:text-gray-400") Gunakan kontrol Plyr player untuk memutar video
 
-        // Download Section
+        // Download Section - Mobile Optimized
         if episode.download_links && (episode.download_links.mp4 || episode.download_links.mkv)
-          div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-white/20 dark:border-gray-700/30 overflow-hidden transition-all duration-500 hover:shadow-2xl")
-            button(onclick="toggleDownloads()" class="w-full p-4 sm:p-6 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300")
-              div(class="flex items-center space-x-3 sm:space-x-4")
-                div(class="p-3 bg-green-100 dark:bg-green-900/30 rounded-2xl transition-colors duration-300")
-                  svg(class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+          div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl border border-white/20 dark:border-gray-700/30 overflow-hidden transition-all duration-500 hover:shadow-2xl mb-4 sm:mb-6 lg:mb-8")
+            button(onclick="toggleDownloads()" class="w-full p-3 sm:p-4 lg:p-6 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300")
+              div(class="flex items-center space-x-2 sm:space-x-3 lg:space-x-4")
+                div(class="p-2 sm:p-3 bg-green-100 dark:bg-green-900/30 rounded-xl sm:rounded-2xl transition-colors duration-300")
+                  svg(class="w-4 h-4 sm:w-6 sm:h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                     path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z")
-                div
-                  h3(class="font-bold text-gray-900 dark:text-gray-100 text-lg") Download Episode
+                div(class="min-w-0")
+                  h3(class="font-bold text-gray-900 dark:text-gray-100 text-sm sm:text-base lg:text-lg") Download Episode
                   - var totalLinks = 0
                   if episode.download_links.mp4
                     each resolution in episode.download_links.mp4
@@ -115,90 +128,90 @@ block content
                   if episode.download_links.mkv
                     each resolution in episode.download_links.mkv
                       - totalLinks += resolution.urls.length
-                  p(class="text-sm text-gray-500 dark:text-gray-400")= `${totalLinks} link tersedia`
-              svg(id="downloadChevron" class="w-6 h-6 text-gray-400 dark:text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  p(class="text-xs sm:text-sm text-gray-500 dark:text-gray-400")= `${totalLinks} link tersedia`
+              svg(id="downloadChevron" class="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 dark:text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7")
             
             div(id="downloadContent" class="hidden border-t border-gray-200 dark:border-gray-700")
               div(class="flex border-b border-gray-200 dark:border-gray-700")
                 if episode.download_links.mp4 && episode.download_links.mp4.length > 0
-                  button(onclick="switchFormat('mp4')" id="mp4Tab" class="flex-1 px-6 py-4 text-sm font-medium text-center border-b-2 border-transparent hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all duration-300")
-                    span(class="flex items-center justify-center space-x-2")
-                      svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  button(onclick="switchFormat('mp4')" id="mp4Tab" class="flex-1 px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium text-center border-b-2 border-transparent hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all duration-300")
+                    span(class="flex items-center justify-center space-x-1 sm:space-x-2")
+                      svg(class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                         path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2")
                       span MP4
                 if episode.download_links.mkv && episode.download_links.mkv.length > 0
-                  button(onclick="switchFormat('mkv')" id="mkvTab" class="flex-1 px-6 py-4 text-sm font-medium text-center border-b-2 border-transparent hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all duration-300")
-                    span(class="flex items-center justify-center space-x-2")
-                      svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                  button(onclick="switchFormat('mkv')" id="mkvTab" class="flex-1 px-4 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm font-medium text-center border-b-2 border-transparent hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-300 dark:hover:border-indigo-600 transition-all duration-300")
+                    span(class="flex items-center justify-center space-x-1 sm:space-x-2")
+                      svg(class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                         path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2")
                       span MKV
               
               if episode.download_links.mp4 && episode.download_links.mp4.length > 0
-                div(id="mp4Content" class="p-6")
+                div(id="mp4Content" class="p-4 sm:p-6")
                   each resolution in episode.download_links.mp4
-                    div(class="mb-6 last:mb-0")
-                      div(class="flex items-center justify-between mb-4")
-                        span(class="text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 px-4 py-2 rounded-full")= resolution.resolution
-                        span(class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-full transition-colors duration-300")= `${resolution.urls.length} providers`
-                      div(class="grid grid-cols-2 sm:grid-cols-3 gap-4")
+                    div(class="mb-4 sm:mb-6 last:mb-0")
+                      div(class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 space-y-2 sm:space-y-0")
+                        span(class="text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-600 px-3 sm:px-4 py-2 rounded-full text-center sm:text-left")= resolution.resolution
+                        span(class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 sm:px-3 py-2 rounded-full transition-colors duration-300 text-center")= `${resolution.urls.length} providers`
+                      div(class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4")
                         each provider in resolution.urls
-                          a(href=provider.url target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center p-4 text-sm border-2 border-gray-200 dark:border-gray-600 rounded-2xl hover:border-indigo-300 dark:hover:border-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-all duration-300 transform hover:scale-105")
-                            svg(class="w-5 h-5 mr-3 text-gray-400 group-hover:text-indigo-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                          a(href=provider.url target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center p-3 sm:p-4 text-xs sm:text-sm border-2 border-gray-200 dark:border-gray-600 rounded-xl sm:rounded-2xl hover:border-indigo-300 dark:hover:border-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-all duration-300 transform hover:scale-105")
+                            svg(class="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3 text-gray-400 group-hover:text-indigo-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3")
                             span(class="truncate font-medium text-gray-700 dark:text-gray-300")= provider.provider
               
               if episode.download_links.mkv && episode.download_links.mkv.length > 0
-                div(id="mkvContent" class="p-6 hidden")
+                div(id="mkvContent" class="p-4 sm:p-6 hidden")
                   each resolution in episode.download_links.mkv
-                    div(class="mb-6 last:mb-0")
-                      div(class="flex items-center justify-between mb-4")
-                        span(class="text-sm font-semibold text-white bg-gradient-to-r from-green-500 to-green-600 px-4 py-2 rounded-full")= resolution.resolution
-                        span(class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-2 rounded-full transition-colors duration-300")= `${resolution.urls.length} providers`
-                      div(class="grid grid-cols-2 sm:grid-cols-3 gap-4")
+                    div(class="mb-4 sm:mb-6 last:mb-0")
+                      div(class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 space-y-2 sm:space-y-0")
+                        span(class="text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-green-500 to-green-600 px-3 sm:px-4 py-2 rounded-full text-center sm:text-left")= resolution.resolution
+                        span(class="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 sm:px-3 py-2 rounded-full transition-colors duration-300 text-center")= `${resolution.urls.length} providers`
+                      div(class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4")
                         each provider in resolution.urls
-                          a(href=provider.url target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center p-4 text-sm border-2 border-gray-200 dark:border-gray-600 rounded-2xl hover:border-indigo-300 dark:hover:border-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-all duration-300 transform hover:scale-105")
-                            svg(class="w-5 h-5 mr-3 text-gray-400 group-hover:text-indigo-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                          a(href=provider.url target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center p-3 sm:p-4 text-xs sm:text-sm border-2 border-gray-200 dark:border-gray-600 rounded-xl sm:rounded-2xl hover:border-indigo-300 dark:hover:border-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-all duration-300 transform hover:scale-105")
+                            svg(class="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3 text-gray-400 group-hover:text-indigo-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3")
                             span(class="truncate font-medium text-gray-700 dark:text-gray-300")= provider.provider
 
       div(class="lg:col-span-1")
-        // Anime Info Sidebar
-        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 mb-6 sm:mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
+        // Anime Info Sidebar - Mobile Optimized
+        div(class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-xl p-4 sm:p-6 lg:p-8 mb-4 sm:mb-6 lg:mb-8 border border-white/20 dark:border-gray-700/30 transition-all duration-500 hover:shadow-2xl")
           a(href=`/anime/${anime.slug}` class="block group")
-            div(class="relative overflow-hidden rounded-2xl mb-6")
+            div(class="relative overflow-hidden rounded-xl sm:rounded-2xl mb-4 sm:mb-6")
               img(src=anime.poster alt=anime.title class="w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-105" onerror="this.onerror=null;this.src='https://placehold.co/400x600?text=No+Image';")
               div(class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300")
-          h3(class="font-bold text-gray-900 dark:text-gray-100 mb-4 text-xl")
+          h3(class="font-bold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4 text-lg sm:text-xl")
             a(href=`/anime/${anime.slug}` class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300")= anime.title
           if anime.synopsis && anime.synopsis.trim() !== ''
-            p(class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-6")= anime.synopsis
+            p(class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 line-clamp-3 mb-4 sm:mb-6")= anime.synopsis
           else
-            p(class="text-sm text-gray-500 dark:text-gray-400 line-clamp-3 mb-6 italic") Sinopsis tidak tersedia
-          a(href=`/anime/${anime.slug}` class="inline-flex items-center text-indigo-600 dark:text-indigo-400 text-sm hover:text-indigo-700 dark:hover:text-indigo-300 font-medium transition-colors duration-300")
+            p(class="text-xs sm:text-sm text-gray-500 dark:text-gray-400 line-clamp-3 mb-4 sm:mb-6 italic") Sinopsis tidak tersedia
+          a(href=`/anime/${anime.slug}` class="inline-flex items-center text-indigo-600 dark:text-indigo-400 text-xs sm:text-sm hover:text-indigo-700 dark:hover:text-indigo-300 font-medium transition-colors duration-300")
             span Lihat Detail Anime
-            svg(class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            svg(class="w-3 h-3 sm:w-4 sm:h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7")
 
-        // Share Section Sidebar
-        div(class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 border border-white/30 dark:border-gray-600/40 transition-all duration-500 hover:shadow-2xl")
-          h3(class="font-bold text-gray-800 dark:text-gray-100 mb-6 flex items-center text-lg")
-            svg(class="w-6 h-6 mr-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+        // Share Section Sidebar - Mobile Optimized
+        div(class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-xl rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-xl p-4 sm:p-6 lg:p-8 border border-white/30 dark:border-gray-600/40 transition-all duration-500 hover:shadow-2xl")
+          h3(class="font-bold text-gray-800 dark:text-gray-100 mb-4 sm:mb-6 flex items-center text-base sm:text-lg")
+            svg(class="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24")
               path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z")
             span Bagikan
-          div(class="space-y-4")
-            button(onclick="shareEpisode()" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2")
-              svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+          div(class="space-y-3 sm:space-y-4")
+            button(onclick="shareEpisode()" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2 text-xs sm:text-sm")
+              svg(class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z")
               span Bagikan Episode
-            button(onclick="copyEpisodeLink()" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-6 py-3 rounded-2xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2")
-              svg(class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+            button(onclick="copyEpisodeLink()" class="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg flex items-center justify-center space-x-2 text-xs sm:text-sm")
+              svg(class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                 path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z")
               span Copy Link
 
-  // Scroll to Top Button
+  // Scroll to Top Button - Mobile Optimized
   button(id="scrollToTop" class="fixed bottom-4 sm:bottom-8 right-4 sm:right-8 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white p-3 sm:p-4 rounded-full shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-110 opacity-0 invisible z-50")
-    svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+    svg(class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
       path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18")
 
 block scripts
@@ -245,7 +258,103 @@ block scripts
               volumeBars[i].remove();
             }
           }
+          
+          // Fix mobile progress bar display
+          fixMobileProgressBar();
+          
+          // Fix fullscreen layout for mobile
+          fixFullscreenLayout();
         });
+        
+        // Also fix on quality change
+        player.on('qualitychange', () => {
+          setTimeout(() => {
+            fixMobileProgressBar();
+            fixFullscreenLayout();
+          }, 100);
+        });
+        
+        // Fix fullscreen layout when entering/exiting fullscreen
+        player.on('enterfullscreen', () => {
+          setTimeout(fixFullscreenLayout, 100);
+        });
+        
+        player.on('exitfullscreen', () => {
+          setTimeout(fixFullscreenLayout, 100);
+        });
+      }
+      
+      // Function to fix mobile progress bar
+      function fixMobileProgressBar() {
+        // Remove any duplicate progress elements
+        const progressInputs = document.querySelectorAll('.plyr__progress__input');
+        const progressPlayed = document.querySelectorAll('.plyr__progress__played');
+        const progressBuffer = document.querySelectorAll('.plyr__progress__buffer');
+        
+        // Keep only one of each type
+        if (progressInputs.length > 1) {
+          for (let i = 1; i < progressInputs.length; i++) {
+            progressInputs[i].remove();
+          }
+        }
+        
+        if (progressPlayed.length > 1) {
+          for (let i = 1; i < progressPlayed.length; i++) {
+            progressPlayed[i].remove();
+          }
+        }
+        
+        if (progressBuffer.length > 1) {
+          for (let i = 1; i < progressBuffer.length; i++) {
+            progressBuffer[i].remove();
+          }
+        }
+        
+        // Ensure proper z-index layering
+        const remainingProgress = document.querySelector('.plyr__progress');
+        if (remainingProgress) {
+          const input = remainingProgress.querySelector('.plyr__progress__input');
+          const played = remainingProgress.querySelector('.plyr__progress__played');
+          const buffer = remainingProgress.querySelector('.plyr__progress__buffer');
+          
+          if (input) input.style.zIndex = '3';
+          if (played) played.style.zIndex = '2';
+          if (buffer) buffer.style.zIndex = '1';
+        }
+      }
+      
+      // Function to fix fullscreen layout for mobile
+      function fixFullscreenLayout() {
+        const isFullscreen = player && player.fullscreen.active;
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isFullscreen && isMobile) {
+          // Center video in fullscreen mode
+          const videoElement = document.querySelector('.plyr__video-wrapper video');
+          const plyrContainer = document.querySelector('.plyr--fullscreen');
+          
+          if (videoElement && plyrContainer) {
+            // Ensure video is centered
+            videoElement.style.objectFit = 'contain';
+            videoElement.style.objectPosition = 'center';
+            
+            // Center the video container
+            plyrContainer.style.display = 'flex';
+            plyrContainer.style.alignItems = 'center';
+            plyrContainer.style.justifyContent = 'center';
+            plyrContainer.style.backgroundColor = '#000';
+            
+            // Ensure video wrapper is centered
+            const videoWrapper = document.querySelector('.plyr__video-wrapper');
+            if (videoWrapper) {
+              videoWrapper.style.display = 'flex';
+              videoWrapper.style.alignItems = 'center';
+              videoWrapper.style.justifyContent = 'center';
+              videoWrapper.style.width = '100%';
+              videoWrapper.style.height = '100%';
+            }
+          }
+        }
       }
     });
 
@@ -353,303 +462,323 @@ block scripts
           const style = document.createElement('style');
           style.textContent = `
             @media (max-width: 767px) {
+              /* Container and spacing improvements */
               .container {
-                padding-left: 1rem !important;
-                padding-right: 1rem !important;
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+                max-width: 100% !important;
               }
               
+              /* Card improvements for mobile */
               .bg-white\\/80.dark\\:bg-gray-800\\/80 {
-                margin-bottom: 2rem !important;
-                border-radius: 1rem !important;
+                margin-bottom: 1rem !important;
+                border-radius: 0.75rem !important;
+                padding: 0.75rem !important;
               }
               
+              /* Sidebar improvements */
               .lg\\:col-span-1 > div {
-                margin-bottom: 2rem !important;
-                border-radius: 1rem !important;
+                margin-bottom: 1rem !important;
+                border-radius: 0.75rem !important;
+                padding: 0.75rem !important;
               }
               
+              /* Video player improvements */
               #player {
-                border-radius: 1rem !important;
+                border-radius: 0.75rem !important;
+                max-height: 50vh !important;
               }
               
-
-            }
-            
-
-            
-            /* Mobile video player optimizations - YouTube-like */
-            @media (max-width: 767px) {
-              /* Progress bar styling - prevent duplication */
-              .plyr__progress {
-                height: 4px !important;
-                margin: 0 8px !important;
-                position: relative !important;
+              /* Breadcrumb improvements */
+              nav ol {
+                padding-bottom: 0.5rem !important;
+                margin-bottom: 1rem !important;
               }
               
-              /* Ensure only one progress bar is visible */
-              .plyr__progress__input {
-                position: absolute !important;
-                top: 0 !important;
-                left: 0 !important;
+              nav ol li {
+                font-size: 0.75rem !important;
+              }
+              
+              /* Episode navigation improvements */
+              .episode-navigation {
+                gap: 0.75rem !important;
+              }
+              
+              .episode-navigation > div {
+                order: 2 !important;
+              }
+              
+              .episode-navigation > div:nth-child(2) {
+                order: 1 !important;
+              }
+              
+              .episode-navigation > div:nth-child(3) {
+                order: 3 !important;
+              }
+              
+              /* Button improvements for mobile */
+              .episode-navigation a,
+              .episode-navigation div {
+                padding: 0.5rem 0.75rem !important;
+                font-size: 0.75rem !important;
+                border-radius: 0.75rem !important;
                 width: 100% !important;
-                height: 100% !important;
-                opacity: 1 !important;
-                z-index: 2 !important;
+                text-align: center !important;
               }
               
-              .plyr__progress__played {
-                background: #3b82f6 !important;
-                height: 100% !important;
-                border-radius: 2px !important;
+              /* Center episode number */
+              .episode-navigation > div:nth-child(2) {
+                text-align: center !important;
+                order: 1 !important;
               }
               
-              .plyr__progress__buffer {
-                background: rgba(255, 255, 255, 0.3) !important;
-                height: 100% !important;
-                border-radius: 2px !important;
+              .episode-navigation > div:nth-child(2) > div {
+                display: inline-block !important;
+                padding: 0.5rem 0.75rem !important;
               }
               
-              /* Volume bar styling - smaller than progress bar */
-              .plyr__volume {
-                width: 60px !important;
-                margin: 0 8px !important;
-                position: relative !important;
+              /* Download section improvements */
+              #downloadContent {
+                padding: 0.75rem !important;
               }
               
-              .plyr__volume__display {
-                height: 3px !important;
-                background: rgba(255, 255, 255, 0.3) !important;
-                border-radius: 1.5px !important;
+              #downloadContent .grid {
+                grid-template-columns: 1fr !important;
+                gap: 0.75rem !important;
               }
               
-              .plyr__volume__display .plyr__volume__played {
-                background: #3b82f6 !important;
-                height: 100% !important;
-                border-radius: 1.5px !important;
+              /* Tab improvements */
+              #mp4Tab, #mkvTab {
+                padding: 0.75rem 1rem !important;
+                font-size: 0.75rem !important;
               }
               
-              /* Control buttons - centered and properly sized */
-              .plyr__controls {
-                padding: 8px 12px !important;
-                background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)) !important;
+              /* Provider link improvements */
+              #downloadContent a {
+                padding: 0.75rem !important;
+                font-size: 0.75rem !important;
+                border-radius: 0.75rem !important;
               }
               
-              .plyr__control {
-                width: 32px !important;
-                height: 32px !important;
-                margin: 0 4px !important;
+              /* Resolution and provider info */
+              #downloadContent .flex-col {
+                gap: 0.5rem !important;
               }
               
-              .plyr__control--overlaid {
-                width: 48px !important;
-                height: 48px !important;
-                background: rgba(0, 0, 0, 0.8) !important;
-                border: 2px solid rgba(255, 255, 255, 0.2) !important;
+              #downloadContent span {
+                font-size: 0.75rem !important;
+                padding: 0.5rem 0.75rem !important;
               }
               
-              /* Time display */
-              .plyr__time {
-                font-size: 12px !important;
-                color: #ffffff !important;
-                margin: 0 8px !important;
+              /* Sidebar image improvements */
+              .lg\\:col-span-1 img {
+                border-radius: 0.75rem !important;
               }
               
-              /* Settings and fullscreen buttons */
-              .plyr__menu__container {
-                background: rgba(0, 0, 0, 0.9) !important;
-                border-radius: 8px !important;
-                padding: 8px !important;
+              /* Share button improvements */
+              .space-y-3 button {
+                padding: 0.5rem 1rem !important;
+                font-size: 0.75rem !important;
+                border-radius: 0.75rem !important;
               }
               
-              .plyr__menu__item {
-                padding: 8px 12px !important;
-                font-size: 14px !important;
+              /* Toggle switch improvements */
+              .peer-checked\\:after\\:translate-x-full {
+                transform: translateX(1.25rem) !important;
               }
               
-              /* Hide large play button on mobile for better UX */
-              .plyr__control--overlaid {
+              /* Loading overlay improvements */
+              #playerLoading {
+                padding: 1rem !important;
+              }
+              
+              #playerLoading .animate-spin {
+                height: 3rem !important;
+                width: 3rem !important;
+              }
+              
+              #playerLoading p {
+                font-size: 1rem !important;
+                margin-bottom: 0.5rem !important;
+              }
+              
+              #playerLoading p:last-child {
+                font-size: 0.875rem !important;
+              }
+              
+              /* Video title overlay improvements */
+              .absolute.top-0 {
+                padding: 0.5rem !important;
+              }
+              
+              .absolute.top-0 h2 {
+                font-size: 0.75rem !important;
+              }
+              
+              .absolute.top-0 span {
+                font-size: 0.625rem !important;
+                padding: 0.25rem 0.5rem !important;
+              }
+              
+              /* Scroll to top button improvements */
+              #scrollToTop {
+                bottom: 1rem !important;
+                right: 1rem !important;
+                padding: 0.75rem !important;
+              }
+              
+              #scrollToTop svg {
+                width: 1.25rem !important;
+                height: 1.25rem !important;
+              }
+              
+              /* Auto next episode improvements */
+              .bg-indigo-100 {
+                padding: 0.5rem !important;
+                border-radius: 0.75rem !important;
+              }
+              
+              .bg-indigo-100 svg {
+                width: 1rem !important;
+                height: 1rem !important;
+              }
+              
+              /* Text improvements */
+              h3 {
+                font-size: 0.875rem !important;
+                margin-bottom: 0.5rem !important;
+              }
+              
+              p {
+                font-size: 0.75rem !important;
+                margin-bottom: 0.5rem !important;
+              }
+              
+              /* Link improvements */
+              a {
+                font-size: 0.75rem !important;
+              }
+              
+              /* Icon improvements */
+              svg {
+                width: 1rem !important;
+                height: 1rem !important;
+              }
+              
+              /* Spacing improvements */
+              .space-y-3 > * + * {
+                margin-top: 0.75rem !important;
+              }
+              
+              .space-y-4 > * + * {
+                margin-top: 1rem !important;
+              }
+              
+              /* Grid improvements */
+              .grid {
+                gap: 0.75rem !important;
+              }
+              
+              /* Border improvements */
+              .border-t {
+                margin-top: 0.75rem !important;
+                padding-top: 0.75rem !important;
+              }
+              
+              /* Shadow improvements */
+              .shadow-xl {
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+              }
+              
+              /* Hover effects for mobile */
+              @media (hover: none) {
+                .hover\\:scale-105:hover {
+                  transform: none !important;
+                }
+                
+                .hover\\:shadow-2xl:hover {
+                  box-shadow: inherit !important;
+                }
+              }
+              
+              /* Touch improvements */
+              button, a {
+                touch-action: manipulation !important;
+                -webkit-tap-highlight-color: transparent !important;
+              }
+              
+              /* Focus improvements */
+              button:focus, a:focus {
+                outline: 2px solid #3b82f6 !important;
+                outline-offset: 2px !important;
+              }
+              
+              /* Animation improvements for mobile */
+              .transition-all {
+                transition: all 0.2s ease !important;
+              }
+              
+              /* Better mobile scrolling */
+              .overflow-x-auto {
+                -webkit-overflow-scrolling: touch !important;
+                scrollbar-width: none !important;
+                -ms-overflow-style: none !important;
+              }
+              
+              .overflow-x-auto::-webkit-scrollbar {
                 display: none !important;
               }
             }
             
             /* Tablet optimizations */
             @media (min-width: 768px) and (max-width: 1023px) {
-              .plyr__progress {
-                height: 6px !important;
+              .container {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
               }
               
-              .plyr__volume {
-                width: 80px !important;
+              .bg-white\\/80.dark\\:bg-gray-800\\/80 {
+                margin-bottom: 1.5rem !important;
+                border-radius: 1rem !important;
+                padding: 1.5rem !important;
               }
               
-              .plyr__control {
-                width: 36px !important;
-                height: 36px !important;
+              .lg\\:col-span-1 > div {
+                margin-bottom: 1.5rem !important;
+                border-radius: 1rem !important;
+                padding: 1.5rem !important;
+              }
+              
+              #player {
+                border-radius: 1rem !important;
               }
             }
             
             /* Desktop optimizations */
             @media (min-width: 1024px) {
-              .plyr__progress {
-                height: 8px !important;
+              .container {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
               }
               
-              .plyr__volume {
-                width: 100px !important;
+              .bg-white\\/80.dark\\:bg-gray-800\\/80 {
+                margin-bottom: 2rem !important;
+                border-radius: 1.5rem !important;
+                padding: 1.5rem !important;
               }
               
-              .plyr__control {
-                width: 40px !important;
-                height: 40px !important;
-              }
-            }
-            
-            /* Global Plyr improvements */
-            .plyr {
-              border-radius: 12px !important;
-              overflow: hidden !important;
-            }
-            
-            /* Fix progress bar duplication globally */
-            .plyr__progress {
-              position: relative !important;
-              overflow: visible !important;
-            }
-            
-            .plyr__progress__input {
-              position: absolute !important;
-              top: 0 !important;
-              left: 0 !important;
-              width: 100% !important;
-              height: 100% !important;
-              opacity: 1 !important;
-              z-index: 2 !important;
-              cursor: pointer !important;
-            }
-            
-            .plyr__progress__played,
-            .plyr__progress__buffer {
-              height: 100% !important;
-              border-radius: inherit !important;
-            }
-            
-            /* Fix volume bar duplication */
-            .plyr__volume {
-              position: relative !important;
-              overflow: visible !important;
-            }
-            
-            .plyr__volume__display {
-              position: relative !important;
-              overflow: visible !important;
-            }
-            
-            .plyr__volume__input {
-              position: absolute !important;
-              top: 0 !important;
-              left: 0 !important;
-              width: 100% !important;
-              height: 100% !important;
-              opacity: 1 !important;
-              z-index: 2 !important;
-              cursor: pointer !important;
-            }
-            
-            .plyr__video-wrapper {
-              border-radius: 12px !important;
-              overflow: hidden !important;
-            }
-            
-            /* Ensure controls are always visible on mobile */
-            .plyr--hide-controls .plyr__controls {
-              opacity: 1 !important;
-              visibility: visible !important;
-            }
-            
-            /* Better touch targets for mobile */
-            .plyr__control {
-              min-width: 32px !important;
-              min-height: 32px !important;
-              touch-action: manipulation !important;
-            }
-            
-            /* Prevent any hidden duplicate elements */
-            .plyr__progress__input[type="range"] {
-              -webkit-appearance: none !important;
-              appearance: none !important;
-              background: transparent !important;
-              border: none !important;
-              outline: none !important;
-            }
-            
-            .plyr__volume__input[type="range"] {
-              -webkit-appearance: none !important;
-              appearance: none !important;
-              background: transparent !important;
-              border: none !important;
-              outline: none !important;
-            }
-            
-            /* Ensure proper layering */
-            .plyr__progress__played {
-              z-index: 1 !important;
-            }
-            
-            .plyr__progress__buffer {
-              z-index: 0 !important;
-            }
-            
-            .plyr__volume__played {
-              z-index: 1 !important;
-            }
-            
-            /* Improved progress bar interaction */
-            .plyr__progress__input {
-              cursor: pointer !important;
-              touch-action: manipulation !important;
-            }
-            
-            /* Volume control improvements */
-            .plyr__volume__input {
-              cursor: pointer !important;
-              touch-action: manipulation !important;
-            }
-            
-            /* Video player container improvements */
-            .video-player-container {
-              position: relative !important;
-              overflow: hidden !important;
-            }
-            
-            .video-player-container .plyr {
-              width: 100% !important;
-              height: auto !important;
-            }
-            
-            /* Mobile-specific video player improvements */
-            @media (max-width: 767px) {
-              .video-player-container {
-                margin: 0 -1rem !important;
-                border-radius: 0 !important;
+              .lg\\:col-span-1 > div {
+                margin-bottom: 2rem !important;
+                border-radius: 1.5rem !important;
+                padding: 2rem !important;
               }
               
-              .video-player-container .plyr {
-                border-radius: 0 !important;
-              }
-              
-              /* Ensure video fills mobile screen properly */
-              .video-player-container video {
-                width: 100% !important;
-                height: auto !important;
-                max-height: 70vh !important;
+              #player {
+                border-radius: 1.5rem !important;
               }
             }
             
-            /* Scroll performance optimizations */
-            * {
-              scroll-behavior: auto !important;
-            }
-            
+            /* Global improvements */
             .will-change-transform {
               will-change: transform;
             }
@@ -659,19 +788,319 @@ block scripts
               backface-visibility: hidden;
             }
             
-            /* Reduce backdrop-filter on scroll for better performance */
+            /* Performance optimizations */
             @media (prefers-reduced-motion: reduce) {
-              .backdrop-blur-xl {
-                backdrop-filter: none !important;
-              }
-              
               .transition-all {
                 transition: none !important;
               }
               
-              .hover\\:shadow-2xl:hover {
-                box-shadow: none !important;
+              .hover\\:scale-105:hover {
+                transform: none !important;
               }
+              
+              .hover\\:shadow-2xl:hover {
+                box-shadow: inherit !important;
+              }
+            }
+            
+            /* Plyr Mobile Fullscreen Fixes - YouTube-like */
+            .plyr--fullscreen {
+              background: #000 !important;
+            }
+            
+            .plyr--fullscreen .plyr__video-wrapper {
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              width: 100% !important;
+              height: 100% !important;
+              background: #000 !important;
+            }
+            
+            .plyr--fullscreen .plyr__video-wrapper video {
+              object-fit: contain !important;
+              object-position: center !important;
+              max-width: 100% !important;
+              max-height: 100% !important;
+              width: auto !important;
+              height: auto !important;
+            }
+            
+            /* Mobile-specific Plyr improvements */
+            @media (max-width: 767px) {
+              .plyr--fullscreen {
+                background: #000 !important;
+              }
+              
+              .plyr--fullscreen .plyr__video-wrapper {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                background: #000 !important;
+              }
+              
+              .plyr--fullscreen .plyr__video-wrapper video {
+                object-fit: contain !important;
+                object-position: center !important;
+                max-width: 100vw !important;
+                max-height: 100vh !important;
+                width: auto !important;
+                height: auto !important;
+              }
+              
+              /* Fix progress bar duplication */
+            .plyr__progress {
+              position: relative !important;
+                height: 4px !important;
+                margin: 0 8px !important;
+              overflow: visible !important;
+            }
+            
+            .plyr__progress__input {
+              position: absolute !important;
+              top: 0 !important;
+              left: 0 !important;
+              width: 100% !important;
+              height: 100% !important;
+              opacity: 1 !important;
+                z-index: 3 !important;
+              cursor: pointer !important;
+                -webkit-appearance: none !important;
+                appearance: none !important;
+                background: transparent !important;
+                border: none !important;
+                outline: none !important;
+              }
+              
+              /* Remove duplicate progress elements */
+              .plyr__progress__input:nth-child(n+2),
+              .plyr__progress__played:nth-child(n+2),
+              .plyr__progress__buffer:nth-child(n+2) {
+                display: none !important;
+              }
+              
+              .plyr__progress__played {
+                background: #3b82f6 !important;
+              height: 100% !important;
+                border-radius: 2px !important;
+                z-index: 2 !important;
+                position: relative !important;
+              }
+              
+              .plyr__progress__buffer {
+                background: rgba(255, 255, 255, 0.3) !important;
+                height: 100% !important;
+                border-radius: 2px !important;
+                z-index: 1 !important;
+              position: relative !important;
+            }
+            
+              /* Volume bar improvements */
+              .plyr__volume {
+                width: 60px !important;
+                margin: 0 8px !important;
+              position: relative !important;
+              overflow: visible !important;
+            }
+            
+            .plyr__volume__input {
+              position: absolute !important;
+              top: 0 !important;
+              left: 0 !important;
+              width: 100% !important;
+              height: 100% !important;
+              opacity: 1 !important;
+              z-index: 2 !important;
+              cursor: pointer !important;
+                -webkit-appearance: none !important;
+                appearance: none !important;
+                background: transparent !important;
+                border: none !important;
+                outline: none !important;
+              }
+              
+              /* Remove duplicate volume elements */
+              .plyr__volume__input:nth-child(n+2),
+              .plyr__volume__played:nth-child(n+2) {
+                display: none !important;
+              }
+              
+              .plyr__volume__played {
+                background: #3b82f6 !important;
+                height: 100% !important;
+                border-radius: 1.5px !important;
+                z-index: 1 !important;
+                position: relative !important;
+              }
+              
+              /* Controls layout improvements */
+              .plyr__controls {
+                padding: 8px 12px !important;
+                background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)) !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                position: absolute !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 10 !important;
+              }
+              
+              .plyr__control {
+                width: 32px !important;
+                height: 32px !important;
+                margin: 0 4px !important;
+                flex-shrink: 0 !important;
+                color: #ffffff !important;
+              }
+              
+              .plyr__progress {
+                flex: 1 !important;
+                margin: 0 8px !important;
+                min-width: 0 !important;
+              }
+              
+              .plyr__time {
+                font-size: 12px !important;
+                color: #ffffff !important;
+                margin: 0 8px !important;
+                flex-shrink: 0 !important;
+              }
+              
+              /* Hide large play button on mobile */
+              .plyr__control--overlaid {
+                display: none !important;
+              }
+              
+              /* Better touch targets */
+            .plyr__control {
+              min-width: 32px !important;
+              min-height: 32px !important;
+              touch-action: manipulation !important;
+            }
+            
+            /* Prevent any hidden duplicate elements */
+              .plyr__progress__input[type="range"],
+            .plyr__volume__input[type="range"] {
+              -webkit-appearance: none !important;
+              appearance: none !important;
+              background: transparent !important;
+              border: none !important;
+              outline: none !important;
+            }
+            }
+            
+            /* Global Plyr improvements */
+            .plyr {
+              border-radius: 12px !important;
+              overflow: hidden !important;
+            }
+            
+            /* Fix progress bar duplication globally */
+            .plyr__progress__input:nth-child(n+2),
+            .plyr__progress__played:nth-child(n+2),
+            .plyr__progress__buffer:nth-child(n+2),
+            .plyr__volume__input:nth-child(n+2),
+            .plyr__volume__played:nth-child(n+2) {
+              display: none !important;
+            }
+            
+            /* Ensure proper z-index for all progress elements */
+            .plyr__progress__input {
+              z-index: 3 !important;
+            }
+            
+            .plyr__progress__played {
+              z-index: 2 !important;
+            }
+            
+            .plyr__progress__buffer {
+              z-index: 1 !important;
+            }
+            
+            .plyr__volume__input {
+              z-index: 3 !important;
+            }
+            
+            .plyr__volume__played {
+              z-index: 2 !important;
+            }
+            
+            /* Prevent any CSS conflicts */
+            .plyr * {
+              box-sizing: border-box !important;
+            }
+            
+            /* Ensure controls layout is correct */
+            .plyr__controls {
+              display: flex !important;
+              align-items: center !important;
+              flex-wrap: nowrap !important;
+            }
+            
+            .plyr__progress {
+              flex: 1 !important;
+              min-width: 0 !important;
+            }
+            
+            /* Fix for iOS Safari */
+            @supports (-webkit-touch-callout: none) {
+              .plyr__progress__input,
+              .plyr__volume__input {
+                -webkit-appearance: none !important;
+                background: transparent !important;
+              }
+            }
+            
+            /* Fullscreen specific fixes */
+            .plyr--fullscreen {
+              background: #000 !important;
+            }
+            
+            .plyr--fullscreen .plyr__video-wrapper {
+              background: #000 !important;
+            }
+            
+            .plyr--fullscreen .plyr__video-wrapper video {
+              background: #000 !important;
+            }
+            /* Mobile toggle button improvements */
+            #autonexteps + div {
+              width: 3rem !important;
+              height: 1.75rem !important;
+            }
+            
+            #autonexteps:checked + div::after {
+              width: 1.25rem !important;
+              height: 1.25rem !important;
+              transform: translateX(1.25rem) !important;
+            }
+            
+            /* Mobile toggle layout */
+            .flex-col.space-y-3 > div:first-child {
+              order: 1 !important;
+            }
+            
+            .flex-col.space-y-3 > div:last-child {
+              order: 2 !important;
+              justify-content: center !important;
+              margin-top: 0.5rem !important;
+            }
+            
+            /* Center toggle on mobile */
+            .flex-col.space-y-3 > div:last-child > div {
+              justify-content: center !important;
+              width: 100% !important;
+            }
+            
+            /* Mobile status text */
+            #autoNextStatus {
+              margin-top: 0.5rem !important;
+              text-align: center !important;
+              width: 100% !important;
             }
           `;
           document.head.appendChild(style);
@@ -738,16 +1167,33 @@ block scripts
       }, 2000);
     }
 
+    // Auto next episode functionality with improved status display
     const autonexteps = document.getElementById('autonexteps')
+    const autoNextStatus = document.getElementById('autoNextStatus')
+    
+    // Set initial state
     autonexteps.checked = localStorage.getItem('AutoPlayNextEpisode') === 'true';
+    updateAutoNextStatus();
+    
     autonexteps.addEventListener('change', (e) => {
       localStorage.setItem('AutoPlayNextEpisode', e.target.checked);
+      updateAutoNextStatus();
     });
+    
+    function updateAutoNextStatus() {
+      if (autoNextStatus) {
+        const isEnabled = autonexteps.checked;
+        const statusText = isEnabled ? 'Aktif' : 'Nonaktif';
+        const statusClass = isEnabled ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : 'text-gray-500 dark:text-gray-400';
+        
+        autoNextStatus.innerHTML = `<span class="${statusClass}">${statusText}</span>`;
+      }
+    }
     const source = !{JSON.stringify(episode.quality)}
     const player = new Plyr('#player', {
       autoplay: false,
       muted: true,
-      controls: ['play-large', 'play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'settings', 'fullscreen'],
+      controls: ['play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'settings', 'fullscreen'],
       settings: ['quality', 'speed'],
       quality: {
         default: 360,
@@ -785,7 +1231,21 @@ block scripts
       clickToPlay: true,
       disableContextMenu: false,
       hideControls: false,
-      resetOnEnd: false
+      resetOnEnd: false,
+      // Mobile-specific optimizations
+      controls: ['play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'settings', 'fullscreen'],
+      // Prevent duplicate controls
+      multipleInstances: false,
+      // Better mobile experience
+      touch: {
+        seek: true,
+        seekTime: 10
+      },
+      // YouTube-like mobile controls
+      clickToPlay: true,
+      hideControls: true,
+      // Custom mobile controls
+      controls: ['play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'settings', 'fullscreen']
     });
     const video = player.media;
     const playerContainer = document.querySelector('#player');
@@ -870,6 +1330,9 @@ block scripts
       player.volume = 0.8;
       player.elements.container.focus();
       console.log('Plyr is ready');
+      
+      // Fix progress bar duplication on ready
+      setTimeout(fixMobileProgressBar, 100);
     });
 
     player.on('timeupdate', event => {
@@ -887,14 +1350,46 @@ block scripts
           }));
         }
       }
+      
+      // Periodically check for duplicate progress bars
+      if (Math.floor(currentTime) % 5 === 0) { // Check every 5 seconds
+        fixMobileProgressBar();
+        fixFullscreenLayout();
+      }
     });
 
     player.on('seeking', event => {
       console.log('User is seeking to:', player.currentTime);
+      // Fix layout when seeking
+      setTimeout(() => {
+        fixMobileProgressBar();
+        fixFullscreenLayout();
+      }, 100);
     });
 
     player.on('seeked', event => {
       console.log('Seek completed at:', player.currentTime);
+      // Fix layout after seek
+      setTimeout(() => {
+        fixMobileProgressBar();
+        fixFullscreenLayout();
+      }, 100);
+    });
+
+    // Fix layout on window resize
+    window.addEventListener('resize', () => {
+      setTimeout(() => {
+        fixMobileProgressBar();
+        fixFullscreenLayout();
+      }, 100);
+    });
+
+    // Fix layout on orientation change
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        fixMobileProgressBar();
+        fixFullscreenLayout();
+      }, 500);
     });
 
     function seekTo(time) {
