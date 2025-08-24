@@ -10,7 +10,7 @@ router.get('/:slug', async (req, res) => {
 
     if (!animeData) {
       return res.status(404).render('error', {
-        title: 'Anime Tidak Ditemukan - FreeNime',
+        title: 'Anime Tidak Ditemukan - KitaNime',
         error: {
           status: 404,
           message: 'Anime yang Anda cari tidak ditemukan'
@@ -30,7 +30,7 @@ router.get('/:slug', async (req, res) => {
     });
     sanitizedAnime.episodes = clean;
     res.render('anime-detail', {
-      title: `${sanitizedAnime.title} - FreeNime`,
+      title: `${sanitizedAnime.title} - KitaNime`,
       description: sanitizedAnime.synopsis ?
         sanitizedAnime.synopsis.substring(0, 160) + '...' :
         `Nonton ${sanitizedAnime.title} subtitle Indonesia`,
@@ -40,7 +40,7 @@ router.get('/:slug', async (req, res) => {
   } catch (error) {
     console.error('Anime detail page error:', error);
     res.status(500).render('error', {
-      title: 'Terjadi Kesalahan - FreeNime',
+      title: 'Terjadi Kesalahan - KitaNime',
       error: {
         status: 500,
         message: 'Tidak dapat memuat detail anime'
@@ -59,7 +59,7 @@ router.get('/:slug/episodes', async (req, res) => {
 
     if (!animeData) {
       return res.status(404).render('error', {
-        title: 'Anime Tidak Ditemukan - FreeNime',
+        title: 'Anime Tidak Ditemukan - KitaNime',
         error: {
           status: 404,
           message: 'Anime yang Anda cari tidak ditemukan'
@@ -78,7 +78,7 @@ router.get('/:slug/episodes', async (req, res) => {
       };
     });
     res.render('anime-episodes', {
-      title: `Episode ${sanitizedAnime.title} - FreeNime`,
+      title: `Episode ${sanitizedAnime.title} - KitaNime`,
       description: `Daftar episode ${sanitizedAnime.title} subtitle Indonesia`,
       anime: sanitizedAnime,
       episodes: clean || [],
@@ -87,7 +87,7 @@ router.get('/:slug/episodes', async (req, res) => {
   } catch (error) {
     console.error('Anime episodes page error:', error);
     res.status(500).render('error', {
-      title: 'Terjadi Kesalahan - FreeNime',
+      title: 'Terjadi Kesalahan - KitaNime',
       error: {
         status: 500,
         message: 'Tidak dapat memuat daftar episode'
@@ -108,7 +108,7 @@ router.get('/:slug/episode/:episode', async (req, res) => {
 
     if (!animeData || !episodeData) {
       return res.status(404).render('error', {
-        title: 'Episode Tidak Ditemukan - FreeNime',
+        title: 'Episode Tidak Ditemukan - KitaNime',
         error: {
           status: 404,
           message: 'Episode yang Anda cari tidak ditemukan'
@@ -134,7 +134,7 @@ router.get('/:slug/episode/:episode', async (req, res) => {
     }
     
     var episodeDatas = {
-      title: `${sanitizedAnime.title} Episode ${episodeNumber} - FreeNime`,
+      title: `${sanitizedAnime.title} Episode ${episodeNumber} - KitaNime`,
         description: `Nonton ${sanitizedAnime.title} Episode ${episodeNumber} subtitle Indonesia`,
         anime: sanitizedAnime,
         episode: {
@@ -159,7 +159,7 @@ router.get('/:slug/episode/:episode', async (req, res) => {
   } catch (error) {
     console.error('Episode player page error:', error);
     res.status(500).render('error', {
-      title: 'Terjadi Kesalahan - FreeNime',
+      title: 'Terjadi Kesalahan - KitaNime',
       error: {
         status: 500,
         message: 'Tidak dapat memuat episode'
@@ -175,7 +175,7 @@ router.get('/:slug/batch', async (req, res) => {
 
     if (!animeData) {
       return res.status(404).render('error', {
-        title: 'Anime Tidak Ditemukan - FreeNime',
+        title: 'Anime Tidak Ditemukan - KitaNime',
         error: {
           status: 404,
           message: 'Anime yang Anda cari tidak ditemukan'
@@ -186,7 +186,7 @@ router.get('/:slug/batch', async (req, res) => {
     const sanitizedAnime = animeApi.validateAnimeData(animeData, slug);
 
     res.render('anime-batch', {
-      title: `Download Batch ${sanitizedAnime.title} - FreeNime`,
+      title: `Download Batch ${sanitizedAnime.title} - KitaNime`,
       description: `Download batch ${sanitizedAnime.title} subtitle Indonesia`,
       anime: sanitizedAnime,
       batchLinks: animeData.batch_links || [],
@@ -195,7 +195,7 @@ router.get('/:slug/batch', async (req, res) => {
   } catch (error) {
     console.error('Batch download page error:', error);
     res.status(500).render('error', {
-      title: 'Terjadi Kesalahan - FreeNime',
+      title: 'Terjadi Kesalahan - KitaNime',
       error: {
         status: 500,
         message: 'Tidak dapat memuat halaman batch download'
