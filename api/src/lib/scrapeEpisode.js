@@ -94,23 +94,20 @@ const getMkvDownloadUrls = ($) => {
     return result;
 };
 const getPrevEpisode = ($) => {
-    if (!$('.flir a:first').attr('href')?.startsWith(`${BASEURL}/episode/`))
-        return null;
-    return {
-        slug: $('.flir a:first').attr('href')?.replace(/^https:\/\/otakudesu\.[a-zA-Z0-9-]+\/episode\//, '')?.replace('/', ''),
-        otakudesu_url: $('.flir a:first').attr('href'),
-    };
+    if (!$('.flir a:first').attr('href')?.includes(`/episode/`)) return null;
+    var nextEps = $('.flir a:first').attr('href');
+    nextEps = nextEps.split('/episode/')[1];
+    return nextEps.match(/\d+/)[0];
 };
 const getNextEpisode = ($) => {
-    if (!$('.flir a:last').attr('href')?.startsWith(`${BASEURL}/episode/`))
-        return null;
-    return {
-        slug: $('.flir a:last').attr('href')?.replace(`${BASEURL}/episode/`, '')?.replace('/', ''),
-        otakudesu_url: $('.flir a:last').attr('href'),
-    };
+    if (!$('.flir a:last').attr('href')?.includes(`/episode/`)) return null;
+    var nextEps = $('.flir a:last').attr('href');
+    nextEps = nextEps.split('/episode/')[1];
+    return nextEps.match(/\d+/)[0];
 };
 const getAnimeData = ($) => {
     if ($('.flir a:nth-child(3)').text().trim() === '' || $('.flir a:nth-child(3)').text() === undefined) {
+        
         return {
             slug: $('.flir a:first').attr('href')?.replace(`${BASEURL}/anime/`, '')?.replace('/', ''),
             otakudesu_url: $('.flir a:first').attr('href'),

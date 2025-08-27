@@ -20,6 +20,8 @@ const { initializeDatabase } = require('./models/database');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+app.disable('x-powered-by');
+app.set('trust proxy', 1);
 
 app.use(compression());
 app.use(cors(
@@ -38,12 +40,23 @@ app.use((req, res, next) => {
 });
 
 app.get('/stream', async (req, res) => {
-  const googleVideoUrl = req.query.url;
-  const range = req.headers.range;
-  const token = req.query.token;
-  //non gofile
-  if(!token){
-    const iframeRes = await axios.get(googleVideoUrl, {
+  try {
+    const googleVideoUrl = req.query.url;
+    const range = req.headers.range;
+    const token = req.query.token;
+    
+    if (!googleVideoUrl) {
+      return res.status(400).json({ error: 'URL parameter is required' });
+    }
+    
+    // Set CORS headers early
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Range, Content-Type');
+    
+    //non gofile
+    if(!token){
+      const iframeRes = await axios.get(googleVideoUrl, {
       headers: {
           'Host': 'desustream.info',
           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
@@ -92,28 +105,59 @@ app.get('/stream', async (req, res) => {
         // Kadang Referer bantu
         'Referer': 'https://www.youtube.com/'
       }
-    });
-  
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Content-Type', response.headers['content-type'] || 'video/mp4');
-    if (range) {
-      
-      console.log(response.headers['content-range'])
-      res.setHeader('Content-Range', response.headers['content-range']);
-      res.setHeader('Accept-Ranges', 'bytes');
-      res.status(206);
+      });
+    
+      res.setHeader('Content-Type', response.headers['content-type'] || 'video/mp4');
+      if (range) {
+        res.setHeader('Content-Range', response.headers['content-range']);
+        res.setHeader('Accept-Ranges', 'bytes');
+        res.status(206);
+      }
+    
+      response.data.pipe(res);
     }
-  
-    response.data.pipe(res);
+  } catch (error) {
+    console.error('Stream error:', error.message);
+    res.status(500).json({
+      error: 'Failed to stream video',
+      message: process.env.NODE_ENV === 'production' ? 'Internal server error' : error.message
+    });
   }
 });
 app.get('/proxy', (req, res) => {
-  const url = req.query.url;
-  if (!url) return res.status(400).send('Missing url');
-  request
-    .get(url)
-    .on('error', (err) => res.status(500).send('Proxy error'))
-    .pipe(res);
+  try {
+    const url = req.query.url;
+    if (!url) return res.status(400).json({ error: 'Missing url parameter' });
+    
+    // Set CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    
+    request
+      .get(url)
+      .on('error', (err) => {
+        console.error('Proxy error:', err.message);
+        res.status(500).json({ error: 'Proxy request failed' });
+      })
+      .pipe(res);
+  } catch (error) {
+    console.error('Proxy error:', error.message);
+    res.status(500).json({ error: 'Proxy request failed' });
+  }
+});
+
+// Handle OPTIONS requests for CORS
+app.options('/stream', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Range, Content-Type');
+  res.status(200).end();
+});
+
+app.options('/proxy', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.status(200).end();
 });
 
 app.set('views', path.join(__dirname, 'views'));
@@ -128,7 +172,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
+    secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
@@ -171,16 +215,22 @@ async function startServer() {
     await initializeDatabase();
     console.log('Database initialized successfully');
     
-    app.listen(PORT, () => {
-      console.log(`KitaNime server running on port ${PORT}`);
-      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-    });
+    // Only start server if not in Vercel environment
+    if (!process.env.VERCEL) {
+      app.listen(PORT, () => {
+        console.log(`KitaNime server running on port ${PORT}`);
+        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+      });
+    }
   } catch (error) {
     console.error('Failed to start server:', error);
-    process.exit(1);
+    if (!process.env.VERCEL) {
+      process.exit(1);
+    }
   }
 }
 
-startServer();//start
+// Initialize for both local and Vercel environments
+startServer();
 
 module.exports = app;

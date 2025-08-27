@@ -23,20 +23,21 @@ html(lang="id" class="scroll-smooth")
     script(src="https://cdn.tailwindcss.com/3.4.17")
     script.
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
               primary: {
-                50: '#f0f9ff',
-                100: '#e0f2fe',
-                200: '#bae6fd',
-                300: '#7dd3fc',
-                400: '#38bdf8',
-                500: '#0ea5e9',
-                600: '#0284c7',
-                700: '#0369a1',
-                800: '#075985',
-                900: '#0c4a6e'
+                50: '#f5f3ff',
+                100: '#ede9fe',
+                200: '#ddd6fe',
+                300: '#c4b5fd',
+                400: '#a78bfa',
+                500: '#8b5cf6',
+                600: '#7c3aed',
+                700: '#6d28d9',
+                800: '#5b21b6',
+                900: '#4c1d95'
               }
             },
             fontFamily: {
@@ -74,20 +75,20 @@ html(lang="id" class="scroll-smooth")
         justify-content: center;
       }
 
-  body(class="bg-gray-50 text-gray-900 font-sans")
-    header(class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50 rounded-b-lg justify-between")
-      nav(class="container mx-auto px-8 py-0")
+  body(class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300")
+    header(class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 rounded-b-lg justify-between transition-colors duration-300")
+      nav(class="container mx-auto px-8 py-4")
         div(class="flex items-center justify-between")
           a(href="/" class="flex items-center")
             img(src="/images/logo.png" alt="KitaNime" class="h-8 w-auto rounded-sm", onerror="this.onerror=null;this.src='https://placehold.co/400?text=KN';")
-            span(class="text-xl font-bold text-primary-600") KitaNime
+            span(class="text-xl font-bold text-primary-600 dark:text-primary-400") KitaNime
           
-          div(class="hidden md:flex items-center p-6")
-            a(href="/" class=`p-2 text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'home' ? 'text-primary-600 font-medium' : ''}`) Home
-            a(href="/ongoing" class=`p-2 text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'ongoing' ? 'text-primary-600 font-medium' : ''}`) Ongoing
-            a(href="/complete" class=`p-2 text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'complete' ? 'text-primary-600 font-medium' : ''}`) Complete
-            a(href="/genres" class=`p-2 text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'genres' ? 'text-primary-600 font-medium' : ''}`) Genre
-            a(href="/movies" class=`p-2 text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'movies' ? 'text-primary-600 font-medium' : ''}`) Movie
+          div(class="hidden md:flex items-center space-x-6")
+            a(href="/" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'home' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Home
+            a(href="/ongoing" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'ongoing' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Ongoing
+            a(href="/complete" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'complete' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Complete
+            a(href="/genres" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'genres' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Genre
+            a(href="/movies" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'movies' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Movie
           
           div(class="flex-1 max-w-md mx-6 relative")
             form(action="/search" method="GET" class="relative")
@@ -96,27 +97,34 @@ html(lang="id" class="scroll-smooth")
                 name="q" 
                 placeholder="Cari anime..." 
                 value=keyword || ""
-                class="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                class="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors duration-200"
                 autocomplete="off"
                 id="searchInput"
               )
-              button(type="submit" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400")
+              button(type="submit" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500")
                 svg(class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24")
                   path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
             
-            div(id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 hidden search-suggestions z-50")
+            div(id="searchSuggestions" class="absolute top-full left-0 right-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg mt-1 hidden search-suggestions z-50")
           
-          button(id="mobileMenuBtn" class="md:hidden p-2 text-gray-600")
-            svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
-              path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16")
+          div(class="flex items-center space-x-2")
+            button(id="darkModeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200")
+              svg(id="sunIcon" class="w-5 h-5 text-yellow-500 dark:hidden" fill="currentColor" viewBox="0 0 20 20")
+                path(fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd")
+              svg(id="moonIcon" class="w-5 h-5 text-gray-300 hidden dark:block" fill="currentColor" viewBox="0 0 20 20")
+                path(d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z")
+            
+            button(id="mobileMenuBtn" class="md:hidden p-2 text-gray-600 dark:text-gray-300")
+              svg(class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24")
+                path(stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16")
         
-        div(id="mobileMenu" class="md:hidden hidden mt-4 pb-4 border-t border-gray-200")
+        div(id="mobileMenu" class="md:hidden hidden mt-4 pb-4 border-t border-gray-200 dark:border-gray-700")
           div(class="flex flex-col space-y-3 pt-4")
-            a(href="/" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'home' ? 'text-primary-600 font-medium' : ''}`) Beranda
-            a(href="/ongoing" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'ongoing' ? 'text-primary-600 font-medium' : ''}`) Ongoing
-            a(href="/complete" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'complete' ? 'text-primary-600 font-medium' : ''}`) Complete
-            a(href="/genres" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'genres' ? 'text-primary-600 font-medium' : ''}`) Genre
-            a(href="/movies" class=`text-gray-600 hover:text-primary-600 transition-colors ${currentPage === 'movies' ? 'text-primary-600 font-medium' : ''}`) Movies
+            a(href="/" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'home' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Beranda
+            a(href="/ongoing" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'ongoing' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Ongoing
+            a(href="/complete" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'complete' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Complete
+            a(href="/genres" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'genres' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Genre
+            a(href="/movies" class=`text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors ${currentPage === 'movies' ? 'text-primary-600 dark:text-primary-400 font-medium' : ''}`) Movies
 
     if adSlots && adSlots.header && adSlots.header.length > 0
       div(class="container mx-auto px-4 py-2")
@@ -126,7 +134,7 @@ html(lang="id" class="scroll-smooth")
     main(class="min-h-screen")
       block content
 
-    footer(class="bg-gray-900 text-white mt-12")
+    footer(class="bg-gray-900 dark:bg-gray-950 text-white mt-12 transition-colors duration-300")
       div(class="container mx-auto px-4 py-8")
         div(class="grid grid-cols-1 md:grid-cols-4 gap-8")
           div(class="col-span-1 md:col-span-2")
@@ -155,6 +163,19 @@ html(lang="id" class="scroll-smooth")
               button(id="declineCookies" class="px-3 py-1 bg-gray-200 text-gray-700 text-sm rounded hover:bg-gray-300 transition-colors") Tolak
 
     script.
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const html = document.documentElement;
+      
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+      }
+      
+      darkModeToggle?.addEventListener('click', function() {
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+      });
+
       document.getElementById('mobileMenuBtn')?.addEventListener('click', function() {
         const menu = document.getElementById('mobileMenu');
         menu.classList.toggle('hidden');

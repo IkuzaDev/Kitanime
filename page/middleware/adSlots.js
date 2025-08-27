@@ -20,7 +20,7 @@ async function adSlots(req, res, next) {
       contentBottom: contentBottomAds || [],
       playerBottom: playerBottomAds || []
     };
-
+    
     res.locals.adsenseEnabled = adsenseEnabled === '1';
 
     next();
