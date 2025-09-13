@@ -14,33 +14,27 @@ block content
             li: a(href=`/anime/${anime.slug}` class="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200")= anime.title
             li: span(class="text-gray-400 dark:text-gray-500") /
             li(class="text-primary-600 dark:text-primary-400 font-semibold") Episode #{episode.number}
-
         div(class="relative bg-gradient-to-br from-gray-900 to-black rounded-2xl overflow-hidden shadow-2xl mb-8 group")
-          div(id="playerLoading" class="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center z-20 transition-opacity duration-300")
-            div(class="text-center text-white")
-              div(class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4")
-              p(class="text-lg font-medium") Memuat Video...
-              p(class="text-sm text-gray-300 mt-2") Mohon tunggu sebentar
+          if !episode.quality['480'] && !episode.quality['480'].includes("blogger")
+            div(id="playerLoading" class="absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center z-20 transition-opacity duration-300")
+              div(class="text-center text-white")
+                div(class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4")
+                p(class="text-lg font-medium") Memuat Video...
+                p(class="text-sm text-gray-300 mt-2") Mohon tunggu sebentar
 
           div(class="h-full")
-            video(
-              id="player"
-              class="aspect-video w-full h-full"
-              preload="metadata"
-              poster='/stream?url='+anime.poster
-              crossorigin="anonymous"
-              playsinline
-              allow="autoplay"
-              data-plyr-config='{"autoplay": false, "muted": true}'
-            )
-              if episode.video_sources
-                if Array.isArray(episode.video_sources)
-                  each source in episode.video_sources
-                    source(src=source.url || source type=source.type || "video/mp4")
-                else
-                  source(src=episode.video_sources type="video/mp4")
-              
-              p(class="text-white text-center p-4") Browser Anda tidak mendukung video player.
+            if episode.quality['480'] && episode.quality['480'].includes("blogger")
+              iframe(src=episode.quality['480'] id="player" class="aspect-video w-full h-full" allowfullscreen allow="autoplay; encrypted-media")
+            else
+              video(id="player" class="aspect-video w-full h-full" preload="metadata" poster=anime.poster crossorigin="anonymous" playsinline allow="autoplay" data-plyr-config='{"autoplay": false, "muted": true}')
+                if episode.video_sources
+                  if Array.isArray(episode.video_sources)
+                    each source in episode.video_sources
+                      source(src=source.url || source type=source.type || "video/mp4")
+                  else
+                    each source in episode.qlist
+                      source(src=episode.quality[source] type="video/mp4" size=source)
+                p(class="text-white text-center p-4") Browser Anda tidak mendukung video player.
 
           div(class="absolute top-0 left-0 right-0 bg-gradient-to-t from-transparent via-black/50 to-black p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300")
             div(class="flex items-center justify-between text-white")
@@ -204,15 +198,16 @@ block scripts
     autonexteps.addEventListener('change', (e) => {
       localStorage.setItem('AutoPlayNextEpisode', e.target.checked);
     });
-
+    const source = !{JSON.stringify(episode.quality)}
     const player = new Plyr('#player', {
       autoplay: false,
       muted: true,
       controls: ['play-large', 'play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'settings', 'fullscreen'],
       settings: ['quality', 'speed'],
       quality: {
-        default: 'auto',
-        options: ['auto', '1080', '720', '480', '360']
+        default: 360,
+        options: !{JSON.stringify(episode.qlist)},
+        forced: true,
       },
       speed: {
         selected: 1,
@@ -245,7 +240,6 @@ block scripts
       clickToPlay: true,
       disableContextMenu: false
     });
-
     const video = player.media;
     const playerContainer = document.querySelector('#player');
     const loadingOverlay = document.getElementById('playerLoading');
@@ -296,6 +290,19 @@ block scripts
       }
     });
 
+    player.on('qualitychange', event => {
+      const newQuality = event.detail.quality;
+      console.log('User pilih kualitas:', newQuality);
+
+      const currentTime = player.currentTime;
+      const isPlaying = !player.paused;
+
+      player.source = {
+          type: 'video',
+          sources: [{ src: source[newQuality], type: 'video/mp4', size: newQuality }]
+      };
+    });
+
     player.on('canplay', event => {
       console.log('Video can start playing');
       loadingOverlay.style.opacity = '0';
@@ -305,9 +312,9 @@ block scripts
     });
 
     player.on('ready', event => {
-      console.log('Plyr is ready');
       player.volume = 0.8;
       player.elements.container.focus();
+      console.log('Plyr is ready');
     });
 
     player.on('timeupdate', event => {
