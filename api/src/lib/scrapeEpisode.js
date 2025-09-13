@@ -1,13 +1,15 @@
 import { load } from 'cheerio';
+import axios from 'axios';
 const { BASEURL } = process.env ?? 'https://otakudesu.best';
-const scrapeEpisode = (html) => {
+const scrapeEpisode = async (html) => {
     const $ = load(html);
     const episode = getEpisodeTitle($);
-    const stream_url = getStreamUrl($);
     const download_urls = createDownloadData($);
     const previous_episode = getPrevEpisode($);
+    const stream_url = getStreamUrl($);
     const next_episode = getNextEpisode($);
     const anime = getAnimeData($);
+    const qualityList = await getStreamQuality($);
     if (!episode)
         return undefined;
     return {
@@ -17,16 +19,92 @@ const scrapeEpisode = (html) => {
         next_episode,
         has_previous_episode: previous_episode ? true : false,
         previous_episode,
-        stream_url,
+        stream_url: qualityList['480p'] || stream_url,
+        steramList : qualityList,
         download_urls,
     };
 };
 const getEpisodeTitle = ($) => {
     return $('.venutama .posttl').text();
 };
+
 const getStreamUrl = ($) => {
     return $('#pembed iframe').attr('src');
 };
+
+const postToGetData = async (action, action2, videoData) => {
+    const tasks = Object.entries(videoData).map(async ([key, value]) => {
+      if (!value) return [key, null];
+      try {
+        const url = `https://otakudesu.best/wp-admin/admin-ajax.php`;
+        const form = new URLSearchParams();
+        form.append("id", value.id);
+        form.append("i", value.i);
+        form.append("q", value.q);
+        form.append("action", action);
+  
+        let res = await axios.post(url, form.toString(), {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        });
+        const form2 = new URLSearchParams();
+        form2.append("id", value.id);
+        form2.append("i", value.i);
+        form2.append("q", value.q);
+        form2.append("action", action2);
+        form2.append("nonce", res.data.data);
+  
+        res = await axios.post(url, form2.toString(), {
+          headers: { "Content-Type": "application/x-www-form-urlencoded" }
+        });
+        const $$ = load(Buffer.from(res.data.data, "base64").toString("utf8"));
+        const pdrain_url = $$("iframe").attr("src");
+  
+        const pdarin = await axios.get(pdrain_url);
+        const $$$ = load(pdarin.data);
+        const finalUrl = $$$('meta[property="og:video:secure_url"]').attr("content");
+  
+        return [key.replace("m", ""), finalUrl];
+      } catch (err) {
+        console.error(`${key} error:`, err.message);
+        return [key, null];
+      }
+    });
+  
+    const resultsArr = await Promise.all(tasks);
+    return Object.fromEntries(resultsArr.filter(Boolean));
+  };
+
+const getStreamQuality = async($) => {
+    const streamLable = $('.mirrorstream');
+    const results = {};
+    ["m360p", "m480p", "m720p"].forEach(q => {
+        const items = streamLable.find(`ul.${q} li a`);
+        const last = items
+        .filter((i, el) => {
+            const text = $(el).text().toLowerCase();
+            return text.includes("drain") || text.includes("desu");
+        }).first();
+        if (last.length) {
+            results[q] = JSON.parse(Buffer.from(last.attr("data-content"), "base64").toString("utf8"));
+        }
+    });
+    const actions = [];
+    $("script").each((i, el) => {
+        const scriptContent = $(el).html();
+        if (!scriptContent) return;
+        const regex = /action\s*:\s*"([a-z0-9]+)"/gi;
+        let match;
+        while ((match = regex.exec(scriptContent)) !== null) {
+          actions.push(match[1]);
+        }
+    });
+    const uniqueActions = [...new Set(actions)];
+    const init = uniqueActions[1];
+    const action = uniqueActions[0];
+    const data = await postToGetData(init, action, results);
+    return data;
+};
+
 const createDownloadData = ($) => {
     const mp4 = getMp4DownloadUrls($);
     const mkv = getMkvDownloadUrls($);
@@ -96,13 +174,13 @@ const getMkvDownloadUrls = ($) => {
 const getPrevEpisode = ($) => {
     if (!$('.flir a:first').attr('href')?.includes(`/episode/`)) return null;
     var nextEps = $('.flir a:first').attr('href');
-    nextEps = nextEps.split('/episode/')[1];
+    nextEps = nextEps.split('/episode/')[1].split('-episode-')[1];
     return nextEps.match(/\d+/)[0];
 };
 const getNextEpisode = ($) => {
     if (!$('.flir a:last').attr('href')?.includes(`/episode/`)) return null;
     var nextEps = $('.flir a:last').attr('href');
-    nextEps = nextEps.split('/episode/')[1];
+    nextEps = nextEps.split('/episode/')[1].split('-episode-')[1];
     return nextEps.match(/\d+/)[0];
 };
 const getAnimeData = ($) => {
