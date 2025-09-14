@@ -4,7 +4,7 @@
 
 > KitaNime adalah platform streaming anime modern dengan subtitle Indonesia yang menyediakan ribuan anime berkualitas tinggi. Dilengkapi dengan sistem scraping otomatis, admin panel yang powerful, dan antarmuka yang responsif untuk pengalaman menonton anime terbaik.
 
-Repository page v2: ![KitaNime-v2](https://github.com/IkuzaDev/kitanimev2)
+Repository page v2: [![KitaNime-v2](https://d5studio.my.id/images/favicon.ico)](https://github.com/IkuzaDev/kitanimev2)
 
 ## ✨ Fitur Utama
 
