@@ -59,10 +59,37 @@ app.get('/stream', async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Range, Content-Type');
     
-    //non gofile
-    if(!token){
+    console.log('Stream request for URL:', googleVideoUrl);
+    console.log('Range header:', range);
+    console.log('Token:', token);
+    
+    let response;
+    
+    // Check if it's a direct image/video URL
+    if (googleVideoUrl.includes('.jpg') || googleVideoUrl.includes('.png') || googleVideoUrl.includes('.jpeg') || googleVideoUrl.includes('.webp')) {
+      // Direct image proxy
+      response = await axios.get(googleVideoUrl, {
+        responseType: 'stream',
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
+          'Referer': 'https://otakudesu.best/'
+        }
+      });
+    } else if (token) {
+      // Handle gofile with token
+      response = await axios.get(googleVideoUrl, {
+        responseType: 'stream',
+        headers: {
+          'Range': range,
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
+          'Authorization': `Bearer ${token}`,
+          'Referer': 'https://gofile.io/'
+        }
+      });
+    } else if (googleVideoUrl.includes('desustream.info')) {
+      // Handle desustream
       const iframeRes = await axios.get(googleVideoUrl, {
-      headers: {
+        headers: {
           'Host': 'desustream.info',
           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
           'Cache-Control': 'no-cache',
@@ -77,55 +104,99 @@ app.get('/stream', async (req, res) => {
           'Sec-CH-UA': '"Not)A;Brand";v="8", "Chromium";v="138", "Brave";v="138"',
           'Sec-CH-UA-Mobile': '?0',
           'Sec-CH-UA-Platform': '"Windows"',
-          'Connection': 'keep-alive',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Methods': '*',
-          'Access-Control-Allow-Credentials': 'true',
-      },
-    });
-    const match = iframeRes.data.match(/file:"([^"]+)"/)[1];
-    const host = new URL(match).hostname;
-    const response = await axios.get(match, {
-      responseType: 'stream',
-      headers: {
-        'Host': host,
-        'Range': range,
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br, zstd',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-        'Pragma': 'no-cache',
-        'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
-        'Sec-CH-UA': '"Not)A;Brand";v="8", "Chromium";v="138", "Brave";v="138"',
-        'Sec-CH-UA-Mobile': '?0',
-        'Sec-CH-UA-Platform': '"Windows"',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'none',
-        'Sec-Fetch-User': '?1',
-        'Sec-GPC': '1',
-        'Referer': 'https://www.youtube.com/'
-      }
+          'Connection': 'keep-alive'
+        }
       });
-    
-      res.setHeader('Content-Type', response.headers['content-type'] || 'video/mp4');
-      if (range) {
-        res.setHeader('Content-Range', response.headers['content-range']);
-        res.setHeader('Accept-Ranges', 'bytes');
-        res.status(206);
+      
+      console.log('Desustream response received, looking for video URL...');
+      
+      // Try multiple regex patterns for different desustream formats
+      let match = iframeRes.data.match(/file:"([^"]+)"/);
+      if (!match) {
+        match = iframeRes.data.match(/src:"([^"]+)"/);
       }
-    
-      response.data.pipe(res);
+      if (!match) {
+        match = iframeRes.data.match(/source src="([^"]+)"/);
+      }
+      if (!match) {
+        match = iframeRes.data.match(/video.*?src="([^"]+)"/);
+      }
+      
+      if (!match || !match[1]) {
+        console.error('Video URL not found in desustream response');
+        console.log('Response preview:', iframeRes.data.substring(0, 500));
+        throw new Error('Video URL not found in iframe response');
+      }
+      
+      const videoUrl = match[1];
+      console.log('Found video URL:', videoUrl);
+      const host = new URL(videoUrl).hostname;
+      
+      response = await axios.get(videoUrl, {
+        responseType: 'stream',
+        headers: {
+          'Host': host,
+          'Range': range,
+          'Accept': '*/*',
+          'Accept-Encoding': 'identity',
+          'Accept-Language': 'en-US,en;q=0.5',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+          'Pragma': 'no-cache',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
+          'Referer': googleVideoUrl
+        }
+      });
+    } else {
+      // Fallback for other URLs - try direct access
+      response = await axios.get(googleVideoUrl, {
+        responseType: 'stream',
+        headers: {
+          'Range': range,
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36'
+        }
+      });
     }
+    
+    // Set response headers
+    res.setHeader('Content-Type', response.headers['content-type'] || 'video/mp4');
+    if (range && response.headers['content-range']) {
+      res.setHeader('Content-Range', response.headers['content-range']);
+      res.setHeader('Accept-Ranges', 'bytes');
+      res.status(206);
+    } else {
+      res.setHeader('Accept-Ranges', 'bytes');
+    }
+    
+    // Handle response errors
+    response.data.on('error', (err) => {
+      console.error('Stream pipe error:', err);
+      if (!res.headersSent) {
+        res.status(500).json({ error: 'Stream error' });
+      }
+    });
+    
+    // Pipe the response
+    response.data.pipe(res);
+    
   } catch (error) {
     console.error('Stream error:', error.message);
-    res.status(500).json({
-      error: 'Failed to stream video',
-      message: process.env.NODE_ENV === 'production' ? 'Internal server error' : error.message
-    });
+    console.error('Error details:', error.response?.status, error.response?.statusText);
+    console.error('Full error:', error);
+    console.error('Request URL:', req.query.url);
+    
+    if (!res.headersSent) {
+      res.status(500).json({
+        error: 'Failed to stream video',
+        message: process.env.NODE_ENV === 'production' ? 'Internal server error' : error.message,
+        url: req.query.url,
+        details: process.env.NODE_ENV === 'production' ? undefined : {
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          stack: error.stack
+        }
+      });
+    }
   }
 });
 

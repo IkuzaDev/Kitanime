@@ -220,10 +220,16 @@ block scripts
     document.addEventListener('DOMContentLoaded', function() {
       console.log('Video player initialized with Plyr only');
       
+      // Check if Plyr is loaded
+      if (typeof Plyr === 'undefined') {
+        console.error('Plyr is not loaded');
+        throw new Error('Plyr is not loaded');
+      }
+      
       // Ensure mobile controls are properly configured
       if (window.innerWidth <= 768) {
         // Mobile-specific Plyr configuration
-        if (player) {
+        if (typeof player !== 'undefined' && player) {
           // Ensure controls are always visible on mobile
           player.config.hideControls = false;
           
@@ -239,7 +245,7 @@ block scripts
       }
       
       // Fix progress bar duplication after player is ready
-      if (player) {
+      if (typeof player !== 'undefined' && player) {
         player.on('ready', () => {
           // Remove any duplicate progress bars
           const progressBars = document.querySelectorAll('.plyr__progress');
@@ -260,101 +266,40 @@ block scripts
           }
           
           // Fix mobile progress bar display
-          fixMobileProgressBar();
+          if (typeof fixMobileProgressBar === 'function') {
+            fixMobileProgressBar();
+          }
           
           // Fix fullscreen layout for mobile
-          fixFullscreenLayout();
+          if (typeof fixFullscreenLayout === 'function') {
+            fixFullscreenLayout();
+          }
         });
         
         // Also fix on quality change
         player.on('qualitychange', () => {
           setTimeout(() => {
-            fixMobileProgressBar();
-            fixFullscreenLayout();
+            if (typeof fixMobileProgressBar === 'function') {
+              fixMobileProgressBar();
+            }
+            if (typeof fixFullscreenLayout === 'function') {
+              fixFullscreenLayout();
+            }
           }, 100);
         });
         
         // Fix fullscreen layout when entering/exiting fullscreen
         player.on('enterfullscreen', () => {
-          setTimeout(fixFullscreenLayout, 100);
+          setTimeout(() => {
+            if (typeof fixFullscreenLayout === 'function') {
+              fixFullscreenLayout();
+            }
+          }, 100);
         });
         
         player.on('exitfullscreen', () => {
           setTimeout(fixFullscreenLayout, 100);
         });
-      }
-      
-      // Function to fix mobile progress bar
-      function fixMobileProgressBar() {
-        // Remove any duplicate progress elements
-        const progressInputs = document.querySelectorAll('.plyr__progress__input');
-        const progressPlayed = document.querySelectorAll('.plyr__progress__played');
-        const progressBuffer = document.querySelectorAll('.plyr__progress__buffer');
-        
-        // Keep only one of each type
-        if (progressInputs.length > 1) {
-          for (let i = 1; i < progressInputs.length; i++) {
-            progressInputs[i].remove();
-          }
-        }
-        
-        if (progressPlayed.length > 1) {
-          for (let i = 1; i < progressPlayed.length; i++) {
-            progressPlayed[i].remove();
-          }
-        }
-        
-        if (progressBuffer.length > 1) {
-          for (let i = 1; i < progressBuffer.length; i++) {
-            progressBuffer[i].remove();
-          }
-        }
-        
-        // Ensure proper z-index layering
-        const remainingProgress = document.querySelector('.plyr__progress');
-        if (remainingProgress) {
-          const input = remainingProgress.querySelector('.plyr__progress__input');
-          const played = remainingProgress.querySelector('.plyr__progress__played');
-          const buffer = remainingProgress.querySelector('.plyr__progress__buffer');
-          
-          if (input) input.style.zIndex = '3';
-          if (played) played.style.zIndex = '2';
-          if (buffer) buffer.style.zIndex = '1';
-        }
-      }
-      
-      // Function to fix fullscreen layout for mobile
-      function fixFullscreenLayout() {
-        const isFullscreen = player && player.fullscreen.active;
-        const isMobile = window.innerWidth <= 768;
-        
-        if (isFullscreen && isMobile) {
-          // Center video in fullscreen mode
-          const videoElement = document.querySelector('.plyr__video-wrapper video');
-          const plyrContainer = document.querySelector('.plyr--fullscreen');
-          
-          if (videoElement && plyrContainer) {
-            // Ensure video is centered
-            videoElement.style.objectFit = 'contain';
-            videoElement.style.objectPosition = 'center';
-            
-            // Center the video container
-            plyrContainer.style.display = 'flex';
-            plyrContainer.style.alignItems = 'center';
-            plyrContainer.style.justifyContent = 'center';
-            plyrContainer.style.backgroundColor = '#000';
-            
-            // Ensure video wrapper is centered
-            const videoWrapper = document.querySelector('.plyr__video-wrapper');
-            if (videoWrapper) {
-              videoWrapper.style.display = 'flex';
-              videoWrapper.style.alignItems = 'center';
-              videoWrapper.style.justifyContent = 'center';
-              videoWrapper.style.width = '100%';
-              videoWrapper.style.height = '100%';
-            }
-          }
-        }
       }
     });
 
@@ -1189,7 +1134,103 @@ block scripts
         autoNextStatus.innerHTML = `<span class="${statusClass}">${statusText}</span>`;
       }
     }
+    // Function to fix mobile progress bar
+    function fixMobileProgressBar() {
+      // Remove any duplicate progress elements
+      const progressInputs = document.querySelectorAll('.plyr__progress__input');
+      const progressPlayed = document.querySelectorAll('.plyr__progress__played');
+      const progressBuffer = document.querySelectorAll('.plyr__progress__buffer');
+      
+      // Keep only one of each type
+      if (progressInputs.length > 1) {
+        for (let i = 1; i < progressInputs.length; i++) {
+          progressInputs[i].remove();
+        }
+      }
+      
+      if (progressPlayed.length > 1) {
+        for (let i = 1; i < progressPlayed.length; i++) {
+          progressPlayed[i].remove();
+        }
+      }
+      
+      if (progressBuffer.length > 1) {
+        for (let i = 1; i < progressBuffer.length; i++) {
+          progressBuffer[i].remove();
+        }
+      }
+      
+      // Ensure proper z-index layering
+      const remainingProgress = document.querySelector('.plyr__progress');
+      if (remainingProgress) {
+        const input = remainingProgress.querySelector('.plyr__progress__input');
+        const played = remainingProgress.querySelector('.plyr__progress__played');
+        const buffer = remainingProgress.querySelector('.plyr__progress__buffer');
+        
+        if (input) input.style.zIndex = '3';
+        if (played) played.style.zIndex = '2';
+        if (buffer) buffer.style.zIndex = '1';
+      }
+    }
+    
+    // Function to fix fullscreen layout for mobile
+    function fixFullscreenLayout() {
+      const isFullscreen = player && player.fullscreen.active;
+      const isMobile = window.innerWidth <= 768;
+      
+      if (isMobile && isFullscreen) {
+        // Mobile fullscreen optimizations
+        const videoWrapper = document.querySelector('.plyr__video-wrapper');
+        const controls = document.querySelector('.plyr__controls');
+        
+        if (videoWrapper) {
+          videoWrapper.style.height = '100vh';
+          videoWrapper.style.width = '100vw';
+        }
+        
+        if (controls) {
+          controls.style.bottom = '0';
+          controls.style.position = 'absolute';
+        }
+      }
+    }
+
     const source = !{JSON.stringify(episode.quality)}
+    
+    // Ensure video element exists before initializing Plyr
+    const videoElement = document.getElementById('player');
+    if (!videoElement) {
+      console.error('Video element not found');
+      throw new Error('Video element not found');
+    }
+    
+    // Check if video has valid sources
+    const sources = videoElement.querySelectorAll('source');
+    console.log('Found video sources:', sources.length);
+    
+    if (sources.length === 0) {
+      console.warn('No video sources found, Plyr may not initialize properly');
+      showVideoError();
+      return;
+    }
+    
+    // Validate sources have valid URLs
+    let validSources = 0;
+    sources.forEach((source, index) => {
+      console.log(`Source ${index}:`, source.src, source.type);
+      if (source.src && source.src.trim() !== '') {
+        validSources++;
+      }
+    });
+    
+    if (validSources === 0) {
+      console.error('No valid video sources found');
+      showVideoError();
+      return;
+    }
+    
+    console.log(`Initializing Plyr with ${validSources} valid sources`);
+    
     const player = new Plyr('#player', {
       autoplay: false,
       muted: true,
@@ -1232,10 +1273,6 @@ block scripts
       disableContextMenu: false,
       hideControls: false,
       resetOnEnd: false,
-      // Mobile-specific optimizations
-      controls: ['play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'settings', 'fullscreen'],
-      // Prevent duplicate controls
-      multipleInstances: false,
       // Better mobile experience
       touch: {
         seek: true,
@@ -1310,16 +1347,63 @@ block scripts
       };
     });
 
+    // Multiple event handlers to ensure loading overlay is hidden
     player.on('canplay', event => {
       console.log('Video can start playing');
-      loadingOverlay.style.opacity = '0';
-      setTimeout(() => {
-        loadingOverlay.style.pointerEvents = 'none';
-      }, 300);
+      hideLoadingOverlay();
+    });
+
+    player.on('canplaythrough', event => {
+      console.log('Video can play through without buffering');
+      hideLoadingOverlay();
+    });
+
+    player.on('loadeddata', event => {
+      console.log('Video data loaded');
+      hideLoadingOverlay();
+    });
+
+    // Function to hide loading overlay
+    function hideLoadingOverlay() {
+      if (loadingOverlay) {
+        loadingOverlay.style.opacity = '0';
+        setTimeout(() => {
+          loadingOverlay.style.pointerEvents = 'none';
+        }, 300);
+      }
+    }
+
+    player.on('waiting', event => {
+      console.log('Video is buffering');
+      if (loadingOverlay) {
+        loadingOverlay.style.opacity = '1';
+        loadingOverlay.style.pointerEvents = 'auto';
+      }
+    });
+
+    player.on('stalled', event => {
+      console.log('Video stalled - network issue');
+      if (loadingOverlay) {
+        loadingOverlay.style.opacity = '1';
+        loadingOverlay.style.pointerEvents = 'auto';
+      }
+    });
+
+    player.on('progress', event => {
+      console.log('Video buffering progress');
+      // Hide loading if we have enough buffered data
+      if (player.buffered.length > 0) {
+        const bufferedEnd = player.buffered.end(player.buffered.length - 1);
+        const currentTime = player.currentTime;
+        if (bufferedEnd - currentTime > 5) { // 5 seconds ahead buffered
+          hideLoadingOverlay();
+        }
+      }
     });
 
     player.on('play', event => {
       console.log('Video started playing');
+      hideLoadingOverlay();
     });
 
     player.on('pause', event => {
@@ -1418,7 +1502,23 @@ block scripts
     });
 
     player.on('error', event => {
-      console.error('Plyr error:', event.detail);
+      console.error('Plyr error:', event);
+      console.error('Plyr error detail:', event.detail);
+      console.error('Plyr error type:', typeof event.detail);
+      
+      // Additional error information
+      if (event.detail && event.detail.plyr) {
+        console.error('Plyr instance error:', event.detail.plyr);
+      }
+      
+      // Check video element state when error occurs
+      const currentVideo = document.getElementById('player');
+      if (currentVideo) {
+        console.error('Video readyState:', currentVideo.readyState);
+        console.error('Video networkState:', currentVideo.networkState);
+        console.error('Video error:', currentVideo.error);
+      }
+      
       showVideoError();
     });
 
